@@ -7,78 +7,121 @@ public class ConsolePackages {
     private static final int LENGTH_BODY = 6;
     private static final int WIDTH_BODY = 6;
 
-    private static final Map<Integer, String> ships = new HashMap<>();
-
-    static {
-        ships.put(1, "1 1");
-        ships.put(2, "1 2");
-        ships.put(3, "1 3");
-        ships.put(4, "1 4");
-        ships.put(5, "1 5");
-        ships.put(6, "2 3 3");
-        ships.put(7, "2 3 4");
-        ships.put(8, "2 4 4");
-        ships.put(9, "3 3 3 3");
-    }
-
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         try {
-            Map<Integer, Integer> packages = readFile(new File(args[0]));
-            System.out.println(packages);
-            printBody(initBody());
-            List<Character[][]> a = simplestPlacementPackage(packages);
-            for(Character[][] characters : a){
-                printBody(characters);
+            List<char[][]> packages = readFile(new File(args[0]));
+
+            sort(packages);
+
+            List<char[][]> bodies = placementPackage(packages);
+
+            for(char[][] body : bodies) {
+                printBody(body);
             }
+
         } catch (FileNotFoundException e) {
             System.out.println("File not exist");
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error");
         }
     }
 
-    public static List<Character[][]> simplestPlacementPackage(Map<Integer, Integer> packages) {
-        List<Character[][]> bodies = new ArrayList<>();
+    public static List<char[][]> placementPackage(List<char[][]> packages) {
+        List<char[][]> bodies = new ArrayList<>();
+        char[][] startBody = initBody();
+        bodies.add(startBody);
 
-        for (Map.Entry<Integer, Integer> entry : packages.entrySet()) {
-            int count = entry.getValue();
-            int figure = entry.getKey();
-            String[] strings = ships.get(figure).split(" ");
+        for(char[][] pack : packages) {
+            boolean f = true;
 
-            for (int i = 0; i < count; i++) {
-                Character[][] body = initBody();
-                int drawingLines = 0;
-                int countLines= Integer.parseInt(strings[0]);
+            for(char[][] body : bodies) {
+                f = searchPlaceAndInsert(pack, body);
+                if(f) break;
+            }
 
-                for (int j = WIDTH_BODY - 1; j > WIDTH_BODY - 1 - countLines; j--) {
-                    for (int k = 1; k < 1 + Integer.parseInt(strings[strings.length - 1 - drawingLines]); k++) {
-                        body[j][k] = (char) (figure + 48);
-                    }
-
-                    drawingLines++;
-                }
-
-                bodies.add(body);
+            if(!f) {
+                char[][] newBody = initBody();
+                bodies.add(newBody);
+                searchPlaceAndInsert(pack, newBody);
             }
         }
 
         return bodies;
     }
 
-    public static Character[][] initBody() {
-        Character[][] body = new Character[WIDTH_BODY + 1][LENGTH_BODY + 2];
+    public static boolean searchPlaceAndInsert(char[][] pack, char[][] body) {
+        boolean f = true;
+        for (int i = WIDTH_BODY - 1; i >= pack.length - 1; i--) {
+            for (int j = 0; j < WIDTH_BODY - pack[pack.length - 1].length + 1; j++) {
+                f = true;
+                int k = 0;
 
-        for (int i = 0; i < WIDTH_BODY + 1; i++) {
-            body[i][0] = '+';
-            body[i][LENGTH_BODY + 2 - 1] = '+';
+                for (int l = 0; l < pack.length; l++) {
+                    for (int m = 0; m < pack[pack.length - k - 1].length; m++) {
+                        if (body[i - l][j + m] != ' ') {
+                            f = false;
+                            break;
+                        }
+                    }
+                    k++;
+                }
+
+                if (f) {
+                    insertPack(pack, body, i, j);
+                    break;
+                }
+            }
+            if (f) {
+                break;
+            }
         }
 
-        for (int i = 0; i < LENGTH_BODY + 1; i++) {
-            body[WIDTH_BODY + 1 - 1][i] = '+';
+        return f;
+    }
+
+    public static void sort(List<char[][]> packages) {
+        for (int i = 0; i < packages.size() - 1; i++) {
+            for (int j = i + 1; j < packages.size(); j++) {
+                if(packages.get(i)[0][0] < packages.get(j)[0][0]) {
+                    char[][] temp = packages.get(i);
+                    packages.set(i, packages.get(j));
+                    packages.set(j, temp);
+                }
+            }
         }
+    }
+
+    public static List<char[][]> simplestPlacementPackage(List<char[][]> packages) {
+        List<char[][]> bodies = new ArrayList<>();
+        sort(packages);
+
+        for (char[][] pack : packages) {
+            char[][] body = initBody();
+
+            insertPack(pack, body, LENGTH_BODY - 1, 0);
+
+            bodies.add(body);
+        }
+
+        return bodies;
+    }
+
+    public static void insertPack(char[][] pack, char[][] body, int i, int j) {
+        int k = 0;
+
+        for (int l = 0; l < pack.length; l++) {
+            for (int m = 0; m < pack[pack.length - k - 1].length; m++) {
+                body[i - l][j + m] = pack[0][0];
+            }
+            k++;
+        }
+    }
+
+    public static char[][] initBody() {
+        char[][] body = new char[WIDTH_BODY][LENGTH_BODY];
 
         for (int i = 0; i < WIDTH_BODY; i++) {
-            for (int j = 1; j < LENGTH_BODY + 1; j++) {
+            for (int j = 0; j < LENGTH_BODY; j++) {
                 body[i][j] = ' ';
             }
         }
@@ -86,64 +129,46 @@ public class ConsolePackages {
         return body;
     }
 
-    public static void printBody(Character[][] body) {
-        for (int i = 0; i < WIDTH_BODY + 1; i++) {
-            for (int j = 0; j < LENGTH_BODY + 2; j++) {
+    public static void printBody(char[][] body) {
+        for (int i = 0; i < WIDTH_BODY; i++) {
+            System.out.print('+');
+            for (int j = 0; j < LENGTH_BODY; j++) {
                 System.out.print(body[i][j]);
             }
+            System.out.print('+');
             System.out.println();
         }
+
+        for (int j = 0; j < LENGTH_BODY + 2; j++) {
+            System.out.print('+');
+        }
+        System.out.println("\n");
     }
 
-    public static Map<Integer, Integer> readFile(File file) throws IOException {
+    public static List<char[][]> readFile(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        Map<Integer, Integer> packages = new HashMap<>();
+        List<char[][]> packages = new ArrayList<>();
         String line;
+        List<String> lines = new ArrayList<>();
 
-        while((line = reader.readLine()) != null){
-            if(!line.isEmpty()) {
-                int x = line.charAt(0) - 48;
-                if (packages.containsKey(x))
-                    packages.put(x, packages.get(x) + 1);
-                else packages.put(x, 1);
-            }
-        }
-
-        for(Map.Entry<Integer, Integer> entry : packages.entrySet()) {
-            int key = entry.getKey();
-
-            if(key == 6 || key == 7 || key == 8) {
-                entry.setValue(entry.getValue() / 2);
-            }
-
-            if(key == 9) {
-                entry.setValue(entry.getValue() / 3);
+        while ((line = reader.readLine()) != null) {
+            if (line.isEmpty() && !lines.isEmpty()) {
+                char[][] chars = new char[lines.size()][];
+                int i = 0;
+                for (String s : lines) {
+                    chars[i] = new char[s.length()];
+                    for (int j = 0; j < s.length(); j++) {
+                        chars[i][j] = s.charAt(j);
+                    }
+                    i++;
+                }
+                packages.add(chars);
+                lines.clear();
+            } else {
+                lines.add(line);
             }
         }
 
         return packages;
     }
 }
-/*    //private static final char[][] body = new char[WIDTH_BODY + 1][LENGTH_BODY + 2];
-
-    static {
-        for (int i = 0; i < WIDTH_BODY + 1; i++) {
-            body[i][0] = '+';
-            body[i][LENGTH_BODY + 2 - 1] = '+';
-        }
-
-        for (int i = 0; i < LENGTH_BODY + 1; i++) {
-            body[WIDTH_BODY + 1 - 1][i] = '+';
-        }
-    }*/        /*ships.add(new Integer[][]{new Integer[]{1}});
-        ships.add(new Integer[][]{new Integer[]{2,2}});
-        ships.add(new Integer[][]{new Integer[]{3,3,3}});
-        ships.add(new Integer[][]{new Integer[]{4,4,4,4}});
-        ships.add(new Integer[][]{new Integer[]{5,5,5,5,5}});
-        ships.add(new Integer[][]{new Integer[]{6,6,6}, new Integer[]{6,6,6}});
-        ships.add(new Integer[][]{new Integer[]{7,7,7}, new Integer[]{7,7,7,7}});
-        ships.add(new Integer[][]{new Integer[]{8,8,8,8}, new Integer[]{8,8,8,8}});
-        ships.add(new Integer[][]{new Integer[]{9,9,9}, new Integer[]{9,9,9}, new Integer[]{9,9,9}});*/
-
-
-//private static final List<Integer[][]> ships = new ArrayList<>();
