@@ -1,6 +1,7 @@
 package ru.liga.services;
 
 import ru.liga.models.Body;
+import ru.liga.models.Package;
 import ru.liga.utils.PlacementUtil;
 
 import java.util.ArrayList;
@@ -16,13 +17,13 @@ public class OptimalPlacementService implements PlacementService {
     }
 
     @Override
-    public List<Body> placementPackage(List<char[][]> packages) {
+    public List<Body> placementPackage(List<Package> packages) {
         PlacementUtil.sortPackage(packages);
         List<Body> bodies = new ArrayList<>();
         Body startBody = new Body(LENGTH_BODY, WIDTH_BODY);
         bodies.add(startBody);
 
-        for(char[][] pack : packages) {
+        for(Package pack : packages) {
             boolean f = true;
 
             for(Body body : bodies) {
@@ -40,33 +41,31 @@ public class OptimalPlacementService implements PlacementService {
         return bodies;
     }
 
-    private boolean searchPlaceAndInsertPackage(char[][] pack, Body body) {
-        boolean f = true;
-        for (int i = WIDTH_BODY - 1; i >= pack.length - 1; i--) {
-            for (int j = 0; j < WIDTH_BODY - pack[pack.length - 1].length + 1; j++) {
-                f = true;
-                int k = 0;
-
-                for (int l = 0; l < pack.length; l++) {
-                    for (int m = 0; m < pack[pack.length - k - 1].length; m++) {
-                        if (body.getElement(i - l, j + m) != ' ') {
-                            f = false;
-                            break;
-                        }
-                    }
-                    k++;
-                }
-
-                if (f) {
+    private boolean searchPlaceAndInsertPackage(Package pack, Body body) {
+        for (int i = WIDTH_BODY - 1; i >= pack.getWidth() - 1; i--) {
+            for (int j = 0; j < WIDTH_BODY - pack.getLength(pack.getWidth() - 1) + 1; j++) {
+                if (checkPlaceForPackage(pack, body, i, j)) {
                     body.insertPackage(pack, i, j);
-                    break;
+                    return true;
                 }
-            }
-            if (f) {
-                break;
             }
         }
 
-        return f;
+        return false;
+    }
+
+    private boolean checkPlaceForPackage(Package pack, Body body, int i, int j) {
+        int k = 0;
+
+        for (int l = 0; l < pack.getWidth(); l++) {
+            for (int m = 0; m < pack.getLength(pack.getWidth() - k - 1); m++) {
+                if (body.getElement(i - l, j + m) != ' ') {
+                    return false;
+                }
+            }
+            k++;
+        }
+
+        return true;
     }
 }

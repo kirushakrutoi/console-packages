@@ -1,5 +1,7 @@
 package ru.liga.services;
 
+import ru.liga.models.Package;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderService {
-    public static List<char[][]> readFile(File file) throws IOException {
+    public static List<Package> readFile(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        List<char[][]> packages = new ArrayList<>();
+        List<Package> packages = new ArrayList<>();
         String line;
         List<String> lines = new ArrayList<>();
 
@@ -25,7 +27,8 @@ public class ReaderService {
                     }
                     i++;
                 }
-                packages.add(chars);
+                Package pack = new Package(chars);
+                packages.add(pack);
                 lines.clear();
             } else {
                 lines.add(line);

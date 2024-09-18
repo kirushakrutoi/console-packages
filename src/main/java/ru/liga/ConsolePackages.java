@@ -1,6 +1,7 @@
 package ru.liga;
 
 import ru.liga.models.Body;
+import ru.liga.models.Package;
 import ru.liga.services.OptimalPlacementService;
 import ru.liga.services.PlacementService;
 import ru.liga.services.ReaderService;
@@ -14,10 +15,11 @@ import java.util.*;
 public class ConsolePackages {
     private static final int LENGTH_BODY = 6;
     private static final int WIDTH_BODY = 6;
-
+    private static final String OPTIMAL_ALGORITHM = "o";
+    private static final String SIMPLEST_ALGORITHM = "s";
     public static void main(String[] args) {
         try {
-            List<char[][]> packages = ReaderService.readFile(new File(args[0]));
+            List<Package> packages = ReaderService.readFile(new File(args[0]));
             BodyView bodyView = new BodyView(LENGTH_BODY, WIDTH_BODY);
             PlacementService placementService;
 
@@ -26,20 +28,27 @@ public class ConsolePackages {
             System.out.println("o - optimal, s - simplest");
             String ans = reader.readLine();
 
-            if (ans.equals("o")) {
-                placementService = new OptimalPlacementService(LENGTH_BODY, WIDTH_BODY);
-                List<Body> bodies = placementService.placementPackage(packages);
-                for (Body body : bodies) {
-                    bodyView.printBody(body);
-                }
-            } else if (ans.equals("s")) {
-                placementService = new SimplestPlacementService(LENGTH_BODY, WIDTH_BODY);
-                List<Body> bodies = placementService.placementPackage(packages);
-                for (Body body : bodies) {
-                    bodyView.printBody(body);
-                }
-            } else {
-                System.out.println("incorrect");
+            switch (ans) {
+                case OPTIMAL_ALGORITHM:
+                    placementService = new OptimalPlacementService(LENGTH_BODY, WIDTH_BODY);
+                    List<Body> bodies = placementService.placementPackage(packages);
+
+                    for (Body body : bodies) {
+                        bodyView.printBody(body);
+                    }
+
+                    break;
+                case SIMPLEST_ALGORITHM:
+                    placementService = new SimplestPlacementService(LENGTH_BODY, WIDTH_BODY);
+                    bodies = placementService.placementPackage(packages);
+
+                    for (Body body : bodies) {
+                        bodyView.printBody(body);
+                    }
+
+                    break;
+                default:
+                    System.out.println("incorrect");
             }
         } catch (IOException e) {
             System.out.println("File not exist");

@@ -1,6 +1,7 @@
 package ru.liga.services;
 
 import ru.liga.models.Body;
+import ru.liga.models.Package;
 import ru.liga.utils.PlacementUtil;
 
 import java.util.ArrayList;
@@ -15,11 +16,11 @@ public class SimplestPlacementService implements PlacementService {
         this.WIDTH_BODY = WIDTH_BODY;
     }
     @Override
-    public List<Body> placementPackage(List<char[][]> packages) {
+    public List<Body> placementPackage(List<Package> packages) {
         List<Body> bodies = new ArrayList<>();
         PlacementUtil.sortPackage(packages);
 
-        for (char[][] pack : packages) {
+        for (Package pack : packages) {
             Body body = new Body(LENGTH_BODY, WIDTH_BODY);
 
             body.insertPackage(pack, LENGTH_BODY - 1, 0);

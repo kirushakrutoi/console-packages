@@ -15,12 +15,12 @@ public class Body {
         }
     }
 
-    public void insertPackage(char[][] pack, int i, int j) {
+    public void insertPackage(Package pack, int i, int j) {
         int k = 0;
 
-        for (int l = 0; l < pack.length; l++) {
-            for (int m = 0; m < pack[pack.length - k - 1].length; m++) {
-                body[i - l][j + m] = pack[0][0];
+        for (int l = 0; l < pack.getWidth(); l++) {
+            for (int m = 0; m < pack.getLength(pack.getWidth() - k - 1); m++) {
+                body[i - l][j + m] = pack.getSymbol();
             }
             k++;
         }
