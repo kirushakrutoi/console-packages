@@ -1,6 +1,6 @@
 package ru.liga.views;
 
-import ru.liga.services.PlacementService;
+import ru.liga.models.Body;
 
 public class BodyView {
     private final int LENGTH_BODY;
@@ -11,11 +11,11 @@ public class BodyView {
         this.WIDTH_BODY = WIDTH_BODY;
     }
 
-    public void printBody(char[][] body) {
+    public void printBody(Body body) {
         for (int i = 0; i < WIDTH_BODY; i++) {
             System.out.print('+');
             for (int j = 0; j < LENGTH_BODY; j++) {
-                System.out.print(body[i][j]);
+                System.out.print(body.getElement(i, j));
             }
             System.out.print('+');
             System.out.println();
