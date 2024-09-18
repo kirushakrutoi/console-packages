@@ -1,15 +1,9 @@
 package ru.liga;
 
-import org.junit.jupiter.api.Test;
-import ru.liga.models.Body;
-import ru.liga.services.PlacementService;
-import ru.liga.services.OptimalPlacementService;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.liga.ConsolePackages.services.PlacementService;
+import ru.liga.ConsolePackages.services.OptimalPlacementService;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class OptimalPlacementServiceTest {
 

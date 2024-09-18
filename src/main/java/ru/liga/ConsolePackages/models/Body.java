@@ -1,8 +1,5 @@
-package ru.liga.models;
+package ru.liga.ConsolePackages.models;
 
-import ru.liga.views.BodyView;
-
-import java.util.Arrays;
 
 public class Body {
     private final char[][] body;
@@ -17,12 +14,12 @@ public class Body {
         }
     }
 
-    public void insertPackage(Package pack, int i, int j) {
+    public void insertPackage(Package pack, Place place) {
         int k = 0;
 
-        for (int l = 0; l < pack.getWidth(); l++) {
-            for (int m = 0; m < pack.getLength(pack.getWidth() - k - 1); m++) {
-                body[i - l][j + m] = pack.getSymbol();
+        for (int i = 0; i < pack.getWidth(); i++) {
+            for (int j = 0; j < pack.getLength(pack.getWidth() - k - 1); j++) {
+                body[place.getI() - i][place.getJ() + j] = pack.getSymbol();
             }
             k++;
         }

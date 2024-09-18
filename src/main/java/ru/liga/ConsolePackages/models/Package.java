@@ -1,4 +1,7 @@
-package ru.liga.models;
+package ru.liga.ConsolePackages.models;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Package {
     private final char[][] pack;
@@ -21,5 +24,10 @@ public class Package {
 
     public int getSquare() {
         return pack[0][0];
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(pack);
     }
 }

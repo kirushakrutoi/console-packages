@@ -1,6 +1,6 @@
-package ru.liga.utils;
+package ru.liga.ConsolePackages.utils;
 
-import ru.liga.models.Package;
+import ru.liga.ConsolePackages.models.Package;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.liga.exceptions;
+package ru.liga.ConsolePackages.exceptions;
 
 import java.io.IOException;
 

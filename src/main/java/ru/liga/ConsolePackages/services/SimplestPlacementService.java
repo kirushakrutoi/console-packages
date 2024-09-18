@@ -1,13 +1,14 @@
-package ru.liga.services;
+package ru.liga.ConsolePackages.services;
 
-import ru.liga.models.Body;
-import ru.liga.models.Package;
-import ru.liga.utils.PlacementUtil;
+import ru.liga.ConsolePackages.models.Body;
+import ru.liga.ConsolePackages.models.Package;
+import ru.liga.ConsolePackages.models.Place;
+import ru.liga.ConsolePackages.utils.PlacementUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimplestPlacementService implements PlacementService {
+public class SimplestPlacementService implements ru.liga.ConsolePackages.services.PlacementService {
     private final int LENGTH_BODY;
     private final int  WIDTH_BODY;
 
@@ -23,7 +24,7 @@ public class SimplestPlacementService implements PlacementService {
         for (Package pack : packages) {
             Body body = new Body(LENGTH_BODY, WIDTH_BODY);
 
-            body.insertPackage(pack, LENGTH_BODY - 1, 0);
+            body.insertPackage(pack, new Place(LENGTH_BODY - 1, 0));
 
             bodies.add(body);
         }

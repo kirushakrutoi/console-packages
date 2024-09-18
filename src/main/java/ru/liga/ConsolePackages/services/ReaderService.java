@@ -1,6 +1,6 @@
-package ru.liga.services;
+package ru.liga.ConsolePackages.services;
 
-import ru.liga.models.Package;
+import ru.liga.ConsolePackages.models.Package;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,17 +18,7 @@ public class ReaderService {
 
         while ((line = reader.readLine()) != null) {
             if (line.isEmpty() && !lines.isEmpty()) {
-                char[][] chars = new char[lines.size()][];
-                int i = 0;
-                for (String s : lines) {
-                    chars[i] = new char[s.length()];
-                    for (int j = 0; j < s.length(); j++) {
-                        chars[i][j] = s.charAt(j);
-                    }
-                    i++;
-                }
-                Package pack = new Package(chars);
-                packages.add(pack);
+                packages.add(new Package(convertLinesToCharArr(lines)));
                 lines.clear();
             } else {
                 lines.add(line);
@@ -36,5 +26,19 @@ public class ReaderService {
         }
 
         return packages;
+    }
+
+    private static char[][] convertLinesToCharArr(List<String> lines) {
+        char[][] pack = new char[lines.size()][];
+
+        for (int i = 0; i < lines.size(); i++) {
+            pack[i] = new char[lines.get(i).length()];
+
+            for (int j = 0; j < lines.get(i).length(); j++) {
+                pack[i][j] = lines.get(i).charAt(j);
+            }
+        }
+
+        return pack;
     }
 }

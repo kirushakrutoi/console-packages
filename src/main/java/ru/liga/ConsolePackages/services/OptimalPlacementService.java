@@ -1,8 +1,9 @@
-package ru.liga.services;
+package ru.liga.ConsolePackages.services;
 
-import ru.liga.models.Body;
-import ru.liga.models.Package;
-import ru.liga.utils.PlacementUtil;
+import ru.liga.ConsolePackages.models.Body;
+import ru.liga.ConsolePackages.models.Place;
+import ru.liga.ConsolePackages.models.Package;
+import ru.liga.ConsolePackages.utils.PlacementUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +25,14 @@ public class OptimalPlacementService implements PlacementService {
         bodies.add(startBody);
 
         for(Package pack : packages) {
-            boolean f = true;
+            boolean successInserted = true;
 
             for(Body body : bodies) {
-                f = searchPlaceAndInsertPackage(pack, body);
-                if(f) break;
+                successInserted = searchPlaceAndInsertPackage(pack, body);
+                if(successInserted) break;
             }
 
-            if(!f) {
+            if(!successInserted) {
                 Body newBody = new Body(LENGTH_BODY, WIDTH_BODY);
                 bodies.add(newBody);
                 searchPlaceAndInsertPackage(pack, newBody);
@@ -44,8 +45,10 @@ public class OptimalPlacementService implements PlacementService {
     private boolean searchPlaceAndInsertPackage(Package pack, Body body) {
         for (int i = WIDTH_BODY - 1; i >= pack.getWidth() - 1; i--) {
             for (int j = 0; j < WIDTH_BODY - pack.getLength(pack.getWidth() - 1) + 1; j++) {
-                if (checkPlaceForPackage(pack, body, i, j)) {
-                    body.insertPackage(pack, i, j);
+                Place place = new Place(i, j);
+
+                if (checkPlaceForPackage(pack, body, place)) {
+                    body.insertPackage(pack, place);
                     return true;
                 }
             }
@@ -54,12 +57,12 @@ public class OptimalPlacementService implements PlacementService {
         return false;
     }
 
-    private boolean checkPlaceForPackage(Package pack, Body body, int i, int j) {
+    private boolean checkPlaceForPackage(Package pack, Body body, Place place) {
         int k = 0;
 
-        for (int l = 0; l < pack.getWidth(); l++) {
-            for (int m = 0; m < pack.getLength(pack.getWidth() - k - 1); m++) {
-                if (body.getElement(i - l, j + m) != ' ') {
+        for (int i = 0; i < pack.getWidth(); i++) {
+            for (int j = 0; j < pack.getLength(pack.getWidth() - k - 1); j++) {
+                if (body.getElement(place.getI() - i, place.getJ() + j) != ' ') {
                     return false;
                 }
             }

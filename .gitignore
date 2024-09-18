@@ -3,7 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 /applogs
-/src/main/resources/input.txt
+src/main/resources/input.txt
 
 ### IntelliJ IDEA ###
 .idea

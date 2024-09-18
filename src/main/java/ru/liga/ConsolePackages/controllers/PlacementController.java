@@ -1,19 +1,13 @@
-package ru.liga.controllers;
+package ru.liga.ConsolePackages.controllers;
 
-import ru.liga.exceptions.EmptyFileException;
-import ru.liga.exceptions.IncorrectAnswerException;
-import ru.liga.models.Body;
-import ru.liga.models.Package;
-import ru.liga.services.OptimalPlacementService;
-import ru.liga.services.PlacementService;
-import ru.liga.services.ReaderService;
-import ru.liga.services.SimplestPlacementService;
-import ru.liga.views.BodyView;
+import ru.liga.ConsolePackages.exceptions.IncorrectAnswerException;
+import ru.liga.ConsolePackages.models.Body;
+import ru.liga.ConsolePackages.models.Package;
+import ru.liga.ConsolePackages.services.OptimalPlacementService;
+import ru.liga.ConsolePackages.services.PlacementService;
+import ru.liga.ConsolePackages.services.SimplestPlacementService;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 public class PlacementController {
@@ -27,7 +21,7 @@ public class PlacementController {
         this.LENGTH_BODY = LENGTH_BODY;
     }
 
-    public List<Body> placement(String ans, String path) throws IOException {
+    public List<Body> placement(String ans, List<Package> packages) throws IOException {
         PlacementService placementService;
 
         switch (ans) {
@@ -37,15 +31,10 @@ public class PlacementController {
             case SIMPLEST_ALGORITHM:
                 placementService = new SimplestPlacementService(LENGTH_BODY, WIDTH_BODY);
                 break;
-
             default:
                 throw new IncorrectAnswerException("Incorrect answer\n o - optimal algorithm \n s - simplest algorithm");
         }
 
-        List<Package> packages = ReaderService.readFile(new File(path));
-        if(packages.isEmpty()){
-            throw new EmptyFileException("Empty file\ntry other file");
-        }
         return placementService.placementPackage(packages);
     }
 }
