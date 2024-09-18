@@ -4,7 +4,7 @@ import ru.liga.ConsolePackages.exceptions.IncorrectAnswerException;
 import ru.liga.ConsolePackages.models.Body;
 import ru.liga.ConsolePackages.models.Package;
 import ru.liga.ConsolePackages.services.OptimalPlacementService;
-import ru.liga.ConsolePackages.services.PlacementService;
+import ru.liga.ConsolePackages.services.interfaces.PlacementService;
 import ru.liga.ConsolePackages.services.SimplestPlacementService;
 
 import java.io.IOException;

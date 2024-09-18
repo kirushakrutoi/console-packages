@@ -1,18 +1,21 @@
 package ru.liga.ConsolePackages.models;
 
+import java.util.Arrays;
+
 public class Place {
-    private static final int[] cord = new int[2];
+    private final int i;
+    private final int j;
 
     public Place(int i, int j) {
-        cord[0] = i;
-        cord[1] = j;
+        this.i = i;
+        this.j = j;
     }
 
     public int getI() {
-        return cord[0];
+        return i;
     }
 
     public int getJ() {
-        return cord[1];
+        return j;
     }
 }

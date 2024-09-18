@@ -22,9 +22,14 @@ public class Package {
         return pack[line].length;
     }
 
+    public int getMaxLength() {
+        return pack[pack.length - 1].length;
+    }
+
     public int getSquare() {
         return pack[0][0];
     }
+
 
     @Override
     public String toString() {

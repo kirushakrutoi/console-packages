@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderService {
-    public static List<Package> readFile(File file) throws IOException {
+    public List<Package> readFile(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         List<Package> packages = new ArrayList<>();
         String line;
@@ -18,7 +18,8 @@ public class ReaderService {
 
         while ((line = reader.readLine()) != null) {
             if (line.isEmpty() && !lines.isEmpty()) {
-                packages.add(new Package(convertLinesToCharArr(lines)));
+                Package pack = new Package(convertLinesToCharArr(lines));
+                packages.add(pack);
                 lines.clear();
             } else {
                 lines.add(line);
@@ -28,7 +29,7 @@ public class ReaderService {
         return packages;
     }
 
-    private static char[][] convertLinesToCharArr(List<String> lines) {
+    private char[][] convertLinesToCharArr(List<String> lines) {
         char[][] pack = new char[lines.size()][];
 
         for (int i = 0; i < lines.size(); i++) {

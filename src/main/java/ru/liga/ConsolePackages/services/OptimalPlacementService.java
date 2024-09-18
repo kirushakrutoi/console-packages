@@ -3,6 +3,7 @@ package ru.liga.ConsolePackages.services;
 import ru.liga.ConsolePackages.models.Body;
 import ru.liga.ConsolePackages.models.Place;
 import ru.liga.ConsolePackages.models.Package;
+import ru.liga.ConsolePackages.services.interfaces.PlacementService;
 import ru.liga.ConsolePackages.utils.PlacementUtil;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class OptimalPlacementService implements PlacementService {
 
     private boolean searchPlaceAndInsertPackage(Package pack, Body body) {
         for (int i = WIDTH_BODY - 1; i >= pack.getWidth() - 1; i--) {
-            for (int j = 0; j < WIDTH_BODY - pack.getLength(pack.getWidth() - 1) + 1; j++) {
+            for (int j = 0; j < WIDTH_BODY - pack.getMaxLength() + 1; j++) {
                 Place place = new Place(i, j);
 
                 if (checkPlaceForPackage(pack, body, place)) {
@@ -58,15 +59,17 @@ public class OptimalPlacementService implements PlacementService {
     }
 
     private boolean checkPlaceForPackage(Package pack, Body body, Place place) {
-        int k = 0;
+        int indexPackLine = pack.getWidth() - 1;
 
         for (int i = 0; i < pack.getWidth(); i++) {
-            for (int j = 0; j < pack.getLength(pack.getWidth() - k - 1); j++) {
-                if (body.getElement(place.getI() - i, place.getJ() + j) != ' ') {
+            for (int j = 0; j < pack.getLength(indexPackLine); j++) {
+                Place checkPlace = new Place(place.getI() - i, place.getJ() + j);
+
+                if (body.getElement(checkPlace) != ' ') {
                     return false;
                 }
             }
-            k++;
+            indexPackLine--;
         }
 
         return true;

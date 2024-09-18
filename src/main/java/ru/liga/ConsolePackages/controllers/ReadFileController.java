@@ -10,7 +10,8 @@ import java.util.List;
 public class ReadFileController {
 
     public List<Package> readFile(String filePath) throws IOException {
-        List<Package> packages = ReaderService.readFile(new File(filePath));
+        ReaderService readerService = new ReaderService();
+        List<Package> packages = readerService.readFile(new File(filePath));
 
         if(packages.isEmpty()){
             throw new EmptyFileException("Empty file\ntry other file");

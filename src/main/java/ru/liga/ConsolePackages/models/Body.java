@@ -1,6 +1,8 @@
 package ru.liga.ConsolePackages.models;
 
 
+import java.util.Arrays;
+
 public class Body {
     private final char[][] body;
 
@@ -15,18 +17,18 @@ public class Body {
     }
 
     public void insertPackage(Package pack, Place place) {
-        int k = 0;
+        int indexPackLine = pack.getWidth() - 1;
 
         for (int i = 0; i < pack.getWidth(); i++) {
-            for (int j = 0; j < pack.getLength(pack.getWidth() - k - 1); j++) {
+            for (int j = 0; j < pack.getLength(indexPackLine); j++) {
                 body[place.getI() - i][place.getJ() + j] = pack.getSymbol();
             }
-            k++;
+            indexPackLine--;
         }
     }
 
-    public char getElement(int i, int j) {
-        return body[i][j];
+    public char getElement(Place place) {
+        return body[place.getI()][place.getJ()];
     }
 
     @Override
@@ -36,7 +38,8 @@ public class Body {
         for (int i = 0; i < body.length; i++) {
             stringBuilder.append("+");
             for (int j = 0; j < body[0].length; j++) {
-                stringBuilder.append(getElement(i, j));
+                Place place = new Place(i, j);
+                stringBuilder.append(getElement(place));
             }
             stringBuilder.append('+').append("\n");
         }
