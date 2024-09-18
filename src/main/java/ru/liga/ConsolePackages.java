@@ -1,5 +1,8 @@
 package ru.liga;
 
+import ru.liga.controllers.PlacementController;
+import ru.liga.exceptions.EmptyFileException;
+import ru.liga.exceptions.IncorrectAnswerException;
 import ru.liga.models.Body;
 import ru.liga.models.Package;
 import ru.liga.services.OptimalPlacementService;
@@ -15,43 +18,27 @@ import java.util.*;
 public class ConsolePackages {
     private static final int LENGTH_BODY = 6;
     private static final int WIDTH_BODY = 6;
-    private static final String OPTIMAL_ALGORITHM = "o";
-    private static final String SIMPLEST_ALGORITHM = "s";
     public static void main(String[] args) {
         try {
-            List<Package> packages = ReaderService.readFile(new File(args[0]));
-            BodyView bodyView = new BodyView(LENGTH_BODY, WIDTH_BODY);
-            PlacementService placementService;
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String filePath = reader.readLine();
             System.out.println("Simplest or optimal algorithm?");
             System.out.println("o - optimal, s - simplest");
             String ans = reader.readLine();
 
-            switch (ans) {
-                case OPTIMAL_ALGORITHM:
-                    placementService = new OptimalPlacementService(LENGTH_BODY, WIDTH_BODY);
-                    List<Body> bodies = placementService.placementPackage(packages);
+            PlacementController placementController = new PlacementController(WIDTH_BODY, LENGTH_BODY);
+            List<Body> bodies = placementController.placement(ans, filePath);
 
-                    for (Body body : bodies) {
-                        bodyView.printBody(body);
-                    }
-
-                    break;
-                case SIMPLEST_ALGORITHM:
-                    placementService = new SimplestPlacementService(LENGTH_BODY, WIDTH_BODY);
-                    bodies = placementService.placementPackage(packages);
-
-                    for (Body body : bodies) {
-                        bodyView.printBody(body);
-                    }
-
-                    break;
-                default:
-                    System.out.println("incorrect");
+            for (Body body : bodies) {
+                System.out.println(body);
             }
-        } catch (IOException e) {
+
+        } catch (FileNotFoundException e) {
             System.out.println("File not exist");
+        } catch (EmptyFileException | IncorrectAnswerException e){
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Unknown error");
         }
     }
 }
