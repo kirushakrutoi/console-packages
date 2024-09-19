@@ -27,7 +27,7 @@ public class CoordinatorService {
         placementServicesMap.put(SIMPLEST_ALGORITHM, new SimplestPlacementService(WIDTH_BODY, LENGTH_BODY));
     }
 
-    public List<Body> getFilledBodies(String ans, String filePath) throws IncorrectAnswerException, FileNotFoundException {
+    public List<Body> getFilledBodies(String answer, String filePath) throws IncorrectAnswerException, FileNotFoundException {
         List<Package> packages;
 
         try {
@@ -36,10 +36,10 @@ public class CoordinatorService {
             throw new FileNotFoundException("File " + filePath + " not found");
         }
 
-        if (!placementServicesMap.containsKey(ans)) {
+        if (!placementServicesMap.containsKey(answer)) {
             throw new IncorrectAnswerException("Incorrect answer\n o - optimal algorithm \n s - simplest algorithm");
         }
 
-        return placementServicesMap.get(ans).placementPackage(packages);
+        return placementServicesMap.get(answer).placementPackage(packages);
     }
 }

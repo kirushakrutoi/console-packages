@@ -25,10 +25,10 @@ public class ConsolePackages {
 
             System.out.println("Simplest or optimal algorithm?");
             System.out.println("o - optimal, s - simplest");
-            String ans = reader.readLine();
+            String answer = reader.readLine();
 
             CoordinatorService coordinatorService = new CoordinatorService(WIDTH_BODY, LENGTH_BODY, new ReaderServiceImpl());
-            List<Body> bodies = coordinatorService.getFilledBodies(ans, filePath);
+            List<Body> bodies = coordinatorService.getFilledBodies(answer, filePath);
 
             for (Body body : bodies) {
                 System.out.println(body);
