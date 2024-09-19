@@ -1,7 +1,6 @@
-package ru.liga.ConsolePackages.models;
+package ru.liga.consolepackages.models;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Package {
     private final char[][] pack;

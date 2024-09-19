@@ -1,11 +1,11 @@
-package ru.liga.ServicesTests;
+package ru.liga.services;
 
 import org.junit.jupiter.api.Test;
-import ru.liga.ConsolePackages.models.Body;
-import ru.liga.ConsolePackages.models.Package;
-import ru.liga.ConsolePackages.models.Place;
-import ru.liga.ConsolePackages.services.SimplestPlacementService;
-import ru.liga.ConsolePackages.services.interfaces.PlacementService;
+import ru.liga.consolepackages.models.Body;
+import ru.liga.consolepackages.models.Package;
+import ru.liga.consolepackages.models.Place;
+import ru.liga.consolepackages.services.placement.SimplestPlacementService;
+import ru.liga.consolepackages.services.placement.PlacementService;
 
 import java.util.ArrayList;
 import java.util.List;

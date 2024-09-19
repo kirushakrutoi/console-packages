@@ -1,6 +1,4 @@
-package ru.liga.ConsolePackages.models;
-
-import java.util.Arrays;
+package ru.liga.consolepackages.models;
 
 public class Place {
     private final int i;

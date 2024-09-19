@@ -1,11 +1,10 @@
-package ru.liga.ConsolePackages;
+package ru.liga.consolepackages;
 
-import ru.liga.ConsolePackages.controllers.PlacementController;
-import ru.liga.ConsolePackages.controllers.ReadFileController;
-import ru.liga.ConsolePackages.exceptions.EmptyFileException;
-import ru.liga.ConsolePackages.exceptions.IncorrectAnswerException;
-import ru.liga.ConsolePackages.models.Body;
-import ru.liga.ConsolePackages.models.Package;
+import ru.liga.consolepackages.exceptions.EmptyFileException;
+import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
+import ru.liga.consolepackages.models.Body;
+import ru.liga.consolepackages.services.CoordinatorService;
+import ru.liga.consolepackages.services.readers.ReaderServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -23,23 +22,18 @@ public class ConsolePackages {
 
             System.out.println("Enter file path");
             String filePath = reader.readLine();
-            ReadFileController readFileController = new ReadFileController();
-            List<Package> packages = readFileController.readFile(filePath);
 
             System.out.println("Simplest or optimal algorithm?");
             System.out.println("o - optimal, s - simplest");
             String ans = reader.readLine();
 
-            PlacementController placementController = new PlacementController(WIDTH_BODY, LENGTH_BODY);
-            List<Body> bodies = placementController.placement(ans, packages);
+            CoordinatorService coordinatorService = new CoordinatorService(WIDTH_BODY, LENGTH_BODY, new ReaderServiceImpl());
+            List<Body> bodies = coordinatorService.placement(ans, filePath);
 
             for (Body body : bodies) {
                 System.out.println(body);
             }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not exist");
-        } catch (EmptyFileException | IncorrectAnswerException e) {
+        } catch (EmptyFileException | IncorrectAnswerException | FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Unknown error");

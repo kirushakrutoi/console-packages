@@ -1,39 +1,36 @@
-package ru.liga.ConsolePackages.services;
+package ru.liga.consolepackages.services.placement;
 
-import ru.liga.ConsolePackages.models.Body;
-import ru.liga.ConsolePackages.models.Place;
-import ru.liga.ConsolePackages.models.Package;
-import ru.liga.ConsolePackages.services.interfaces.PlacementService;
-import ru.liga.ConsolePackages.utils.PlacementUtil;
+import ru.liga.consolepackages.models.Body;
+import ru.liga.consolepackages.models.Package;
+import ru.liga.consolepackages.models.Place;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OptimalPlacementService implements PlacementService {
+public class OptimalPlacementService extends PlacementService {
     private final int LENGTH_BODY;
-    private final int  WIDTH_BODY;
+    private final int WIDTH_BODY;
 
-    public OptimalPlacementService(int LENGTH_BODY, int WIDTH_BODY) {
+    public OptimalPlacementService(int WIDTH_BODY, int LENGTH_BODY) {
         this.LENGTH_BODY = LENGTH_BODY;
         this.WIDTH_BODY = WIDTH_BODY;
     }
 
     @Override
     public List<Body> placementPackage(List<Package> packages) {
-        PlacementUtil.sortPackage(packages);
+        sortPackage(packages);
         List<Body> bodies = new ArrayList<>();
-        Body startBody = new Body(LENGTH_BODY, WIDTH_BODY);
-        bodies.add(startBody);
+        bodies.add(new Body(LENGTH_BODY, WIDTH_BODY));
 
-        for(Package pack : packages) {
+        for (Package pack : packages) {
             boolean successInserted = true;
 
-            for(Body body : bodies) {
+            for (Body body : bodies) {
                 successInserted = searchPlaceAndInsertPackage(pack, body);
-                if(successInserted) break;
+                if (successInserted) break;
             }
 
-            if(!successInserted) {
+            if (!successInserted) {
                 Body newBody = new Body(LENGTH_BODY, WIDTH_BODY);
                 bodies.add(newBody);
                 searchPlaceAndInsertPackage(pack, newBody);
