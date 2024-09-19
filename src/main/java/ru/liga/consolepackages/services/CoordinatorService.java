@@ -3,7 +3,7 @@ package ru.liga.consolepackages.services;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.services.readers.interfaces.ReaderService;
+import ru.liga.consolepackages.services.readers.ReaderService;
 import ru.liga.consolepackages.services.placement.OptimalPlacementService;
 import ru.liga.consolepackages.services.placement.PlacementService;
 import ru.liga.consolepackages.services.placement.SimplestPlacementService;
@@ -27,7 +27,7 @@ public class CoordinatorService {
         placementServicesMap.put(SIMPLEST_ALGORITHM, new SimplestPlacementService(WIDTH_BODY, LENGTH_BODY));
     }
 
-    public List<Body> placement(String ans, String filePath) throws RuntimeException, FileNotFoundException {
+    public List<Body> getFilledBodies(String ans, String filePath) throws IncorrectAnswerException, FileNotFoundException {
         List<Package> packages;
 
         try {

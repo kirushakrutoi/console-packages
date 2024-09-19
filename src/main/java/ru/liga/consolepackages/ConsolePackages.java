@@ -28,7 +28,7 @@ public class ConsolePackages {
             String ans = reader.readLine();
 
             CoordinatorService coordinatorService = new CoordinatorService(WIDTH_BODY, LENGTH_BODY, new ReaderServiceImpl());
-            List<Body> bodies = coordinatorService.placement(ans, filePath);
+            List<Body> bodies = coordinatorService.getFilledBodies(ans, filePath);
 
             for (Body body : bodies) {
                 System.out.println(body);

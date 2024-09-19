@@ -1,7 +1,6 @@
 package ru.liga.consolepackages.services.readers;
 
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.services.readers.interfaces.ReaderService;
 
 import java.io.BufferedReader;
 import java.io.File;

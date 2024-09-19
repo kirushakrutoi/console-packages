@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.services.readers.interfaces;
+package ru.liga.consolepackages.services.readers;
 
 import ru.liga.consolepackages.models.Package;
 
