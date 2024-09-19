@@ -3,7 +3,6 @@ package ru.liga.consolepackages.services.placement;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.services.placement.PlacementService;
 
 import java.util.ArrayList;
 import java.util.Collections;

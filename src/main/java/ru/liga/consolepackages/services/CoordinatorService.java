@@ -3,10 +3,10 @@ package ru.liga.consolepackages.services;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.services.readers.ReaderService;
 import ru.liga.consolepackages.services.placement.OptimalPlacementService;
 import ru.liga.consolepackages.services.placement.PlacementService;
 import ru.liga.consolepackages.services.placement.SimplestPlacementService;
+import ru.liga.consolepackages.services.readers.ReaderService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
