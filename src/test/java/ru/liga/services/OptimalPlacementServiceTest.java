@@ -1,6 +1,7 @@
 package ru.liga.services;
 
 import org.junit.jupiter.api.Test;
+import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
@@ -11,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OptimalPlacementServiceTest {
 
@@ -22,13 +22,14 @@ public class OptimalPlacementServiceTest {
     void emptyListTest() {
         List<Package> packages = new ArrayList<>();
 
-        List<Body> bodies = placementService.placementPackage(packages);
-        assertEquals(1, bodies.size());
-        Body body = bodies.get(0);
+        List<Body> bodies = placementService.placementPackage(packages, 5);
+        assertEquals(5, bodies.size());
 
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                assertEquals(body.getElement(new Place(i, j)), ' ');
+        for (Body body : bodies) {
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 6; j++) {
+                    assertEquals(body.getElement(new Place(i, j)), ' ');
+                }
             }
         }
 
@@ -39,7 +40,7 @@ public class OptimalPlacementServiceTest {
         List<Package> packages = new ArrayList<>();
         packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages);
+        List<Body> bodies = placementService.placementPackage(packages, 1);
 
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
@@ -68,10 +69,10 @@ public class OptimalPlacementServiceTest {
         packages.add(new Package(new char[][]{{'2', '2'}}));
         packages.add(new Package(new char[][]{{'3', '3', '3'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages);
+        List<Body> bodies = placementService.placementPackage(packages, 2);
 
         assertEquals(1, bodies.size());
-        Body body = bodies.get(0);
+        Body body1 = bodies.get(0);
         char[][] testChars = new char[][] {
                 {' ', ' ', ' ', ' ', ' ', ' '},
                 {'1', ' ', ' ', ' ', ' ', ' '},
@@ -79,9 +80,17 @@ public class OptimalPlacementServiceTest {
                 {'9', '9', '9', '3', '3', '3'},
                 {'9', '9', '9', '6', '6', '6'},
                 {'9', '9', '9', '6', '6', '6'}};
+
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                assertEquals(body.getElement(new Place(i, j)), testChars[i][j]);
+                assertEquals(body1.getElement(new Place(i, j)), testChars[i][j]);
+            }
+        }
+
+        Body body2 = bodies.get(0);
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                assertEquals(body2.getElement(new Place(i, j)), ' ');
             }
         }
     }
@@ -99,7 +108,7 @@ public class OptimalPlacementServiceTest {
         packages.add(new Package(new char[][]{{'3', '3', '3'}}));
         packages.add(new Package(new char[][]{{'7', '7', '7'}, {'7', '7', '7', '7'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages);
+        List<Body> bodies = placementService.placementPackage(packages, 2);
 
         assertEquals(2, bodies.size());
 
@@ -128,6 +137,11 @@ public class OptimalPlacementServiceTest {
                 }
             }
         }
+
+
+        assertThrows(SmallNumberBodiesException.class, () -> {
+            placementService.placementPackage(packages, 1);
+        });
     }
 
 }

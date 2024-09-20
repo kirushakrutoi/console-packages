@@ -2,6 +2,7 @@ package ru.liga.consolepackages.models;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -17,6 +18,16 @@ public class Body {
                 this.body[i][j] = ' ';
             }
         }
+    }
+
+    @JsonIgnore
+    public int getWidth() {
+        return body.length;
+    }
+
+    @JsonIgnore
+    public int getLength() {
+        return body[0].length;
     }
 
     public Body(@JsonProperty("body") char[][] body) {

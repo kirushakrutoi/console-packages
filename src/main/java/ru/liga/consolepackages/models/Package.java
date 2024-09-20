@@ -26,9 +26,21 @@ public class Package {
     }
 
     public int getSquare() {
-        return pack[0][0];
+        return pack[0][0] - '0';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Package aPackage = (Package) o;
+        return aPackage.getSymbol() == getSymbol();
+    }
+
+    @Override
+    public int hashCode() {
+        return Character.hashCode(getSymbol());
+    }
 
     @Override
     public String toString() {

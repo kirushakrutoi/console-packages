@@ -1,50 +1,68 @@
 package ru.liga.consolepackages;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.liga.consolepackages.controllers.CountPackagesController;
+import ru.liga.consolepackages.controllers.PlacementController;
 import ru.liga.consolepackages.exceptions.EmptyFileException;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
-import ru.liga.consolepackages.models.Body;
-import ru.liga.consolepackages.services.CoordinatorService;
-import ru.liga.consolepackages.services.writers.WriterServiceImpl;
-import ru.liga.consolepackages.services.readers.ReaderServiceImpl;
+import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class ConsolePackages {
     private static final int LENGTH_BODY = 6;
     private static final int WIDTH_BODY = 6;
     private static final String DIR_FOR_WRITE = "batches";
+    private static final String COUNT_PACKAGES = "1";
+    private static final String PLACE_PACKAGE = "2";
+
+    private static final Logger logger = LoggerFactory.getLogger(ConsolePackages.class);
 
     public static void main(String[] args) {
         try {
+            logger.info("Start application");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-            System.out.println("Enter file path");
-            String filePath = reader.readLine();
+            System.out.println("sort package or count package");
+            System.out.println("1 - sort, 2 - count");
+            String ans = reader.readLine();
 
-            System.out.println("Simplest or optimal algorithm?");
-            System.out.println("o - optimal, s - simplest");
-            String answer = reader.readLine();
+            switch (ans) {
+                case COUNT_PACKAGES:
+                    logger.info("Sorting is selected");
 
-            CoordinatorService coordinatorService =
-                    new CoordinatorService(
-                            WIDTH_BODY,
-                            LENGTH_BODY,
-                            new ReaderServiceImpl(),
-                            new WriterServiceImpl(DIR_FOR_WRITE)
-                    );
+                    PlacementController placementController =
+                        new PlacementController(
+                                WIDTH_BODY,
+                                LENGTH_BODY,
+                                DIR_FOR_WRITE,
+                                reader
+                        );
 
-            List<Body> bodies = coordinatorService.getFilledBodies(answer, filePath);
+                    placementController.placePackage();
 
-            for (Body body : bodies) {
-                System.out.println(body);
+                    break;
+                case PLACE_PACKAGE:
+                    logger.info("Placement selected");
+
+                    CountPackagesController countPackagesController =
+                            new CountPackagesController(reader);
+
+                    countPackagesController.countPackages();
+
+                    break;
+                default:
+                    System.out.println("Incorrect answer");
+                    logger.info("end application");
             }
-
-        } catch (EmptyFileException | IncorrectAnswerException | FileNotFoundException e) {
+        } catch (EmptyFileException | IncorrectAnswerException | FileNotFoundException | SmallNumberBodiesException e) {
             System.out.println(e.getMessage());
+            logger.info("end application");
         } catch (IOException e) {
             System.out.println("Unknown error");
+            logger.info("end application");
         }
     }
 }

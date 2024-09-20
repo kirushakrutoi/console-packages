@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.services.placements.SimplestPlacementService;
+import ru.liga.consolepackages.services.placements.UniformPlacementService;
 import ru.liga.consolepackages.services.placements.PlacementService;
 
 import java.util.ArrayList;
@@ -12,14 +12,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SimplestPlacementServiceTest {
-    private final PlacementService placementService = new SimplestPlacementService(6, 6);
+public class UniformPlacementServiceTest {
+    private final PlacementService placementService = new UniformPlacementService(6, 6);
 
     @Test
     void emptyListTest() {
         List<Package> packages = new ArrayList<>();
 
-        List<Body> bodies = placementService.placementPackage(packages);
+        List<Body> bodies = placementService.placementPackage(packages, 1);
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
 
@@ -36,7 +36,7 @@ public class SimplestPlacementServiceTest {
         List<Package> packages = new ArrayList<>();
         packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages);
+        List<Body> bodies = placementService.placementPackage(packages, 1);
 
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
@@ -62,7 +62,7 @@ public class SimplestPlacementServiceTest {
         packages.add(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}));
         packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages);
+        List<Body> bodies = placementService.placementPackage(packages, 3);
         assertEquals(3, bodies.size());
 
         char[][][] testChars = {
@@ -100,7 +100,44 @@ public class SimplestPlacementServiceTest {
                 }
             }
         }
+    }
 
+    @Test
+    void secondMultiplePackagesTest() {
+        List<Package> packages = new ArrayList<>();
+        packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
+        packages.add(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}));
+        packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
+        packages.add(new Package(new char[][]{{'2', '2'}}));
 
+        List<Body> bodies = placementService.placementPackage(packages, 2);
+        assertEquals(2, bodies.size());
+
+        char[][][] testChars = {
+                {
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {'9', '9', '9', ' ', ' ', ' '},
+                        {'9', '9', '9', ' ', ' ', ' '},
+                        {'9', '9', '9', '2', '2', ' '}
+                },
+                {
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {'4', '4', '4', '4', ' ', ' '},
+                        {'6', '6', '6', ' ', ' ', ' '},
+                        {'6', '6', '6', ' ', ' ', ' '}
+                }
+        };
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 6; j++) {
+                for (int k = 0; k < 6; k++) {
+                    assertEquals(bodies.get(i).getElement(new Place(j, k)), testChars[i][j][k]);
+                }
+            }
+        }
     }
 }
