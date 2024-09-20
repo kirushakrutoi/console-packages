@@ -2,7 +2,6 @@ package ru.liga.consolepackages.services.writers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.liga.consolepackages.models.Body;
-import ru.liga.consolepackages.services.writers.WriterService;
 
 import java.io.File;
 import java.io.IOException;

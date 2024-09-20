@@ -2,7 +2,6 @@ package ru.liga.consolepackages.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.controllers.PlacementController;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
@@ -21,7 +20,7 @@ import java.util.Map;
 
 public class PlacePackagesCoordinator {
     private static final String OPTIMAL_ALGORITHM = "o";
-    private static final String SIMPLEST_ALGORITHM = "u";
+    private static final String UNIFORM_ALGORITHM = "u";
     private static final Map<String, PlacementService> placementServicesMap = new HashMap<>();
     private final PackagesReaderService readerService;
     private final WriterService writerService;
@@ -31,7 +30,7 @@ public class PlacePackagesCoordinator {
         this.readerService = readerService;
         this.writerService = writerService;
         placementServicesMap.put(OPTIMAL_ALGORITHM, new OptimalPlacementService(WIDTH_BODY, LENGTH_BODY));
-        placementServicesMap.put(SIMPLEST_ALGORITHM, new UniformPlacementService(WIDTH_BODY, LENGTH_BODY));
+        placementServicesMap.put(UNIFORM_ALGORITHM, new UniformPlacementService(WIDTH_BODY, LENGTH_BODY));
     }
 
     public List<Body> getFilledBodies(int numberBodies, String answer, String filePath) throws IncorrectAnswerException, IOException {
@@ -53,8 +52,7 @@ public class PlacePackagesCoordinator {
         }
 
 
-
-        List<Body> bodies =  placementServicesMap.get(answer).placementPackage(packages, numberBodies);
+        List<Body> bodies = placementServicesMap.get(answer).placementPackage(packages, numberBodies);
         logger.debug("Recording of downloaded machines to a file has begun");
         writerService.writeBodies(bodies);
         logger.debug("The recording of the downloaded machines to the file has been completed successfully");

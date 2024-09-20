@@ -18,7 +18,7 @@ public class CountPackagesService {
                     Place place = new Place(i, j);
                     char symbol = body.getElement(place);
 
-                    if(symbol != ' ') {
+                    if (symbol != ' ') {
                         putSymbol(packageMap, symbol);
                     }
                 }

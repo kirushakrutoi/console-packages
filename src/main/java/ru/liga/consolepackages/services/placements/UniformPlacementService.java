@@ -29,24 +29,24 @@ public class UniformPlacementService extends PlacementService {
         for (int i = 0; i < packages.size(); i++) {
             logger.debug("Package type " + packages.get(i).getSymbol() + " the beginning of the placement");
 
-            if(!chet) {
-                if(!searchPlaceAndInsertPackage(packages.get(i), bodies.get(i % numberBodies))) {
+            if (!chet) {
+                if (!searchPlaceAndInsertPackage(packages.get(i), bodies.get(i % numberBodies))) {
                     logger.warn("small number bodies");
                     throw new SmallNumberBodiesException("Small number bodies");
                 }
                 logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
-                if(i > 0 && (i + 1) % numberBodies == 0) {
+                if (i > 0 && (i + 1) % numberBodies == 0) {
                     chet = true;
                 }
             } else {
-                if(!searchPlaceAndInsertPackage(packages.get(i), bodies.get(numberBodies - i % numberBodies - 1))) {
+                if (!searchPlaceAndInsertPackage(packages.get(i), bodies.get(numberBodies - i % numberBodies - 1))) {
                     logger.warn("small number bodies");
                     throw new SmallNumberBodiesException("Small number bodies");
                 }
                 logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
-                if((i + 1) % numberBodies == 0) {
+                if ((i + 1) % numberBodies == 0) {
                     chet = false;
                 }
             }

@@ -38,7 +38,7 @@ public class PlacementController {
         logger.debug("The number of bodies entered");
 
         System.out.println("Uniform or optimal algorithm?");
-        System.out.println("u - uniform, s - simplest");
+        System.out.println("u - uniform, o - optimal");
         String answer = reader.readLine();
         logger.debug("The type " + answer + " of algorithm entered");
 

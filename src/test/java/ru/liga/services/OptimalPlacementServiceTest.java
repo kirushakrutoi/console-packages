@@ -5,18 +5,18 @@ import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.services.placements.PlacementService;
 import ru.liga.consolepackages.services.placements.OptimalPlacementService;
+import ru.liga.consolepackages.services.placements.PlacementService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OptimalPlacementServiceTest {
 
-    private final PlacementService placementService = new OptimalPlacementService(6,6);
+    private final PlacementService placementService = new OptimalPlacementService(6, 6);
 
     @Test
     void emptyListTest() {
@@ -44,7 +44,7 @@ public class OptimalPlacementServiceTest {
 
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
-        char[][] testChars = new char[][] {
+        char[][] testChars = new char[][]{
                 {' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' '},
@@ -73,7 +73,7 @@ public class OptimalPlacementServiceTest {
 
         assertEquals(1, bodies.size());
         Body body1 = bodies.get(0);
-        char[][] testChars = new char[][] {
+        char[][] testChars = new char[][]{
                 {' ', ' ', ' ', ' ', ' ', ' '},
                 {'1', ' ', ' ', ' ', ' ', ' '},
                 {'4', '4', '4', '4', '2', '2'},
@@ -112,7 +112,7 @@ public class OptimalPlacementServiceTest {
 
         assertEquals(2, bodies.size());
 
-        char[][][] testChars =  {
+        char[][][] testChars = {
                 {
                         {'3', '3', '3', '6', '6', '6'},
                         {'7', '7', '7', '6', '6', '6'},
@@ -120,7 +120,8 @@ public class OptimalPlacementServiceTest {
                         {'9', '9', '9', '9', '9', '9'},
                         {'9', '9', '9', '9', '9', '9'},
                         {'9', '9', '9', '9', '9', '9'}
-                }, {
+                },
+                {
                         {' ', ' ', ' ', ' ', ' ', ' '},
                         {' ', ' ', ' ', ' ', ' ', ' '},
                         {' ', ' ', ' ', ' ', ' ', ' '},

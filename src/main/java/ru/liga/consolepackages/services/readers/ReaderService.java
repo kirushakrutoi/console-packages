@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.services.PlacePackagesCoordinator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,8 +20,10 @@ public class ReaderService implements PackagesReaderService, BodiesReaderService
 
     @Override
     public List<Body> readBodiesFromJson(File file) throws IOException {
-        return objectMapper.readValue(file, new TypeReference<List<Body>>(){});
+        return objectMapper.readValue(file, new TypeReference<List<Body>>() {
+        });
     }
+
     @Override
     public List<Package> readPackagesFromTxt(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -41,7 +42,7 @@ public class ReaderService implements PackagesReaderService, BodiesReaderService
             }
         }
 
-        if(!lines.isEmpty()) {
+        if (!lines.isEmpty()) {
             Package pack = new Package(convertLinesToCharArr(lines));
             packages.add(pack);
         }

@@ -2,7 +2,6 @@ package ru.liga.consolepackages.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.controllers.CountPackagesController;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.services.readers.BodiesReaderService;

@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.services.PlacePackagesCoordinator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OptimalPlacementService extends PlacementService {

@@ -8,7 +8,10 @@ import ru.liga.consolepackages.exceptions.EmptyFileException;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 public class ConsolePackages {
@@ -34,12 +37,12 @@ public class ConsolePackages {
                     logger.info("Sorting is selected");
 
                     PlacementController placementController =
-                        new PlacementController(
-                                WIDTH_BODY,
-                                LENGTH_BODY,
-                                DIR_FOR_WRITE,
-                                reader
-                        );
+                            new PlacementController(
+                                    WIDTH_BODY,
+                                    LENGTH_BODY,
+                                    DIR_FOR_WRITE,
+                                    reader
+                            );
 
                     placementController.placePackage();
 

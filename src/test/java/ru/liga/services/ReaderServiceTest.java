@@ -9,7 +9,6 @@ import ru.liga.consolepackages.services.readers.ReaderService;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -94,7 +93,7 @@ public class ReaderServiceTest {
 
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
-        char[][] testChars = new char[][] {
+        char[][] testChars = new char[][]{
                 {' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' '},
@@ -118,7 +117,7 @@ public class ReaderServiceTest {
 
         assertEquals(2, bodies.size());
 
-        char[][][] testChars =  {
+        char[][][] testChars = {
                 {
                         {'3', '3', '3', '6', '6', '6'},
                         {'7', '7', '7', '6', '6', '6'},
@@ -126,14 +125,15 @@ public class ReaderServiceTest {
                         {'9', '9', '9', '9', '9', '9'},
                         {'9', '9', '9', '9', '9', '9'},
                         {'9', '9', '9', '9', '9', '9'}
-                }, {
-                {' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' '},
-                {'1', '1', ' ', ' ', ' ', ' '},
-                {'3', '3', '3', '3', '3', '3'},
-                {'4', '4', '4', '4', '1', '1'}
-        }
+                },
+                {
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {' ', ' ', ' ', ' ', ' ', ' '},
+                        {'1', '1', ' ', ' ', ' ', ' '},
+                        {'3', '3', '3', '3', '3', '3'},
+                        {'4', '4', '4', '4', '1', '1'}
+                }
         };
 
         for (int i = 0; i < 2; i++) {
