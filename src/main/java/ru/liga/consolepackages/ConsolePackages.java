@@ -4,12 +4,11 @@ import ru.liga.consolepackages.exceptions.EmptyFileException;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.services.CoordinatorService;
+import ru.liga.consolepackages.services.writers.WriterServiceImpl;
 import ru.liga.consolepackages.services.readers.ReaderServiceImpl;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class ConsolePackages {
@@ -30,6 +29,14 @@ public class ConsolePackages {
             CoordinatorService coordinatorService = new CoordinatorService(WIDTH_BODY, LENGTH_BODY, new ReaderServiceImpl());
             List<Body> bodies = coordinatorService.getFilledBodies(answer, filePath);
 
+            WriterServiceImpl writerServiceImpl = new WriterServiceImpl("batches");
+            writerServiceImpl.writeBodies(bodies);
+
+            for (Body body : bodies) {
+                System.out.println(body);
+            }
+
+            bodies =  new ReaderServiceImpl().readBodiesFromJson(new File("array.json"));
             for (Body body : bodies) {
                 System.out.println(body);
             }
@@ -37,6 +44,8 @@ public class ConsolePackages {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Unknown error");
+            System.out.println(e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 }

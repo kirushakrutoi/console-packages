@@ -3,9 +3,9 @@ package ru.liga.consolepackages.services;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.services.placement.OptimalPlacementService;
-import ru.liga.consolepackages.services.placement.PlacementService;
-import ru.liga.consolepackages.services.placement.SimplestPlacementService;
+import ru.liga.consolepackages.services.placements.OptimalPlacementService;
+import ru.liga.consolepackages.services.placements.PlacementService;
+import ru.liga.consolepackages.services.placements.SimplestPlacementService;
 import ru.liga.consolepackages.services.readers.ReaderService;
 
 import java.io.File;
@@ -31,7 +31,7 @@ public class CoordinatorService {
         List<Package> packages;
 
         try {
-            packages = readerService.readFile(new File(filePath));
+            packages = readerService.readPackagesFromTxt(new File(filePath));
         } catch (IOException e) {
             throw new FileNotFoundException("File " + filePath + " not found");
         }

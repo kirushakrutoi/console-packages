@@ -1,5 +1,8 @@
 package ru.liga.consolepackages.services.readers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 
 import java.io.BufferedReader;
@@ -10,7 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderServiceImpl implements ReaderService {
-    public List<Package> readFile(File file) throws IOException {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+
+    @Override
+    public List<Body> readBodiesFromJson(File file) throws IOException {
+        return objectMapper.readValue(file, new TypeReference<List<Body>>(){});
+    }
+    @Override
+    public List<Package> readPackagesFromTxt(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         List<Package> packages = new ArrayList<>();
         String line;

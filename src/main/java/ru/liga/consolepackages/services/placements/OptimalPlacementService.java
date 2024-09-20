@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.services.placement;
+package ru.liga.consolepackages.services.placements;
 
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;

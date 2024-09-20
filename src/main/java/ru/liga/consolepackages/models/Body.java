@@ -1,7 +1,12 @@
 package ru.liga.consolepackages.models;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Body {
+
     private final char[][] body;
 
     public Body(int length, int weight) {
@@ -12,6 +17,10 @@ public class Body {
                 this.body[i][j] = ' ';
             }
         }
+    }
+
+    public Body(@JsonProperty("body") char[][] body) {
+        this.body = body;
     }
 
     public void insertPackage(Package pack, Place place) {

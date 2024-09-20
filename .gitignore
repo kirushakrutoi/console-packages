@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 /applogs
 src/test/java/ru/liga/resources/input.txt
+/batches
 
 ### IntelliJ IDEA ###
 .idea

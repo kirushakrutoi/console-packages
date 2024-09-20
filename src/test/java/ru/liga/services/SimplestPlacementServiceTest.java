@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.services.placement.SimplestPlacementService;
-import ru.liga.consolepackages.services.placement.PlacementService;
+import ru.liga.consolepackages.services.placements.SimplestPlacementService;
+import ru.liga.consolepackages.services.placements.PlacementService;
 
 import java.util.ArrayList;
 import java.util.List;
