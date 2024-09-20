@@ -14,6 +14,7 @@ import java.util.List;
 public class ConsolePackages {
     private static final int LENGTH_BODY = 6;
     private static final int WIDTH_BODY = 6;
+    private static final String DIR_FOR_WRITE = "batches";
 
     public static void main(String[] args) {
         try {
@@ -26,26 +27,24 @@ public class ConsolePackages {
             System.out.println("o - optimal, s - simplest");
             String answer = reader.readLine();
 
-            CoordinatorService coordinatorService = new CoordinatorService(WIDTH_BODY, LENGTH_BODY, new ReaderServiceImpl());
+            CoordinatorService coordinatorService =
+                    new CoordinatorService(
+                            WIDTH_BODY,
+                            LENGTH_BODY,
+                            new ReaderServiceImpl(),
+                            new WriterServiceImpl(DIR_FOR_WRITE)
+                    );
+
             List<Body> bodies = coordinatorService.getFilledBodies(answer, filePath);
 
-            WriterServiceImpl writerServiceImpl = new WriterServiceImpl("batches");
-            writerServiceImpl.writeBodies(bodies);
-
             for (Body body : bodies) {
                 System.out.println(body);
             }
 
-            bodies =  new ReaderServiceImpl().readBodiesFromJson(new File("array.json"));
-            for (Body body : bodies) {
-                System.out.println(body);
-            }
         } catch (EmptyFileException | IncorrectAnswerException | FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Unknown error");
-            System.out.println(e.getMessage());
-            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 }
