@@ -35,7 +35,6 @@ public class ConsolePackages {
             switch (ans) {
                 case COUNT_PACKAGES:
                     logger.info("Sorting is selected");
-
                     PlacementController placementController =
                             new PlacementController(
                                     WIDTH_BODY,
@@ -43,18 +42,13 @@ public class ConsolePackages {
                                     DIR_FOR_WRITE,
                                     reader
                             );
-
                     placementController.placePackage();
-
                     break;
                 case PLACE_PACKAGE:
                     logger.info("Placement selected");
-
                     CountPackagesController countPackagesController =
                             new CountPackagesController(reader);
-
                     countPackagesController.countPackages();
-
                     break;
                 default:
                     System.out.println("Incorrect answer");
