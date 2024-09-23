@@ -1,12 +1,23 @@
 package ru.liga.consolepackages.models;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Package {
     private final char[][] pack;
 
     public Package(char[][] pack) {
         this.pack = pack;
+    }
+
+    public Package(List<String> lines) {
+        this.pack = new char[lines.size()][];
+        for (int i = 0; i < lines.size(); i++) {
+            this.pack[i] = new char[lines.get(i).length()];
+            for (int j = 0; j < lines.get(i).length(); j++) {
+                this.pack[i][j] = lines.get(i).charAt(j);
+            }
+        }
     }
 
     public char getSymbol() {
@@ -40,6 +51,10 @@ public class Package {
     @Override
     public int hashCode() {
         return Character.hashCode(getSymbol());
+    }
+
+    public int compareTo(Package anotherPackage) {
+        return getSquare() - anotherPackage.getSquare();
     }
 
     @Override

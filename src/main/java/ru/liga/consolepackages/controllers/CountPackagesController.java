@@ -2,10 +2,11 @@ package ru.liga.consolepackages.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.models.Package;
+import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.services.CountPackageCoordinator;
 import ru.liga.consolepackages.services.CountPackagesService;
-import ru.liga.consolepackages.services.readers.ReaderService;
+import ru.liga.consolepackages.services.readers.BodiesReaderServiceImpl;
+import ru.liga.consolepackages.services.readers.PackagesReaderServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class CountPackagesController {
         this.reader = reader;
     }
 
-    public void countPackages() throws IOException {
+    public void countPackages() throws FailedReadFileException, IOException {
         System.out.println("Enter file name");
         String filePath = reader.readLine();
         logger.debug("The path to the file has been entered");
@@ -27,14 +28,14 @@ public class CountPackagesController {
         logger.debug("Start counting packages");
         CountPackageCoordinator countPackageCoordinator =
                 new CountPackageCoordinator(
-                        new ReaderService(),
+                        new BodiesReaderServiceImpl(),
                         new CountPackagesService()
                 );
-        Map<Package, Integer> packageIntegerMap = countPackageCoordinator.countPackage(filePath);
+        Map<Character, Integer> packageIntegerMap = countPackageCoordinator.countPackage(filePath);
         logger.debug("End counting packages");
 
-        for (Map.Entry<Package, Integer> entry : packageIntegerMap.entrySet()) {
-            System.out.println("Package of type " + entry.getKey().getSymbol() + " found " + entry.getValue());
+        for (Map.Entry<Character, Integer> entry : packageIntegerMap.entrySet()) {
+            System.out.println("Package of type " + entry.getKey() + " found " + entry.getValue());
         }
     }
 

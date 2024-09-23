@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface PackagesReaderService {
-    List<Package> readPackagesFromTxt(File file) throws IOException;
+    List<Package> readPackagesFromTxt(String filePath) throws IOException;
 }

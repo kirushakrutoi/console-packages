@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.liga.consolepackages.controllers.CountPackagesController;
 import ru.liga.consolepackages.controllers.PlacementController;
 import ru.liga.consolepackages.exceptions.EmptyFileException;
+import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 
@@ -17,7 +18,6 @@ import java.io.InputStreamReader;
 public class ConsolePackages {
     private static final int LENGTH_BODY = 6;
     private static final int WIDTH_BODY = 6;
-    private static final String DIR_FOR_WRITE = "batches";
     private static final String COUNT_PACKAGES = "1";
     private static final String PLACE_PACKAGE = "2";
 
@@ -39,7 +39,6 @@ public class ConsolePackages {
                             new PlacementController(
                                     WIDTH_BODY,
                                     LENGTH_BODY,
-                                    DIR_FOR_WRITE,
                                     reader
                             );
                     placementController.placePackage();
@@ -54,7 +53,10 @@ public class ConsolePackages {
                     System.out.println("Incorrect answer");
                     logger.info("end application");
             }
-        } catch (EmptyFileException | IncorrectAnswerException | FileNotFoundException | SmallNumberBodiesException e) {
+        } catch (EmptyFileException | IncorrectAnswerException | SmallNumberBodiesException | FailedReadFileException e) {
+            System.out.println(e.getMessage());
+            logger.info("end application");
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
             logger.info("end application");
         } catch (IOException e) {

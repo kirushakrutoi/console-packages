@@ -39,14 +39,14 @@ public class Body {
 
         for (int i = 0; i < pack.getWidth(); i++) {
             for (int j = 0; j < pack.getLength(indexPackLine); j++) {
-                body[place.getI() - i][place.getJ() + j] = pack.getSymbol();
+                body[place.getX() - i][place.getY() + j] = pack.getSymbol();
             }
             indexPackLine--;
         }
     }
 
     public char getElement(Place place) {
-        return body[place.getI()][place.getJ()];
+        return body[place.getX()][place.getY()];
     }
 
     @Override

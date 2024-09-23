@@ -1,19 +1,19 @@
 package ru.liga.consolepackages.models;
 
 public class Place {
-    private final int i;
-    private final int j;
+    private final int x;
+    private final int y;
 
-    public Place(int i, int j) {
-        this.i = i;
-        this.j = j;
+    public Place(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public int getI() {
-        return i;
+    public int getX() {
+        return x;
     }
 
-    public int getJ() {
-        return j;
+    public int getY() {
+        return y;
     }
 }

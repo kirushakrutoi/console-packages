@@ -31,7 +31,9 @@ public class OptimalPlacementService extends PlacementService {
 
             for (Body body : bodies) {
                 successInserted = searchPlaceAndInsertPackage(pack, body);
-                if (successInserted) break;
+                if (successInserted) {
+                    break;
+                }
             }
 
             logger.debug("Package type " + pack.getSymbol() + " the ending of the placement");

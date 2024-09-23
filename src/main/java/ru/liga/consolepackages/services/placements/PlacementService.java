@@ -8,20 +8,20 @@ import ru.liga.consolepackages.models.Place;
 import ru.liga.consolepackages.services.PlacePackagesCoordinator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class PlacementService {
-    public abstract List<Body> placementPackage(List<Package> packages, int numberBodies);
-
-    private static final Logger logger = LoggerFactory.getLogger(PlacePackagesCoordinator.class);
-
     protected final int LENGTH_BODY;
     protected final int WIDTH_BODY;
+    private static final Logger logger = LoggerFactory.getLogger(PlacePackagesCoordinator.class);
 
     public PlacementService(int WIDTH_BODY, int LENGTH_BODY) {
         this.LENGTH_BODY = LENGTH_BODY;
         this.WIDTH_BODY = WIDTH_BODY;
     }
+
+    public abstract List<Body> placementPackage(List<Package> packages, int numberBodies);
 
     protected List<Body> createEmptyBodies(int numberBodies) {
         List<Body> bodies = new ArrayList<>();
@@ -32,15 +32,7 @@ public abstract class PlacementService {
     }
 
     protected void sortPackage(List<Package> packages) {
-        for (int i = 0; i < packages.size() - 1; i++) {
-            for (int j = i + 1; j < packages.size(); j++) {
-                if (packages.get(i).getSquare() < packages.get(j).getSquare()) {
-                    Package temp = packages.get(i);
-                    packages.set(i, packages.get(j));
-                    packages.set(j, temp);
-                }
-            }
-        }
+        packages.sort(Collections.reverseOrder(Package::compareTo));
     }
 
     protected boolean searchPlaceAndInsertPackage(Package pack, Body body) {
@@ -48,8 +40,8 @@ public abstract class PlacementService {
             for (int j = 0; j < WIDTH_BODY - pack.getMaxLength() + 1; j++) {
                 Place place = new Place(i, j);
 
-                if (checkPlaceForPackage(pack, body, place)) {
-                    logger.debug("Place " + "(" + place.getI() + ", " + place.getJ() + ") found for package type " + pack.getSymbol());
+                if (isPlaceExist(pack, body, place)) {
+                    logger.debug("Place ({}, {}) found for package type {}", place.getX(), place.getY(), pack.getSymbol());
                     body.insertPackage(pack, place);
                     return true;
                 }
@@ -60,12 +52,12 @@ public abstract class PlacementService {
         return false;
     }
 
-    private boolean checkPlaceForPackage(Package pack, Body body, Place place) {
+    private boolean isPlaceExist(Package pack, Body body, Place place) {
         int indexPackLine = pack.getWidth() - 1;
 
         for (int i = 0; i < pack.getWidth(); i++) {
             for (int j = 0; j < pack.getLength(indexPackLine); j++) {
-                Place checkPlace = new Place(place.getI() - i, place.getJ() + j);
+                Place checkPlace = new Place(place.getX() - i, place.getY() + j);
 
                 if (body.getElement(checkPlace) != ' ') {
                     return false;

@@ -71,7 +71,7 @@ public class OptimalPlacementServiceTest {
 
         List<Body> bodies = placementService.placementPackage(packages, 2);
 
-        assertEquals(1, bodies.size());
+        assertEquals(2, bodies.size());
         Body body1 = bodies.get(0);
         char[][] testChars = new char[][]{
                 {' ', ' ', ' ', ' ', ' ', ' '},
@@ -87,7 +87,7 @@ public class OptimalPlacementServiceTest {
             }
         }
 
-        Body body2 = bodies.get(0);
+        Body body2 = bodies.get(1);
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 assertEquals(body2.getElement(new Place(i, j)), ' ');

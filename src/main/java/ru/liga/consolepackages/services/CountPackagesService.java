@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CountPackagesService {
-    public Map<Package, Integer> countPackagesFromBodies(List<Body> bodies) {
-        Map<Package, Integer> packageMap = new HashMap<>();
+    public Map<Character, Integer> countPackagesFromBodies(List<Body> bodies) {
+        Map<Character, Integer> packageMap = new HashMap<>();
 
         for (Body body : bodies) {
             for (int i = 0; i < body.getWidth(); i++) {
@@ -30,19 +30,17 @@ public class CountPackagesService {
         return packageMap;
     }
 
-    private void putSymbol(Map<Package, Integer> map, char symbol) {
-        Package pack = new Package(new char[][]{{symbol}});
-
-        if (!map.containsKey(pack)) {
-            map.put(pack, 1);
+    private void putSymbol(Map<Character, Integer> map, char symbol) {
+        if (!map.containsKey(symbol)) {
+            map.put(symbol, 1);
         } else {
-            map.put(pack, map.get(pack) + 1);
+            map.put(symbol, map.get(symbol) + 1);
         }
     }
 
-    private void countPackages(Map<Package, Integer> map) {
-        for (Map.Entry<Package, Integer> entry : map.entrySet()) {
-            entry.setValue(entry.getValue() / entry.getKey().getSquare());
+    private void countPackages(Map<Character, Integer> map) {
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            entry.setValue(entry.getValue() / (entry.getKey() - '0'));
         }
     }
 }
