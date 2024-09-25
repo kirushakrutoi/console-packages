@@ -20,6 +20,13 @@ public class WriterServiceImpl implements WriterService {
         createDir();
     }
 
+
+    /**
+     * Метод для записи заполненных кузовов грузовиков в файл.
+     *
+     * @param bodies список заполненных кузовов грузовиков для записи
+     * @throws IOException если возникла проблема при записи кузовов в файл
+     */
     public void writeBodies(List<Body> bodies) throws IOException {
         objectMapper.writeValue(getNextFile(), bodies);
     }

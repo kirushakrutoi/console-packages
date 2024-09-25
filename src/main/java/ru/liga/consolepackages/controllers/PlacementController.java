@@ -2,6 +2,8 @@ package ru.liga.consolepackages.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.liga.consolepackages.exceptions.FailedReadFileException;
+import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.services.PlacePackagesCoordinator;
 import ru.liga.consolepackages.services.PlacementServiceFactory;
@@ -9,6 +11,7 @@ import ru.liga.consolepackages.services.readers.PackagesReaderServiceImpl;
 import ru.liga.consolepackages.services.writers.WriterServiceImpl;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,7 +28,14 @@ public class PlacementController {
         this.reader = reader;
     }
 
-    public void placePackage() throws IOException {
+    /**
+     * Метод отвечающий за принятие ответов от пользователя, размещение посылок,
+     * вывод в консоль кузовы машин заполненых посылками.
+     *
+     * @throws IOException если возникает проблема с чтением из консоли.
+     * @throws FileNotFoundException если файл для чтения не найден.
+     */
+    public void placePackage() throws FileNotFoundException, IOException {
         System.out.println("Enter file path");
         String filePath = reader.readLine();
         logger.debug("The path to the file has been entered");

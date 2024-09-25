@@ -16,6 +16,13 @@ public class PlacementServiceFactory {
         placementServicesMap.put("u", new UniformPlacementService(width, length));
     }
 
+    /**
+     * Метод для получения сервиса размещения посылок для указанного типа алгоритма.
+     *
+     * @param algorithmType тип алгоритма
+     * @return сервис размещения посылок
+     * @throws IncorrectAnswerException если указан некорректный тип алгоритма
+     */
     public PlacementService getPlacementService(String algorithmType) {
         if(!placementServicesMap.containsKey(algorithmType)) {
             throw new IncorrectAnswerException("Incorrect algorithm type");

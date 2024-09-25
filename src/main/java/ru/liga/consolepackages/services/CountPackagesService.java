@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class CountPackagesService {
+
+    /**
+     * Метод для подсчета количества посылок каждого типа.
+     *
+     * @param bodies список кузовов грузовиков
+     * @return карта, содержащая количество посылок каждого типа
+     */
     public Map<Character, Integer> countPackagesFromBodies(List<Body> bodies) {
         Map<Character, Integer> packageMap = new HashMap<>();
 

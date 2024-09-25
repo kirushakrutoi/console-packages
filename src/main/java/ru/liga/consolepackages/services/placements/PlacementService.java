@@ -2,6 +2,7 @@ package ru.liga.consolepackages.services.placements;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
@@ -21,6 +22,13 @@ public abstract class PlacementService {
         this.WIDTH_BODY = WIDTH_BODY;
     }
 
+    /**
+     * Метод для размещения посылок в кузова грузовиков.
+     *
+     * @param packages список посылок
+     * @param numberBodies количество кузовов грузовиков
+     * @return список заполненных кузовов грузовиков
+     */
     public abstract List<Body> placementPackage(List<Package> packages, int numberBodies);
 
     protected List<Body> createEmptyBodies(int numberBodies) {

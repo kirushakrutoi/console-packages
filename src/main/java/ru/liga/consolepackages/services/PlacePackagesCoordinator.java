@@ -30,7 +30,15 @@ public class PlacePackagesCoordinator {
         this.placementService = placementService;
     }
 
-    public List<Body> getFilledBodies(int numberBodies, String filePath) throws IncorrectAnswerException, IOException {
+    /**
+     * Метод для получения заполненных кузовов грузовиков.
+     *
+     * @param numberBodies количество доступных кузовов грузовиков
+     * @param filePath путь к файлу, содержащему данные о посылках
+     * @return список заполненных кузовов грузовиков
+     * @throws IOException если возникла проблема при чтении входного файла или записи результатов
+     */
+    public List<Body> getFilledBodies(int numberBodies, String filePath) throws IOException {
         List<Package> packages;
         try {
             logger.debug("The file {} is being read", filePath);

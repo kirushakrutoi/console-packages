@@ -15,6 +15,14 @@ public class OptimalPlacementService extends PlacementService {
         super(WIDTH_BODY, LENGTH_BODY);
     }
 
+    /**
+     * Метод для оптимального размещения посылок в кузова грузовиков.
+     *
+     * @param packages список посылок
+     * @param numberBodies количество кузовов грузовиков
+     * @return список заполненных кузовов грузовиков
+     * @throws SmallNumberBodiesException если количество кузовов грузовиков меньше, чем необходимо для размещения всех посылок
+     */
     @Override
     public List<Body> placementPackage(List<Package> packages, int numberBodies) {
         logger.debug("Start sorting package");

@@ -23,10 +23,21 @@ public class CountPackageCoordinator {
         this.countPackagesService = countPackagesService;
     }
 
-    public Map<Character, Integer> countPackage(String filePath) throws FailedReadFileException, FileNotFoundException {
+    /**
+     * Метод для подсчета посылок.
+     *
+     * @param filePath путь к файлу, содержащему данные о кузовах грузовиков
+     * @return карта, содержащая количество посылок каждого типа
+     * @throws FileNotFoundException если указанный файл не найден
+     */
+    public Map<Character, Integer> countPackage(String filePath) throws FileNotFoundException {
         logger.debug("start reading file {}", filePath);
         List<Body> bodies = readerService.readBodiesFromJson(filePath);
         logger.debug("end reading file {}", filePath);
+
+        for (Body body : bodies) {
+            System.out.println(body);
+        }
 
         return countPackagesService.countPackagesFromBodies(bodies);
     }

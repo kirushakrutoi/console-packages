@@ -26,8 +26,17 @@ public class PackagesReaderServiceImpl implements PackagesReaderService/*, Bodie
         }
     }*/
 
+
+    /**
+     * Метод для чтения посылок из текстового файла.
+     *
+     * @param filePath путь к текстовому файлу
+     * @return список посылок
+     * @throws FileNotFoundException если указанный файл не найден
+     * @throws FailedReadFileException если возникла ошибка при чтении файла
+     */
     @Override
-    public List<Package> readPackagesFromTxt(String filePath) throws FileNotFoundException, FailedReadFileException {
+    public List<Package> readPackagesFromTxt(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
         checkExistenceFile(file);
         BufferedReader reader = new BufferedReader(new FileReader(file));

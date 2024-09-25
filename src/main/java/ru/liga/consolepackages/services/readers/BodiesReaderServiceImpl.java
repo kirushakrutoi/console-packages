@@ -13,8 +13,16 @@ import java.util.List;
 public class BodiesReaderServiceImpl implements BodiesReaderService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Метод для чтения заполненных кузовов грузовиков из JSON-файла.
+     *
+     * @param filePath путь к JSON-файлу
+     * @return список заполненных кузовов грузовиков
+     * @throws FileNotFoundException если указанный файл не найден
+     * @throws FailedReadFileException если возникла ошибка при чтении файла
+     */
     @Override
-    public List<Body> readBodiesFromJson(String filePath) throws FileNotFoundException, FailedReadFileException {
+    public List<Body> readBodiesFromJson(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
         checkExistenceFile(file);
 
