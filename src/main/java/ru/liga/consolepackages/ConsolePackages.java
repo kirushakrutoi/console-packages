@@ -1,5 +1,6 @@
 package ru.liga.consolepackages;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.liga.consolepackages.controllers.CountPackagesController;
@@ -8,11 +9,9 @@ import ru.liga.consolepackages.exceptions.EmptyFileException;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
+import ru.liga.consolepackages.models.Package;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 
 public class ConsolePackages {
@@ -20,11 +19,12 @@ public class ConsolePackages {
     private static final int WIDTH_BODY = 6;
     private static final String COUNT_PACKAGES = "1";
     private static final String PLACE_PACKAGE = "2";
-
     private static final Logger logger = LoggerFactory.getLogger(ConsolePackages.class);
 
     public static void main(String[] args) {
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(new File("packages/6.json"), new Package("6", '6', new char[][] {{'6', '6', '6'}, {'6', '6', '6'}}));
             logger.info("Start application");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 

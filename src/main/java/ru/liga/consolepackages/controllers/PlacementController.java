@@ -2,11 +2,9 @@ package ru.liga.consolepackages.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.exceptions.FailedReadFileException;
-import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
-import ru.liga.consolepackages.services.PlacePackagesCoordinator;
-import ru.liga.consolepackages.services.PlacementServiceFactory;
+import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
+import ru.liga.consolepackages.utils.PlacementServiceFactory;
 import ru.liga.consolepackages.services.readers.PackagesReaderServiceImpl;
 import ru.liga.consolepackages.services.writers.WriterServiceImpl;
 

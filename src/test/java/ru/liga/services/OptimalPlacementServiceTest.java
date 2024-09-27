@@ -62,7 +62,7 @@ public class OptimalPlacementServiceTest {
     @Test
     void multiplePackagesFitInOneBodyTest() {
         List<Package> packages = new ArrayList<>();
-        packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
+        packages.add(new Package("4", '#', new char[][]{{'4', '4', '4', '4'}}));
         packages.add(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}));
         packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
         packages.add(new Package(new char[][]{{'1'}}));
@@ -76,10 +76,17 @@ public class OptimalPlacementServiceTest {
         char[][] testChars = new char[][]{
                 {' ', ' ', ' ', ' ', ' ', ' '},
                 {'1', ' ', ' ', ' ', ' ', ' '},
-                {'4', '4', '4', '4', '2', '2'},
+                {'#', '#', '#', '#', '2', '2'},
                 {'9', '9', '9', '3', '3', '3'},
                 {'9', '9', '9', '6', '6', '6'},
                 {'9', '9', '9', '6', '6', '6'}};
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                System.out.print(bodies.get(0).getElement(new Place(i, j)));
+            }
+            System.out.println();
+        }
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
@@ -106,9 +113,23 @@ public class OptimalPlacementServiceTest {
         packages.add(new Package(new char[][]{{'3', '3', '3'}}));
         packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
         packages.add(new Package(new char[][]{{'3', '3', '3'}}));
-        packages.add(new Package(new char[][]{{'7', '7', '7'}, {'7', '7', '7', '7'}}));
+        packages.add(new Package(new char[][]{{'7', '7', '7', ' '}, {'7', '7', '7', '7'}}));
 
         List<Body> bodies = placementService.placementPackage(packages, 2);
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                System.out.print(bodies.get(0).getElement(new Place(i, j)));
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                System.out.print(bodies.get(1).getElement(new Place(i, j)));
+            }
+            System.out.println();
+        }
 
         assertEquals(2, bodies.size());
 
@@ -143,6 +164,52 @@ public class OptimalPlacementServiceTest {
         assertThrows(SmallNumberBodiesException.class, () -> {
             placementService.placementPackage(packages, 1);
         });
+    }
+
+    @Test
+    void multiplePackagesWithNonStandardShapeFitInOneBodyTest() {
+        List<Package> packages = new ArrayList<>();
+        packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
+        packages.add(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}));
+        packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
+        //packages.add(new Package(new char[][]{{'7', '7', '7', ' '}, {'7', '7', '7', '7'}}));
+        packages.add(new Package(new char[][]{{'1'}}));
+        packages.add(new Package(new char[][]{{'1'}}));
+        packages.add(new Package(new char[][]{{'2', '2'}}));
+        packages.add(new Package(new char[][]{{'3', '3', '3'}}));
+        packages.add(new Package(new char[][]{{'#', ' ', '#'}, {'#', '#', '#'}, {'#', ' ', '#'}}));
+
+        List<Body> bodies = placementService.placementPackage(packages, 2);
+
+        assertEquals(2, bodies.size());
+        Body body1 = bodies.get(0);
+        char[][] testChars = new char[][]{
+                {'4', '4', '4', '4', ' ', ' '},
+                {'6', '6', '6', '2', '2', ' '},
+                {'6', '6', '6', '3', '3', '3'},
+                {'9', '9', '9', '#', '1', '#'},
+                {'9', '9', '9', '#', '#', '#'},
+                {'9', '9', '9', '#', '1', '#'}};
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                System.out.print(bodies.get(0).getElement(new Place(i, j)));
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                assertEquals(body1.getElement(new Place(i, j)), testChars[i][j]);
+            }
+        }
+
+        Body body2 = bodies.get(1);
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                assertEquals(body2.getElement(new Place(i, j)), ' ');
+            }
+        }
     }
 
 }

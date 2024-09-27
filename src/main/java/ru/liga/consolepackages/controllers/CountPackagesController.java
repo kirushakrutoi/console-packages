@@ -2,12 +2,9 @@ package ru.liga.consolepackages.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.exceptions.FailedReadFileException;
-import ru.liga.consolepackages.models.Body;
-import ru.liga.consolepackages.services.CountPackageCoordinator;
+import ru.liga.consolepackages.coordinators.CountPackageCoordinator;
 import ru.liga.consolepackages.services.CountPackagesService;
 import ru.liga.consolepackages.services.readers.BodiesReaderServiceImpl;
-import ru.liga.consolepackages.services.readers.PackagesReaderServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

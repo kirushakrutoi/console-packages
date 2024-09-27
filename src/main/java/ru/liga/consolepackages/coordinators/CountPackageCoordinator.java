@@ -1,15 +1,12 @@
-package ru.liga.consolepackages.services;
+package ru.liga.consolepackages.coordinators;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Body;
-import ru.liga.consolepackages.models.Package;
+import ru.liga.consolepackages.services.CountPackagesService;
 import ru.liga.consolepackages.services.readers.BodiesReaderService;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

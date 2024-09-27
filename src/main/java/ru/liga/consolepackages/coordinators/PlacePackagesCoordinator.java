@@ -1,22 +1,16 @@
-package ru.liga.consolepackages.services;
+package ru.liga.consolepackages.coordinators;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.services.placements.OptimalPlacementService;
 import ru.liga.consolepackages.services.placements.PlacementService;
-import ru.liga.consolepackages.services.placements.UniformPlacementService;
 import ru.liga.consolepackages.services.readers.PackagesReaderService;
 import ru.liga.consolepackages.services.writers.WriterService;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PlacePackagesCoordinator {
     private final PackagesReaderService readerService;

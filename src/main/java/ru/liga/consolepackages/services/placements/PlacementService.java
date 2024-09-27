@@ -2,11 +2,10 @@ package ru.liga.consolepackages.services.placements;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.services.PlacePackagesCoordinator;
+import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +48,7 @@ public abstract class PlacementService {
                 Place place = new Place(i, j);
 
                 if (isPlaceExist(pack, body, place)) {
-                    logger.debug("Place ({}, {}) found for package type {}", place.getX(), place.getY(), pack.getSymbol());
+                    logger.debug("Place ({}, {}) found for package type {}", place.getY(), place.getX(), pack.getSymbol());
                     body.insertPackage(pack, place);
                     return true;
                 }
@@ -65,9 +64,9 @@ public abstract class PlacementService {
 
         for (int i = 0; i < pack.getWidth(); i++) {
             for (int j = 0; j < pack.getLength(indexPackLine); j++) {
-                Place checkPlace = new Place(place.getX() - i, place.getY() + j);
+                Place checkPlace = new Place(place.getY() - i, place.getX() + j);
 
-                if (body.getElement(checkPlace) != ' ') {
+                if (body.getElement(checkPlace) != ' ' && pack.getElement(new Place(i, j)) != ' ') {
                     return false;
                 }
             }

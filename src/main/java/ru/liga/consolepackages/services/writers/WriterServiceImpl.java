@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.liga.consolepackages.models.Body;
-import ru.liga.consolepackages.services.CountPackageCoordinator;
 
 import java.io.File;
 import java.io.IOException;

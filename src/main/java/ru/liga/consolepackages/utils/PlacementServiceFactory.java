@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.services;
+package ru.liga.consolepackages.utils;
 
 import ru.liga.consolepackages.exceptions.IncorrectAnswerException;
 import ru.liga.consolepackages.services.placements.OptimalPlacementService;
