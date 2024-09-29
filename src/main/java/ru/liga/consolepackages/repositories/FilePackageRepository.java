@@ -3,7 +3,9 @@ package ru.liga.consolepackages.repositories;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
+import ru.liga.consolepackages.exceptions.pacakgesexceptions.PackageAlreadyExistException;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PackageNotFoundException;
 import ru.liga.consolepackages.models.Package;
 
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class FilePackageRepository implements PackageRepository{
     private static final Logger logger = LoggerFactory.getLogger(FilePackageRepository.class);
     private final ObjectMapper objectMapper;
@@ -77,6 +80,10 @@ public class FilePackageRepository implements PackageRepository{
     @Override
     public void create(Package pack) {
         File newFile = new File(BASE_DIR + "/" + pack.getId() + ".json");
+
+        if(newFile.exists()) {
+            throw new PackageAlreadyExistException("Package with id " + pack.getId() + " already exist");
+        }
 
         try {
             objectMapper.writeValue(newFile, pack);

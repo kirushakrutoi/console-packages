@@ -1,8 +1,11 @@
 package ru.liga.consolepackages;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.liga.consolepackages.controllers.CountPackagesController;
 import ru.liga.consolepackages.controllers.PlacementController;
 import ru.liga.consolepackages.exceptions.EmptyFileException;
@@ -13,7 +16,7 @@ import ru.liga.consolepackages.models.Package;
 
 import java.io.*;
 
-
+@SpringBootApplication
 public class ConsolePackages {
     private static final int LENGTH_BODY = 6;
     private static final int WIDTH_BODY = 6;
@@ -22,7 +25,8 @@ public class ConsolePackages {
     private static final Logger logger = LoggerFactory.getLogger(ConsolePackages.class);
 
     public static void main(String[] args) {
-        try {
+        SpringApplication.run(ConsolePackages.class);
+/*        try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(new File("packages/6.json"), new Package("6", '6', new char[][] {{'6', '6', '6'}, {'6', '6', '6'}}));
             logger.info("Start application");
@@ -62,6 +66,6 @@ public class ConsolePackages {
         } catch (IOException e) {
             System.out.println("Unknown error");
             logger.info("end application");
-        }
+        }*/
     }
 }

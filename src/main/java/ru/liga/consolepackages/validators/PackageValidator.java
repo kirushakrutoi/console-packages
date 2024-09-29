@@ -1,8 +1,11 @@
 package ru.liga.consolepackages.validators;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.InvalidPackageDataException;
 import ru.liga.consolepackages.models.Package;
 
+@Component
 public class PackageValidator {
     public void validation(Package pack) {
         if(pack.getId() == null || pack.getId().isEmpty()) {

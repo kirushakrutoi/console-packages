@@ -129,6 +129,10 @@ public class Package {
 
     @Override
     public String toString() {
-        return Arrays.toString(pack);
+        return "Package{" +
+                "id='" + id + '\'' +
+                ", symbol=" + symbol +
+                ", pack=" + Arrays.toString(pack) +
+                '}';
     }
 }
