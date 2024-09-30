@@ -2,10 +2,10 @@ package ru.liga.consolepackages.services.placements;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public abstract class PlacementService {
     /**
      * Метод для размещения посылок в кузова грузовиков.
      *
-     * @param packages список посылок
+     * @param packages     список посылок
      * @param numberBodies количество кузовов грузовиков
      * @return список заполненных кузовов грузовиков
      */

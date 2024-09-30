@@ -32,7 +32,7 @@ public class PackagesReaderServiceImpl implements PackagesReaderService/*, Bodie
      *
      * @param filePath путь к текстовому файлу
      * @return список посылок
-     * @throws FileNotFoundException если указанный файл не найден
+     * @throws FileNotFoundException   если указанный файл не найден
      * @throws FailedReadFileException если возникла ошибка при чтении файла
      */
     @Override

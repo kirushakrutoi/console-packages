@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class FilePackageRepository implements PackageRepository{
+public class FilePackageRepository implements PackageRepository {
     private static final Logger logger = LoggerFactory.getLogger(FilePackageRepository.class);
     private final ObjectMapper objectMapper;
     private final String BASE_DIR = "packages";
@@ -48,7 +48,7 @@ public class FilePackageRepository implements PackageRepository{
     public Package getById(String id) {
         File file = new File(BASE_DIR + "/" + id + ".json");
 
-        if(!file.exists()) {
+        if (!file.exists()) {
             throw new PackageNotFoundException("Package with id " + id + " not found");
         }
 
@@ -65,7 +65,7 @@ public class FilePackageRepository implements PackageRepository{
         File oldFile = new File(BASE_DIR + "/" + id + ".json");
         File newFile = new File(BASE_DIR + "/" + pack.getId() + ".json");
 
-        if(!oldFile.delete()) {
+        if (!oldFile.delete()) {
             throw new PackageNotFoundException("Package with id " + id + " not found");
         }
 
@@ -81,7 +81,7 @@ public class FilePackageRepository implements PackageRepository{
     public void create(Package pack) {
         File newFile = new File(BASE_DIR + "/" + pack.getId() + ".json");
 
-        if(newFile.exists()) {
+        if (newFile.exists()) {
             throw new PackageAlreadyExistException("Package with id " + pack.getId() + " already exist");
         }
 

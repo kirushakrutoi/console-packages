@@ -1,7 +1,6 @@
 package ru.liga.consolepackages.services;
 
 import ru.liga.consolepackages.models.Body;
-import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
 
 import java.util.HashMap;

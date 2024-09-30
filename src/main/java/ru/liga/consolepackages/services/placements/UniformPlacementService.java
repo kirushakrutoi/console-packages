@@ -19,7 +19,7 @@ public class UniformPlacementService extends PlacementService {
     /**
      * Метод для равномерного размещения посылок в кузова грузовиков.
      *
-     * @param packages список посылок
+     * @param packages     список посылок
      * @param numberBodies количество кузовов грузовиков
      * @return список заполненных кузовов грузовиков
      * @throws SmallNumberBodiesException если количество кузовов грузовиков меньше, чем необходимо для размещения всех посылок

@@ -18,7 +18,7 @@ public class BodiesReaderServiceImpl implements BodiesReaderService {
      *
      * @param filePath путь к JSON-файлу
      * @return список заполненных кузовов грузовиков
-     * @throws FileNotFoundException если указанный файл не найден
+     * @throws FileNotFoundException   если указанный файл не найден
      * @throws FailedReadFileException если возникла ошибка при чтении файла
      */
     @Override

@@ -2,9 +2,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/applogs
+/logs
 src/test/java/ru/liga/resources/input.txt
 /batches
+spring-shell.log
 
 ### IntelliJ IDEA ###
 .idea

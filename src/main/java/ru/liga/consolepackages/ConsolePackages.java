@@ -25,47 +25,7 @@ public class ConsolePackages {
     private static final Logger logger = LoggerFactory.getLogger(ConsolePackages.class);
 
     public static void main(String[] args) {
+        logger.info("Start app");
         SpringApplication.run(ConsolePackages.class);
-/*        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(new File("packages/6.json"), new Package("6", '6', new char[][] {{'6', '6', '6'}, {'6', '6', '6'}}));
-            logger.info("Start application");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-            System.out.println("sort package or count package");
-            System.out.println("1 - sort, 2 - count");
-            String ans = reader.readLine();
-
-            switch (ans) {
-                case COUNT_PACKAGES:
-                    logger.info("Sorting is selected");
-                    PlacementController placementController =
-                            new PlacementController(
-                                    WIDTH_BODY,
-                                    LENGTH_BODY,
-                                    reader
-                            );
-                    placementController.placePackage();
-                    break;
-                case PLACE_PACKAGE:
-                    logger.info("Placement selected");
-                    CountPackagesController countPackagesController =
-                            new CountPackagesController(reader);
-                    countPackagesController.countPackages();
-                    break;
-                default:
-                    System.out.println("Incorrect answer");
-                    logger.info("end application");
-            }
-        } catch (EmptyFileException | IncorrectAnswerException | SmallNumberBodiesException | FailedReadFileException e) {
-            System.out.println(e.getMessage());
-            logger.info("end application");
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            logger.info("end application");
-        } catch (IOException e) {
-            System.out.println("Unknown error");
-            logger.info("end application");
-        }*/
     }
 }
