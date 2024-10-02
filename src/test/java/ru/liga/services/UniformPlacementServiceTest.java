@@ -13,13 +13,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UniformPlacementServiceTest {
-    private final PlacementService placementService = new UniformPlacementService(6, 6);
+    private final PlacementService placementService = new UniformPlacementService();
 
     @Test
     void emptyListTest() {
         List<Package> packages = new ArrayList<>();
 
-        List<Body> bodies = placementService.placementPackage(packages, 1);
+        List<Body> bodies = placementService.placementPackage(packages, 1, 6, 6);
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
 
@@ -36,7 +36,7 @@ public class UniformPlacementServiceTest {
         List<Package> packages = new ArrayList<>();
         packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages, 1);
+        List<Body> bodies = placementService.placementPackage(packages, 1, 6, 6);
 
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
@@ -62,7 +62,7 @@ public class UniformPlacementServiceTest {
         packages.add(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}));
         packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages, 3);
+        List<Body> bodies = placementService.placementPackage(packages, 3, 6, 6);
         assertEquals(3, bodies.size());
 
         char[][][] testChars = {
@@ -110,7 +110,7 @@ public class UniformPlacementServiceTest {
         packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
         packages.add(new Package(new char[][]{{'2', '2'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages, 2);
+        List<Body> bodies = placementService.placementPackage(packages, 2, 6, 6);
         assertEquals(2, bodies.size());
 
         char[][][] testChars = {

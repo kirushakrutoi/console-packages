@@ -37,7 +37,11 @@ public class Package {
     }
 
     public int getSquare() {
-        return pack[0][0] - '0';
+        int square = 0;
+        for (int i = 0; i < getWidth(); i++) {
+            square += getLength(i);
+        }
+        return square;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ru.liga.services;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
@@ -22,7 +21,7 @@ public class CountPackagesServiceTest {
     @Test
     public void emptyBodyTest() {
         List<Body> bodies = new ArrayList<>();
-        bodies.add(new Body(6,6));
+        bodies.add(new Body(6, 6));
 
         Map<Character, Integer> map = countPackagesService.countPackagesFromBodies(bodies);
         assertTrue(map.isEmpty());
@@ -31,7 +30,7 @@ public class CountPackagesServiceTest {
     @Test
     public void onePackageTest() {
         List<Body> bodies = new ArrayList<>();
-        bodies.add(new Body(6,6));
+        bodies.add(new Body(6, 6));
         bodies.get(0).insertPackage(new Package(new char[][]{{'7', '7', '7'}, {'7', '7', '7', '7'}}), new Place(5, 0));
 
         Map<Character, Integer> map = countPackagesService.countPackagesFromBodies(bodies);
@@ -43,9 +42,9 @@ public class CountPackagesServiceTest {
     @Test
     public void manyBodiesTest() {
         List<Body> bodies = new ArrayList<>();
-        bodies.add(new Body(6,6));
+        bodies.add(new Body(6, 6));
         bodies.get(0).insertPackage(new Package(new char[][]{{'7', '7', '7'}, {'7', '7', '7', '7'}}), new Place(5, 0));
-        bodies.add(new Body(6,6));
+        bodies.add(new Body(6, 6));
         bodies.get(1).insertPackage(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}), new Place(5, 0));
         bodies.get(1).insertPackage(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}), new Place(5, 3));
 

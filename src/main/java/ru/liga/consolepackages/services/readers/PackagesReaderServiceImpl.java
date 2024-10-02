@@ -5,50 +5,35 @@ import org.slf4j.LoggerFactory;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Package;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PackagesReaderServiceImpl implements PackagesReaderService/*, BodiesReaderService*/ {
-    //private final ObjectMapper objectMapper = new ObjectMapper();
+public class PackagesReaderServiceImpl implements PackagesReaderService {
     private static final Logger logger = LoggerFactory.getLogger(PackagesReaderServiceImpl.class);
-
-/*    @Override
-    public List<Body> readBodiesFromJson(String filePath) throws FileNotFoundException, FailedReadFileException {
-        File file = new File(filePath);
-        checkExistenceFile(file);
-
-        try {
-            return objectMapper.readValue(file, new TypeReference<List<Body>>() {
-            });
-        } catch (IOException e) {
-            throw new FailedReadFileException("Failed to read the file - " + filePath);
-        }
-    }*/
-
 
     /**
      * Метод для чтения посылок из текстового файла.
      *
      * @param filePath путь к текстовому файлу
      * @return список посылок
-     * @throws FileNotFoundException если указанный файл не найден
-     * @throws FailedReadFileException если возникла ошибка при чтении файла
      */
     @Override
-    public List<Package> readPackagesFromTxt(String filePath) throws FileNotFoundException {
+    public List<Package> readPackagesFromTxt(String filePath) {
         File file = new File(filePath);
-        checkExistenceFile(file);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
         List<Package> packages = new ArrayList<>();
         String line;
         List<String> lines = new ArrayList<>();
 
         try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty() && !lines.isEmpty()) {
                     Package pack = new Package(lines);
-                    logger.debug("A figure of typ" + pack.getSymbol() + "has been read");
+                    logger.debug("A figure of typ {} has been read", pack.getSymbol());
                     packages.add(pack);
                     lines.clear();
                 } else {
@@ -56,21 +41,17 @@ public class PackagesReaderServiceImpl implements PackagesReaderService/*, Bodie
                 }
             }
         } catch (IOException e) {
-            throw new FailedReadFileException("Failed to read the file - " + filePath);
+            logger.warn("Failed to read the file - " + filePath + ". " + e.getMessage());
+            throw new FailedReadFileException("Failed to read the file - " + filePath + ". " + e.getMessage());
         }
 
 
         if (!lines.isEmpty()) {
             Package pack = new Package(lines);
+            logger.debug("A figure of typ {} has been read", pack.getSymbol());
             packages.add(pack);
         }
 
         return packages;
-    }
-
-    private void checkExistenceFile(File file) throws FileNotFoundException {
-        if (!file.exists()) {
-            throw new FileNotFoundException("File - " + file.getName() + " not found");
-        }
     }
 }

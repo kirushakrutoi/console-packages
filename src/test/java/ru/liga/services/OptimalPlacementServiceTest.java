@@ -16,13 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OptimalPlacementServiceTest {
 
-    private final PlacementService placementService = new OptimalPlacementService(6, 6);
+    private final PlacementService placementService = new OptimalPlacementService();
 
     @Test
     void emptyListTest() {
         List<Package> packages = new ArrayList<>();
 
-        List<Body> bodies = placementService.placementPackage(packages, 5);
+        List<Body> bodies = placementService.placementPackage(packages, 5, 6, 6);
         assertEquals(5, bodies.size());
 
         for (Body body : bodies) {
@@ -40,7 +40,7 @@ public class OptimalPlacementServiceTest {
         List<Package> packages = new ArrayList<>();
         packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages, 1);
+        List<Body> bodies = placementService.placementPackage(packages, 1, 6, 6);
 
         assertEquals(1, bodies.size());
         Body body = bodies.get(0);
@@ -69,7 +69,7 @@ public class OptimalPlacementServiceTest {
         packages.add(new Package(new char[][]{{'2', '2'}}));
         packages.add(new Package(new char[][]{{'3', '3', '3'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages, 2);
+        List<Body> bodies = placementService.placementPackage(packages, 2, 6, 6);
 
         assertEquals(2, bodies.size());
         Body body1 = bodies.get(0);
@@ -108,7 +108,7 @@ public class OptimalPlacementServiceTest {
         packages.add(new Package(new char[][]{{'3', '3', '3'}}));
         packages.add(new Package(new char[][]{{'7', '7', '7'}, {'7', '7', '7', '7'}}));
 
-        List<Body> bodies = placementService.placementPackage(packages, 2);
+        List<Body> bodies = placementService.placementPackage(packages, 2, 6, 6);
 
         assertEquals(2, bodies.size());
 
@@ -141,7 +141,7 @@ public class OptimalPlacementServiceTest {
 
 
         assertThrows(SmallNumberBodiesException.class, () -> {
-            placementService.placementPackage(packages, 1);
+            placementService.placementPackage(packages, 1, 6, 6);
         });
     }
 

@@ -1,9 +1,7 @@
 package ru.liga.services;
 
 import org.junit.jupiter.api.Test;
-import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.models.Place;
 import ru.liga.consolepackages.services.readers.PackagesReaderService;
 import ru.liga.consolepackages.services.readers.PackagesReaderServiceImpl;
 
@@ -44,8 +42,7 @@ public class PackagesReaderServiceImplTest {
     public void manyPackageTxtFiles() throws IOException {
         List<Package> packages =
                 packagesReaderService.readPackagesFromTxt(
-                        "src/test/resources/readerservicetestfiles/manyPackageFile.txt")
-                ;
+                        "src/test/resources/readerservicetestfiles/manyPackageFile.txt");
 
         assertEquals(11, packages.size());
 

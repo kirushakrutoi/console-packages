@@ -2,7 +2,6 @@ package ru.liga.consolepackages.services.placements;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
@@ -13,28 +12,27 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class PlacementService {
-    protected final int LENGTH_BODY;
-    protected final int WIDTH_BODY;
+
     private static final Logger logger = LoggerFactory.getLogger(PlacePackagesCoordinator.class);
 
-    public PlacementService(int WIDTH_BODY, int LENGTH_BODY) {
-        this.LENGTH_BODY = LENGTH_BODY;
-        this.WIDTH_BODY = WIDTH_BODY;
+    public PlacementService() {
     }
 
     /**
      * Метод для размещения посылок в кузова грузовиков.
      *
-     * @param packages список посылок
+     * @param packages     список посылок
+     * @param widthBody    ширина кузова машин
+     * @param lengthBody   длина кузова машин
      * @param numberBodies количество кузовов грузовиков
      * @return список заполненных кузовов грузовиков
      */
-    public abstract List<Body> placementPackage(List<Package> packages, int numberBodies);
+    public abstract List<Body> placementPackage(List<Package> packages, int numberBodies, int widthBody, int lengthBody);
 
-    protected List<Body> createEmptyBodies(int numberBodies) {
+    protected List<Body> createEmptyBodies(int numberBodies, int widthBody, int lengthBody) {
         List<Body> bodies = new ArrayList<>();
         for (int i = 0; i < numberBodies; i++) {
-            bodies.add(new Body(LENGTH_BODY, WIDTH_BODY));
+            bodies.add(new Body(widthBody, lengthBody));
         }
         return bodies;
     }
@@ -44,8 +42,8 @@ public abstract class PlacementService {
     }
 
     protected boolean searchPlaceAndInsertPackage(Package pack, Body body) {
-        for (int i = WIDTH_BODY - 1; i >= pack.getWidth() - 1; i--) {
-            for (int j = 0; j < WIDTH_BODY - pack.getMaxLength() + 1; j++) {
+        for (int i = body.getWidth() - 1; i >= pack.getWidth() - 1; i--) {
+            for (int j = 0; j < body.getLength() - pack.getMaxLength() + 1; j++) {
                 Place place = new Place(i, j);
 
                 if (isPlaceExist(pack, body, place)) {

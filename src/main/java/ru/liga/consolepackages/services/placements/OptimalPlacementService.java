@@ -11,31 +11,28 @@ import java.util.List;
 public class OptimalPlacementService extends PlacementService {
     private static final Logger logger = LoggerFactory.getLogger(OptimalPlacementService.class);
 
-    public OptimalPlacementService(int WIDTH_BODY, int LENGTH_BODY) {
-        super(WIDTH_BODY, LENGTH_BODY);
-    }
-
     /**
      * Метод для оптимального размещения посылок в кузова грузовиков.
      *
-     * @param packages список посылок
+     * @param packages     список посылок
+     * @param widthBody    ширина кузова машин
+     * @param lengthBody   длина кузова машин
      * @param numberBodies количество кузовов грузовиков
      * @return список заполненных кузовов грузовиков
-     * @throws SmallNumberBodiesException если количество кузовов грузовиков меньше, чем необходимо для размещения всех посылок
      */
     @Override
-    public List<Body> placementPackage(List<Package> packages, int numberBodies) {
+    public List<Body> placementPackage(List<Package> packages, int numberBodies, int widthBody, int lengthBody) {
         logger.debug("Start sorting package");
         sortPackage(packages);
         logger.debug("End sorting package");
 
         logger.debug("Creating empty bodies");
-        List<Body> bodies = createEmptyBodies(numberBodies);
+        List<Body> bodies = createEmptyBodies(numberBodies, widthBody, lengthBody);
 
         for (Package pack : packages) {
             boolean successInserted = true;
 
-            logger.debug("Package type " + pack.getSymbol() + " the beginning of the placement");
+            logger.debug("Package type {} the beginning of the placement", pack.getSymbol());
 
             for (Body body : bodies) {
                 successInserted = searchPlaceAndInsertPackage(pack, body);
@@ -44,7 +41,7 @@ public class OptimalPlacementService extends PlacementService {
                 }
             }
 
-            logger.debug("Package type " + pack.getSymbol() + " the ending of the placement");
+            logger.debug("Package type {} the ending of the placement", pack.getSymbol());
 
             if (!successInserted) {
                 logger.warn("small number bodies");

@@ -11,9 +11,9 @@ import java.util.Map;
 public class PlacementServiceFactory {
     private static final Map<String, PlacementService> placementServicesMap = new HashMap<>();
 
-    public PlacementServiceFactory(int width, int length) {
-        placementServicesMap.put("o", new OptimalPlacementService(width, length));
-        placementServicesMap.put("u", new UniformPlacementService(width, length));
+    public PlacementServiceFactory() {
+        placementServicesMap.put("o", new OptimalPlacementService());
+        placementServicesMap.put("u", new UniformPlacementService());
     }
 
     /**
@@ -21,10 +21,9 @@ public class PlacementServiceFactory {
      *
      * @param algorithmType тип алгоритма
      * @return сервис размещения посылок
-     * @throws IncorrectAnswerException если указан некорректный тип алгоритма
      */
     public PlacementService getPlacementService(String algorithmType) {
-        if(!placementServicesMap.containsKey(algorithmType)) {
+        if (!placementServicesMap.containsKey(algorithmType)) {
             throw new IncorrectAnswerException("Incorrect algorithm type");
         }
 
