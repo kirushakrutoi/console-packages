@@ -2,6 +2,7 @@ package ru.liga.consolepackages.services.readers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Body;
 
@@ -10,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+@Service
 public class BodiesReaderServiceImpl implements BodiesReaderService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 

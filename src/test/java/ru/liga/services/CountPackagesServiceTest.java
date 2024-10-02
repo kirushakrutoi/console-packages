@@ -1,11 +1,10 @@
 package ru.liga.services;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
-import ru.liga.consolepackages.services.CountPackagesService;
+import ru.liga.consolepackages.services.packages.CountPackagesService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

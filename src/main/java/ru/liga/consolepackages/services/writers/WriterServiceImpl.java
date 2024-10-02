@@ -3,11 +3,13 @@ package ru.liga.consolepackages.services.writers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.models.Body;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 
 public class WriterServiceImpl implements WriterService {
     private final ObjectMapper objectMapper = new ObjectMapper();

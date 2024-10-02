@@ -1,5 +1,7 @@
-package ru.liga.consolepackages.services;
+package ru.liga.consolepackages.services.packages;
 
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Place;
 
@@ -7,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class CountPackagesService {
 
     /**

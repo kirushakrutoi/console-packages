@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.services;
+package ru.liga.consolepackages.services.packages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

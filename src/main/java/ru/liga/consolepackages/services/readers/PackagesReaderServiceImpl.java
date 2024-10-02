@@ -2,6 +2,7 @@ package ru.liga.consolepackages.services.readers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Package;
 
@@ -9,23 +10,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PackagesReaderServiceImpl implements PackagesReaderService/*, BodiesReaderService*/ {
-    //private final ObjectMapper objectMapper = new ObjectMapper();
+@Service
+public class PackagesReaderServiceImpl implements PackagesReaderService {
     private static final Logger logger = LoggerFactory.getLogger(PackagesReaderServiceImpl.class);
-
-/*    @Override
-    public List<Body> readBodiesFromJson(String filePath) throws FileNotFoundException, FailedReadFileException {
-        File file = new File(filePath);
-        checkExistenceFile(file);
-
-        try {
-            return objectMapper.readValue(file, new TypeReference<List<Body>>() {
-            });
-        } catch (IOException e) {
-            throw new FailedReadFileException("Failed to read the file - " + filePath);
-        }
-    }*/
-
 
     /**
      * Метод для чтения посылок из текстового файла.

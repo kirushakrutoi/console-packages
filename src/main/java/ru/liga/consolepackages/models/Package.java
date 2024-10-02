@@ -40,6 +40,7 @@ public class Package {
                 this.pack[i][j] = lines.get(i).charAt(j);
             }
         }
+        this.id = String.valueOf(this.pack[0][0]);
         this.symbol = this.pack[0][0];
     }
 

@@ -11,9 +11,9 @@ import java.util.Map;
 public class PlacementServiceFactory {
     private static final Map<String, PlacementService> placementServicesMap = new HashMap<>();
 
-    public PlacementServiceFactory(int width, int length) {
-        placementServicesMap.put("o", new OptimalPlacementService(width, length));
-        placementServicesMap.put("u", new UniformPlacementService(width, length));
+    public PlacementServiceFactory() {
+        placementServicesMap.put("o", new OptimalPlacementService());
+        placementServicesMap.put("u", new UniformPlacementService());
     }
 
     /**

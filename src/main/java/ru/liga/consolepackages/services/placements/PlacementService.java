@@ -12,13 +12,10 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class PlacementService {
-    protected final int LENGTH_BODY;
-    protected final int WIDTH_BODY;
     private static final Logger logger = LoggerFactory.getLogger(PlacePackagesCoordinator.class);
 
-    public PlacementService(int WIDTH_BODY, int LENGTH_BODY) {
-        this.LENGTH_BODY = LENGTH_BODY;
-        this.WIDTH_BODY = WIDTH_BODY;
+    public PlacementService() {
+
     }
 
     /**
@@ -28,23 +25,23 @@ public abstract class PlacementService {
      * @param numberBodies количество кузовов грузовиков
      * @return список заполненных кузовов грузовиков
      */
-    public abstract List<Body> placementPackage(List<Package> packages, int numberBodies);
+    public abstract List<Body> placementPackage(List<Package> packages, List<Body> emptyBody);
 
-    protected List<Body> createEmptyBodies(int numberBodies) {
+/*    protected List<Body> createEmptyBodies(int numberBodies) {
         List<Body> bodies = new ArrayList<>();
         for (int i = 0; i < numberBodies; i++) {
             bodies.add(new Body(LENGTH_BODY, WIDTH_BODY));
         }
         return bodies;
-    }
+    }*/
 
     protected void sortPackage(List<Package> packages) {
         packages.sort(Collections.reverseOrder(Package::compareTo));
     }
 
     protected boolean searchPlaceAndInsertPackage(Package pack, Body body) {
-        for (int i = WIDTH_BODY - 1; i >= pack.getWidth() - 1; i--) {
-            for (int j = 0; j < WIDTH_BODY - pack.getMaxLength() + 1; j++) {
+        for (int i = body.getWidth() - 1; i >= pack.getWidth() - 1; i--) {
+            for (int j = 0; j < body.getLength() - pack.getMaxLength() + 1; j++) {
                 Place place = new Place(i, j);
 
                 if (isPlaceExist(pack, body, place)) {

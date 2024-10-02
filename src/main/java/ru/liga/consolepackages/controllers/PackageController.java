@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.services.PackageService;
+import ru.liga.consolepackages.services.packages.PackageService;
 
 import java.util.stream.Collectors;
 

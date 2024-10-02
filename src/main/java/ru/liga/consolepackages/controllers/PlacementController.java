@@ -20,10 +20,10 @@ public class PlacementController {
     private final int LENGTH_BODY = 6;
     private final int WIDTH_BODY = 6;
     private static final Logger logger = LoggerFactory.getLogger(PlacementController.class);
+    private final PlacePackagesCoordinator coordinator;
 
-    public PlacementController(/*int lengthBody, int widthBody*/) {
-/*        LENGTH_BODY = lengthBody;
-        WIDTH_BODY = widthBody;*/
+    public PlacementController(PlacePackagesCoordinator coordinator) {
+        this.coordinator = coordinator;
     }
 
     /**
@@ -34,22 +34,34 @@ public class PlacementController {
      * @throws FileNotFoundException если файл для чтения не найден.
      */
     @ShellMethod("Метод для размещения посылок")
-    public void placePackage(String filePath, int numberBodies, String selectedAlgorithm, String dirName) throws FileNotFoundException, IOException {
+    public void placePackageFromFile(String filePath, String selectedAlgorithm, String bodiesSize) throws FileNotFoundException, IOException {
         logger.debug("The path to the file has been entered");
 
         logger.debug("The number of bodies entered");
 
         logger.debug("The type {} of algorithm entered", selectedAlgorithm);
 
-        PlacePackagesCoordinator placePackagesCoordinator =
-                new PlacePackagesCoordinator(
-                        new PackagesReaderServiceImpl(),
-                        new WriterServiceImpl(dirName),
-                        new PlacementServiceFactory(WIDTH_BODY, LENGTH_BODY).getPlacementService(selectedAlgorithm)
-                );
+        logger.info("The placement of packages has begun");
+        coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
+        List<Body> bodies = coordinator.getFilledBodiesFromFile(bodiesSize, filePath);
+        logger.info("The placement of packages has been completed");
+
+        for (Body body : bodies) {
+            System.out.println(body);
+        }
+    }
+
+    @ShellMethod("Метод для размещения посылок")
+    public void placePackageById(String packages, String selectedAlgorithm, String bodiesSize) throws FileNotFoundException, IOException {
+        logger.debug("The path to the file has been entered");
+
+        logger.debug("The number of bodies entered");
+
+        logger.debug("The type {} of algorithm entered", selectedAlgorithm);
 
         logger.info("The placement of packages has begun");
-        List<Body> bodies = placePackagesCoordinator.getFilledBodies(numberBodies, filePath);
+        coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
+        List<Body> bodies = coordinator.getFilledBodiesFromString(bodiesSize, packages);
         logger.info("The placement of packages has been completed");
 
         for (Body body : bodies) {

@@ -3,17 +3,13 @@ package ru.liga.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.models.Place;
 import ru.liga.consolepackages.repositories.FilePackageRepository;
-import ru.liga.consolepackages.services.DefaultPackageService;
+import ru.liga.consolepackages.services.packages.DefaultPackageService;
 import ru.liga.consolepackages.validators.PackageValidator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

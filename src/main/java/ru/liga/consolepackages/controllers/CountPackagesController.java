@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.liga.consolepackages.coordinators.CountPackageCoordinator;
-import ru.liga.consolepackages.services.CountPackagesService;
+import ru.liga.consolepackages.services.packages.CountPackagesService;
 import ru.liga.consolepackages.services.readers.BodiesReaderServiceImpl;
 
 import java.io.FileNotFoundException;
@@ -14,10 +14,11 @@ import java.util.Map;
 
 @ShellComponent
 public class CountPackagesController {
+    private final CountPackageCoordinator coordinator;
     private static final Logger logger = LoggerFactory.getLogger(CountPackagesController.class);
 
-    public CountPackagesController() {
-
+    public CountPackagesController(CountPackageCoordinator coordinator) {
+        this.coordinator = coordinator;
     }
 
     /**
@@ -31,12 +32,7 @@ public class CountPackagesController {
         logger.info("Start counting packages");
 
         logger.debug("Start counting packages");
-        CountPackageCoordinator countPackageCoordinator =
-                new CountPackageCoordinator(
-                        new BodiesReaderServiceImpl(),
-                        new CountPackagesService()
-                );
-        Map<Character, Integer> packageIntegerMap = countPackageCoordinator.countPackage(filePath);
+        Map<Character, Integer> packageIntegerMap = coordinator.countPackage(filePath);
         logger.debug("End counting packages");
 
         for (Map.Entry<Character, Integer> entry : packageIntegerMap.entrySet()) {
