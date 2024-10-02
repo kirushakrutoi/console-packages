@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
+import ru.liga.consolepackages.exceptions.FileNotFoundException;
 import ru.liga.consolepackages.models.Body;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,11 +20,9 @@ public class BodiesReaderServiceImpl implements BodiesReaderService {
      *
      * @param filePath путь к JSON-файлу
      * @return список заполненных кузовов грузовиков
-     * @throws FileNotFoundException   если указанный файл не найден
-     * @throws FailedReadFileException если возникла ошибка при чтении файла
      */
     @Override
-    public List<Body> readBodiesFromJson(String filePath) throws FileNotFoundException {
+    public List<Body> readBodiesFromJson(String filePath) {
         File file = new File(filePath);
         checkExistenceFile(file);
 
@@ -36,7 +34,7 @@ public class BodiesReaderServiceImpl implements BodiesReaderService {
         }
     }
 
-    private void checkExistenceFile(File file) throws FileNotFoundException {
+    private void checkExistenceFile(File file) {
         if (!file.exists()) {
             throw new FileNotFoundException("File - " + file.getName() + " not found");
         }

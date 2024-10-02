@@ -7,5 +7,5 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface BodiesReaderService {
-    List<Body> readBodiesFromJson(String filePath) throws FileNotFoundException, FailedReadFileException;
+    List<Body> readBodiesFromJson(String filePath);
 }

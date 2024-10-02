@@ -7,5 +7,5 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface PackagesReaderService {
-    List<Package> readPackagesFromTxt(String filePath) throws FileNotFoundException, FailedReadFileException;
+    List<Package> readPackagesFromTxt(String filePath);
 }

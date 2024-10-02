@@ -6,6 +6,13 @@ import ru.liga.consolepackages.models.Package;
 
 @Component
 public class PackageValidator {
+
+    /**
+     * Валидирует параметры посылки.
+     *
+     * @param pack посылка для валидации
+     * @throws InvalidPackageDataException если параметры посылки некорректны
+     */
     public void validation(Package pack) {
         if (pack.getId() == null || pack.getId().isEmpty()) {
             throw new InvalidPackageDataException("Empty id package");

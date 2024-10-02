@@ -19,19 +19,17 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
      *
      * @param filePath путь к текстовому файлу
      * @return список посылок
-     * @throws FileNotFoundException   если указанный файл не найден
-     * @throws FailedReadFileException если возникла ошибка при чтении файла
      */
     @Override
-    public List<Package> readPackagesFromTxt(String filePath) throws FileNotFoundException {
+    public List<Package> readPackagesFromTxt(String filePath) {
         File file = new File(filePath);
-        checkExistenceFile(file);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
+
         List<Package> packages = new ArrayList<>();
         String line;
         List<String> lines = new ArrayList<>();
 
         try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty() && !lines.isEmpty()) {
                     Package pack = new Package(lines);
@@ -53,11 +51,5 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
         }
 
         return packages;
-    }
-
-    private void checkExistenceFile(File file) throws FileNotFoundException {
-        if (!file.exists()) {
-            throw new FileNotFoundException("File - " + file.getName() + " not found");
-        }
     }
 }

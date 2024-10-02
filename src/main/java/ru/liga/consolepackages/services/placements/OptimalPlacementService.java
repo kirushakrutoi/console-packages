@@ -2,7 +2,6 @@ package ru.liga.consolepackages.services.placements;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PlacementException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
@@ -18,10 +17,9 @@ public class OptimalPlacementService extends PlacementService {
     /**
      * Метод для оптимального размещения посылок в кузова грузовиков.
      *
-     * @param packages     список посылок
+     * @param packages  список посылок
      * @param emptyBody пустые кузовы грузовиков
      * @return список заполненных кузовов грузовиков
-     * @throws SmallNumberBodiesException если количество кузовов грузовиков меньше, чем необходимо для размещения всех посылок
      */
     @Override
     public List<Body> placementPackage(List<Package> packages, List<Body> emptyBody) {

@@ -23,11 +23,9 @@ public class CountPackagesController {
 
     /**
      * Метод вечающий за принятие ответов от пользователя и для подсчета посылок.
-     *
-     * @throws IOException если возникла проблема с чтением из консоли.
      */
     @ShellMethod("Метод для подсчета посылок")
-    public void countPackages(String filePath) throws FileNotFoundException, IOException {
+    public void countPackages(String filePath) {
         logger.debug("The path to the file has been entered");
         logger.info("Start counting packages");
 

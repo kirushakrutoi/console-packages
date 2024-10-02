@@ -24,6 +24,11 @@ public class FilePackageRepository implements PackageRepository {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Получает список всех посылок.
+     *
+     * @return список всех посылок
+     */
     @Override
     public List<Package> getAll() {
         List<Package> packages = new ArrayList<>();
@@ -44,6 +49,12 @@ public class FilePackageRepository implements PackageRepository {
         return packages;
     }
 
+    /**
+     * Получает посылку по ее идентификатору.
+     *
+     * @param id идентификатор посылки
+     * @return посылка с указанным идентификатором
+     */
     @Override
     public Package getById(String id) {
         File file = new File(BASE_DIR + "/" + id + ".json");
@@ -60,6 +71,13 @@ public class FilePackageRepository implements PackageRepository {
         }
     }
 
+
+    /**
+     * Изменяет параметры посылки.
+     *
+     * @param id идентификатор посылки
+     * @param pack посылка с новыми параметрами
+     */
     @Override
     public void change(String id, Package pack) {
         File oldFile = new File(BASE_DIR + "/" + id + ".json");
@@ -77,6 +95,11 @@ public class FilePackageRepository implements PackageRepository {
         }
     }
 
+    /**
+     * Создает новую посылку.
+     *
+     * @param pack новая посылка
+     */
     @Override
     public void create(Package pack) {
         File newFile = new File(BASE_DIR + "/" + pack.getId() + ".json");

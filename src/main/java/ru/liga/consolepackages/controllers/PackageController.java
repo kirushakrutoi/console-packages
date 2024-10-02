@@ -18,23 +18,48 @@ public class PackageController {
         this.packageService = packageService;
     }
 
+    /**
+     * Метод для получения всех посылок.
+     *
+     * @return строка, содержащая все посылки, разделенные символом новой строки
+     */
     @ShellMethod("Метод для получения всех посылок")
     public String getAll() {
-        return packageService.getAll().stream().map(Object::toString).collect(Collectors.joining("\n"));
+        return packageService.getAll()
+                .stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("\n"));
     }
 
-    @ShellMethod
+    /**
+     * Метод для получения посылки по id.
+     *
+     * @param id идентификатор посылки
+     * @return посылка с указанным идентификатором
+     */
+    @ShellMethod("Метод для получения посылки по id")
     public Package getById(String id) {
         return packageService.getById(id);
     }
 
-    @ShellMethod
-    public void change(String id, String newPack) throws JsonProcessingException {
+    /**
+     * Метод для изменения параметров посылки.
+     *
+     * @param id идентификатор посылки для изменения
+     * @param newPack новые параметры посылки
+     */
+    @ShellMethod("Метод для изменения параметров посылки")
+    public void change(String id, String newPack) {
         packageService.change(id, newPack);
     }
 
-    @ShellMethod
-    public void create(String newPack) throws JsonProcessingException {
+    /**
+     * Метод для создания посылки.
+     *
+     * @param newPack параметры новой посылки
+     */
+    @ShellMethod("Метод для создания посылки")
+    public void create(String newPack) {
         packageService.create(newPack);
     }
 }

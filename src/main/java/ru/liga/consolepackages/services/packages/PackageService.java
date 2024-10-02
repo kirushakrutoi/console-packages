@@ -10,7 +10,7 @@ public interface PackageService {
 
     Package getById(String id);
 
-    void change(String id, String sPack) throws JsonProcessingException;
+    void change(String id, String sPack);
 
-    void create(String sPack) throws JsonProcessingException;
+    void create(String sPack);
 }

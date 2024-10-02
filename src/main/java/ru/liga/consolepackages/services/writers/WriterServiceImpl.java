@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.liga.consolepackages.exceptions.FailedWriteDataException;
 import ru.liga.consolepackages.models.Body;
 
 import java.io.File;
@@ -26,10 +27,14 @@ public class WriterServiceImpl implements WriterService {
      * Метод для записи заполненных кузовов грузовиков в файл.
      *
      * @param bodies список заполненных кузовов грузовиков для записи
-     * @throws IOException если возникла проблема при записи кузовов в файл
      */
-    public void writeBodies(List<Body> bodies) throws IOException {
-        objectMapper.writeValue(getNextFile(), bodies);
+    public void writeBodies(List<Body> bodies) {
+        try {
+            objectMapper.writeValue(getNextFile(), bodies);
+        } catch (IOException e) {
+            throw new FailedWriteDataException(e.getMessage());
+        }
+
     }
 
     private File getNextFile() {

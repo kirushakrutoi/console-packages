@@ -2,12 +2,10 @@ package ru.liga.consolepackages.services.placements;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -20,10 +18,9 @@ public class UniformPlacementService extends PlacementService {
     /**
      * Метод для равномерного размещения посылок в кузова грузовиков.
      *
-     * @param packages     список посылок
+     * @param packages    список посылок
      * @param emptyBodies пустые кузова грузовиков
      * @return список заполненных кузовов грузовиков
-     * @throws SmallNumberBodiesException если количество кузовов грузовиков меньше, чем необходимо для размещения всех посылок
      */
     @Override
     public List<Body> placementPackage(List<Package> packages, List<Body> emptyBodies) {

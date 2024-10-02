@@ -6,6 +6,7 @@ target/
 src/test/java/ru/liga/resources/input.txt
 /batches
 spring-shell.log
+/applogs
 
 ### IntelliJ IDEA ###
 .idea

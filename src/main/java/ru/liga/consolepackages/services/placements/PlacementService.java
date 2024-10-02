@@ -22,7 +22,6 @@ public abstract class PlacementService {
      * Метод для размещения посылок в кузова грузовиков.
      *
      * @param packages     список посылок
-     * @param numberBodies количество кузовов грузовиков
      * @return список заполненных кузовов грузовиков
      */
     public abstract List<Body> placementPackage(List<Package> packages, List<Body> emptyBody);

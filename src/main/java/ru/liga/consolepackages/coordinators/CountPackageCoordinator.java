@@ -29,9 +29,8 @@ public class CountPackageCoordinator {
      *
      * @param filePath путь к файлу, содержащему данные о кузовах грузовиков
      * @return карта, содержащая количество посылок каждого типа
-     * @throws FileNotFoundException если указанный файл не найден
      */
-    public Map<Character, Integer> countPackage(String filePath) throws FileNotFoundException {
+    public Map<Character, Integer> countPackage(String filePath) {
         logger.debug("start reading file {}", filePath);
         List<Body> bodies = readerService.readBodiesFromJson(filePath);
         logger.debug("end reading file {}", filePath);
