@@ -1,16 +1,17 @@
 package ru.liga.consolepackages.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.services.packages.PackageService;
 
 import java.util.stream.Collectors;
 
 @ShellComponent
 public class PackageController {
+    private static final Logger logger = LoggerFactory.getLogger(PackageController.class);
     private final PackageService packageService;
 
     @Autowired
@@ -25,10 +26,16 @@ public class PackageController {
      */
     @ShellMethod("Метод для получения всех посылок")
     public String getAll() {
-        return packageService.getAll()
-                .stream()
-                .map(Object::toString)
-                .collect(Collectors.joining("\n"));
+        logger.info("Get all packages");
+        try {
+            return packageService.getAll()
+                    .stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+            return e.getMessage();
+        }
     }
 
     /**
@@ -38,19 +45,32 @@ public class PackageController {
      * @return посылка с указанным идентификатором
      */
     @ShellMethod("Метод для получения посылки по id")
-    public Package getById(String id) {
-        return packageService.getById(id);
+    public String getById(String id) {
+        logger.info("Get package by id - {}", id);
+        try {
+            return packageService.getById(id).toString();
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+            return e.getMessage();
+        }
     }
 
     /**
      * Метод для изменения параметров посылки.
      *
-     * @param id идентификатор посылки для изменения
+     * @param id      идентификатор посылки для изменения
      * @param newPack новые параметры посылки
      */
     @ShellMethod("Метод для изменения параметров посылки")
-    public void change(String id, String newPack) {
-        packageService.change(id, newPack);
+    public String change(String id, String newPack) {
+        logger.info("Change package with id - {}", id);
+        try {
+            packageService.change(id, newPack);
+            return "Successful changed";
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+            return e.getMessage();
+        }
     }
 
     /**
@@ -59,7 +79,31 @@ public class PackageController {
      * @param newPack параметры новой посылки
      */
     @ShellMethod("Метод для создания посылки")
-    public void create(String newPack) {
-        packageService.create(newPack);
+    public String create(String newPack) {
+        logger.info("Create new package");
+        try {
+            packageService.create(newPack);
+            return "Successful created";
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    /**
+     * Метод для удаления посылки.
+     *
+     * @param id идентификатор посылки для удаления
+     */
+    @ShellMethod("Метод для удаления посылки")
+    public String delete(String id) {
+        logger.info("Delete package with id {}", id);
+        try {
+            packageService.delete(id);
+            return "Successful deleted";
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+            return e.getMessage();
+        }
     }
 }

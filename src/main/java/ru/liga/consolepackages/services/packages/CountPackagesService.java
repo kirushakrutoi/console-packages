@@ -1,6 +1,5 @@
 package ru.liga.consolepackages.services.packages;
 
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Place;

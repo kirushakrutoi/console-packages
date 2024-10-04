@@ -13,4 +13,6 @@ public interface PackageRepository {
     void change(String id, Package pack);
 
     void create(Package pack);
+
+    void delete(String id);
 }

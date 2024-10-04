@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Package;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +44,8 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
                 }
             }
         } catch (IOException e) {
-            throw new FailedReadFileException("Failed to read the file - " + filePath);
+            logger.warn("Failed to read the file - {}. {}", filePath, e.getMessage());
+            throw new FailedReadFileException("Failed to read the file - " + filePath + ". " + e.getMessage());
         }
 
 

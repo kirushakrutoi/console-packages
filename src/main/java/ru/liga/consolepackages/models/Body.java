@@ -20,6 +20,10 @@ public class Body {
         }
     }
 
+    public Body(@JsonProperty("body") char[][] body) {
+        this.body = body;
+    }
+
     @JsonIgnore
     public int getWidth() {
         return body.length;
@@ -28,10 +32,6 @@ public class Body {
     @JsonIgnore
     public int getLength() {
         return body[0].length;
-    }
-
-    public Body(@JsonProperty("body") char[][] body) {
-        this.body = body;
     }
 
     public void insertPackage(Package pack, Place place) {

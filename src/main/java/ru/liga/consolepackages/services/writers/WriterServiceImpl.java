@@ -3,7 +3,6 @@ package ru.liga.consolepackages.services.writers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.FailedWriteDataException;
 import ru.liga.consolepackages.models.Body;
 
@@ -13,9 +12,9 @@ import java.util.List;
 
 
 public class WriterServiceImpl implements WriterService {
+    private static final Logger logger = LoggerFactory.getLogger(WriterServiceImpl.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String DIR_FOR_WRITE;
-    private static final Logger logger = LoggerFactory.getLogger(WriterServiceImpl.class);
 
     public WriterServiceImpl(String DIR_FOR_WRITE) {
         this.DIR_FOR_WRITE = DIR_FOR_WRITE;

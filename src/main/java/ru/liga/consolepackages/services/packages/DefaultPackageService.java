@@ -2,6 +2,8 @@ package ru.liga.consolepackages.services.packages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.InvalidPackageDataException;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @Service
 public class DefaultPackageService implements PackageService {
-
+    private static final Logger logger = LoggerFactory.getLogger(DefaultPackageService.class);
     private final PackageRepository packageRepository;
     private final PackageValidator packageValidator;
 
@@ -58,6 +60,7 @@ public class DefaultPackageService implements PackageService {
             packageValidator.validation(newPack);
             packageRepository.change(id, newPack);
         } catch (JsonProcessingException e) {
+            logger.warn(e.getMessage());
             throw new InvalidPackageDataException(e.getMessage());
         }
     }
@@ -74,7 +77,18 @@ public class DefaultPackageService implements PackageService {
             packageValidator.validation(newPack);
             packageRepository.create(newPack);
         } catch (JsonProcessingException e) {
+            logger.warn(e.getMessage());
             throw new InvalidPackageDataException(e.getMessage());
         }
+    }
+
+    /**
+     * Удаляет посылку.
+     *
+     * @param id Идентификатор пакета.
+     */
+    @Override
+    public void delete(String id) {
+        packageRepository.delete(id);
     }
 }

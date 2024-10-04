@@ -7,7 +7,6 @@ import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.models.Place;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,20 +18,13 @@ public abstract class PlacementService {
     }
 
     /**
-     * Метод для размещения посылок в кузова грузовиков.
+     * Размещает посылки в указанных телах.
      *
-     * @param packages     список посылок
-     * @return список заполненных кузовов грузовиков
+     * @param packages  Список посылок.
+     * @param emptyBody Список пустых кузовов.
+     * @return Список заполненных кузовов.
      */
     public abstract List<Body> placementPackage(List<Package> packages, List<Body> emptyBody);
-
-/*    protected List<Body> createEmptyBodies(int numberBodies) {
-        List<Body> bodies = new ArrayList<>();
-        for (int i = 0; i < numberBodies; i++) {
-            bodies.add(new Body(LENGTH_BODY, WIDTH_BODY));
-        }
-        return bodies;
-    }*/
 
     protected void sortPackage(List<Package> packages) {
         packages.sort(Collections.reverseOrder(Package::compareTo));

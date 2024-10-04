@@ -21,7 +21,6 @@ public class PlacementServiceFactory {
      *
      * @param algorithmType тип алгоритма
      * @return сервис размещения посылок
-     * @throws IncorrectAnswerException если указан некорректный тип алгоритма
      */
     public PlacementService getPlacementService(String algorithmType) {
         if (!placementServicesMap.containsKey(algorithmType)) {

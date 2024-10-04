@@ -75,7 +75,7 @@ public class FilePackageRepository implements PackageRepository {
     /**
      * Изменяет параметры посылки.
      *
-     * @param id идентификатор посылки
+     * @param id   идентификатор посылки
      * @param pack посылка с новыми параметрами
      */
     @Override
@@ -114,5 +114,21 @@ public class FilePackageRepository implements PackageRepository {
             logger.warn("File " + newFile.getName() + "couldn't read");
             throw new FailedReadFileException("File " + newFile.getName() + "couldn't read");
         }
+    }
+
+    /**
+     * Удаляет посылку.
+     *
+     * @param id Идентификатор посылки.
+     */
+    @Override
+    public void delete(String id) {
+        File file = new File(BASE_DIR + "/" + id + ".json");
+
+        if (!file.exists()) {
+            throw new PackageNotFoundException("Package with id " + id + " not found");
+        }
+
+        file.delete();
     }
 }

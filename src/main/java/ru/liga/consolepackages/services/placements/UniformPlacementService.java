@@ -16,11 +16,11 @@ public class UniformPlacementService extends PlacementService {
     }
 
     /**
-     * Метод для равномерного размещения посылок в кузова грузовиков.
+     * Равномерно размещает посылки в указанных телах.
      *
-     * @param packages    список посылок
-     * @param emptyBodies пустые кузова грузовиков
-     * @return список заполненных кузовов грузовиков
+     * @param packages    Список посылок.
+     * @param emptyBodies Список пустых кузовов.
+     * @return Список заполненных кузовов.
      */
     @Override
     public List<Body> placementPackage(List<Package> packages, List<Body> emptyBodies) {
@@ -29,7 +29,6 @@ public class UniformPlacementService extends PlacementService {
         logger.debug("End sorting package");
         int numberBodies = emptyBodies.size();
         logger.debug("Creating empty bodies");
-        //List<Body> bodies = createEmptyBodies(numberBodies);
         boolean chet = false;
 
         for (int i = 0; i < packages.size(); i++) {
@@ -37,8 +36,8 @@ public class UniformPlacementService extends PlacementService {
 
             if (!chet) {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(i % numberBodies))) {
-                    logger.warn("small number bodies");
-                    throw new SmallNumberBodiesException("Small number bodies");
+                    logger.warn("Package " + packages.get(i).getId() + " failed to post");
+                    throw new SmallNumberBodiesException("Package " + packages.get(i).getId() + " failed to post");
                 }
                 logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
@@ -47,8 +46,8 @@ public class UniformPlacementService extends PlacementService {
                 }
             } else {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(numberBodies - i % numberBodies - 1))) {
-                    logger.warn("small number bodies");
-                    throw new SmallNumberBodiesException("Small number bodies");
+                    logger.warn("Package " + packages.get(i).getId() + " failed to post");
+                    throw new SmallNumberBodiesException("Package " + packages.get(i).getId() + " failed to post");
                 }
                 logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
@@ -57,10 +56,6 @@ public class UniformPlacementService extends PlacementService {
                 }
             }
         }
-
-/*        if (emptyBodies.isEmpty()) {
-            return Collections.singletonList(new Body(6, 6));
-        }*/
 
         return emptyBodies;
     }

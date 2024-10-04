@@ -1,14 +1,1 @@
-logging:
-  level:
-    root: "warn"
-    org.springframework: "info"
-    ru.liga.consolepackages: "debug"
-  file:
-    name:
-      logs/console-packages-logs.log
-
-DIR:
-  FOR:
-    WRITE:
-      batches
 

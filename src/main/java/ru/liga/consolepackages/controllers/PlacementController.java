@@ -5,17 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
-import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.utils.PlacementServiceFactory;
-
-import java.util.List;
 
 @ShellComponent
 public class PlacementController {
-
     private static final Logger logger = LoggerFactory.getLogger(PlacementController.class);
-    private final int LENGTH_BODY = 6;
-    private final int WIDTH_BODY = 6;
     private final PlacePackagesCoordinator coordinator;
 
     public PlacementController(PlacePackagesCoordinator coordinator) {
@@ -23,52 +17,52 @@ public class PlacementController {
     }
 
     /**
-     * Метод отвечающий за принятие ответов от пользователя, размещение посылок,
-     * вывод в консоль кузовы машин заполненых посылками.
+     * Метод для размещения посылок.
+     *
+     * @param filePath          Путь к файлу с посылками.
+     * @param selectedAlgorithm Выбранный алгоритм размещения.
+     * @param bodiesSize        Строка, содержащая размеры доступного пространства.
+     * @return Результат размещения посылок или сообщение об ошибке.
      */
     @ShellMethod("Метод для размещения посылок")
-    public void placePackageFromFile(String filePath, String selectedAlgorithm, String bodiesSize) {
-        logger.debug("The path to the file has been entered");
+    public String placePackageFromFile(String filePath, String selectedAlgorithm, String bodiesSize) {
+        try {
+            logger.debug("The path to the file {} has been entered", filePath);
+            logger.debug("The type {} of algorithm entered", selectedAlgorithm);
+            logger.info("The placement of packages has begun");
+            coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
+            String bodies = coordinator.getFilledBodiesFromFile(bodiesSize, filePath);
+            logger.info("The placement of packages has been completed");
 
-        logger.debug("The number of bodies entered");
+            return bodies;
 
-        logger.debug("The type {} of algorithm entered", selectedAlgorithm);
-
-        logger.info("The placement of packages has begun");
-        coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
-        List<Body> bodies = coordinator.getFilledBodiesFromFile(bodiesSize, filePath);
-        logger.info("The placement of packages has been completed");
-
-        for (Body body : bodies) {
-            System.out.println(body);
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+            return e.getMessage();
         }
     }
 
     /**
-     * Размещает пакеты в указанном количестве кузовов по идентификаторам.
+     * Метод для размещения посылок.
      *
-     * @param packages          список идентификаторов пакетов, разделенных пробелом
-     * @param selectedAlgorithm тип алгоритма размещения пакетов (равномерный или оптимальный)
+     * @param packages          Строка, содержащая типы посылок.
+     * @param selectedAlgorithm Выбранный алгоритм размещения.
      * @param bodiesSize        размеры кузовов, разделенные пробелом в формате "ширинаxдлина"
-     * @throws IllegalArgumentException если список идентификаторов пакетов пуст или содержит дубликаты,
-     *                                  если тип алгоритма размещения пакетов не поддерживается,
-     *                                  если список размеров кузовов пуст или содержит некорректные данные
+     * @return Результат размещения посылок или сообщение об ошибке.
      */
     @ShellMethod("Метод для размещения посылок")
-    public void placePackageById(String packages, String selectedAlgorithm, String bodiesSize) {
-        logger.debug("The path to the file has been entered");
+    public String placePackageById(String packages, String selectedAlgorithm, String bodiesSize) {
+        try {
+            logger.debug("The type {} of algorithm entered", selectedAlgorithm);
+            logger.info("The placement of packages has begun");
+            coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
+            String bodies = coordinator.getFilledBodiesFromString(bodiesSize, packages);
+            logger.info("The placement of packages has been completed");
+            return bodies;
 
-        logger.debug("The number of bodies entered");
-
-        logger.debug("The type {} of algorithm entered", selectedAlgorithm);
-
-        logger.info("The placement of packages has begun");
-        coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
-        List<Body> bodies = coordinator.getFilledBodiesFromString(bodiesSize, packages);
-        logger.info("The placement of packages has been completed");
-
-        for (Body body : bodies) {
-            System.out.println(body);
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+            return e.getMessage();
         }
     }
 }

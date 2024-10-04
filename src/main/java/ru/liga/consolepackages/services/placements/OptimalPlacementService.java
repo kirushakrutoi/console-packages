@@ -15,11 +15,11 @@ public class OptimalPlacementService extends PlacementService {
     }
 
     /**
-     * Метод для оптимального размещения посылок в кузова грузовиков.
+     * Оптимально размещает посылки в указанных телах.
      *
-     * @param packages  список посылок
-     * @param emptyBody пустые кузовы грузовиков
-     * @return список заполненных кузовов грузовиков
+     * @param packages  Список посылок.
+     * @param emptyBody Список пустых кузовов.
+     * @return Список заполненных кузовов.
      */
     @Override
     public List<Body> placementPackage(List<Package> packages, List<Body> emptyBody) {
@@ -46,7 +46,7 @@ public class OptimalPlacementService extends PlacementService {
             logger.debug("Package type " + pack.getSymbol() + " the ending of the placement");
 
             if (!successInserted) {
-                logger.warn("small number bodies");
+                logger.warn("Package " + pack.getId() + " failed to post");
                 throw new PlacementException("Package " + pack.getId() + " failed to post");
             }
         }

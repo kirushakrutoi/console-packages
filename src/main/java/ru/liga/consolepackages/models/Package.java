@@ -12,13 +12,13 @@ import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Package {
+    private final char[][] pack;
     @Setter
     @Getter
     private String id;
     @Getter
     @Setter
     private char symbol;
-    private final char[][] pack;
 
     public Package(char[][] pack) {
         this.symbol = pack[0][0];
