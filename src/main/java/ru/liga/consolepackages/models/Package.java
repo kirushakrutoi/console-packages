@@ -123,7 +123,7 @@ public class Package {
         return "Package{" +
                 "id='" + id + '\'' +
                 ", symbol=" + symbol +
-                ", pack=" + Arrays.toString(pack) +
+                ", pack=" + Arrays.deepToString(pack) +
                 '}';
     }
 }

@@ -34,27 +34,6 @@
   - delete - удаление посылки, параметры:
     - --id, id посылки:
 
-<h3>Пример использования при сортировке</h3>
-<h4>Пример входных данных</h4>
-
-![alt-text](/img/example1.png)
-
-<h4>Вывод на консоль<h4>
-
-![alt-text](/img/output_example1.png)
-
-<h4>Вывод в файл</h4>
-
-![alt-text](/img/json_output_example1.png)
-
-<h3>Пример использования при полсчете посылок</h3>
-<h4>Пример входных данных</h4>
-
-![alt-text](/img/example2.png)
-
-<h4>Вывод на консоль<h4>
-
-![alt-text](/img/output_example2.png)
 
 
 
