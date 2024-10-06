@@ -18,11 +18,17 @@ public class PackagesConverter {
         this.packageService = packageService;
     }
 
+    /**
+     * Конвертирует строку с названиями посылок в список объектов посылок.
+     *
+     * @param sPackages Строка с названиями посылок.
+     * @return Список объектов посылок.
+     */
     public List<Package> convertFromString(String sPackages) {
         logger.debug("Start converting packages {}", sPackages);
         List<Package> packages = new ArrayList<>();
         for (String sPack : sPackages.split(" ")) {
-            packages.add(packageService.getById(sPack));
+            packages.add(packageService.findByName(sPack));
         }
         logger.debug("End converting packages {}", sPackages);
         return packages;

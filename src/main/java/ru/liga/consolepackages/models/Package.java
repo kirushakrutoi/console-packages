@@ -1,24 +1,32 @@
 package ru.liga.consolepackages.models;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.Arrays;
 import java.util.List;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@Data
+@Entity
+@Table(name = "packages")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Package {
-    private final char[][] pack;
-    @Setter
-    @Getter
-    private String id;
-    @Getter
-    @Setter
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(unique = true)
+    private String name;
+    @Column(unique = true)
     private char symbol;
+    @Column
+    private char[][] pack;
 
     public Package(char[][] pack) {
         this.symbol = pack[0][0];
@@ -26,8 +34,8 @@ public class Package {
     }
 
     @JsonCreator
-    public Package(@JsonProperty("id") String id, @JsonProperty("symbol") char symbol, @JsonProperty("pack") char[][] pack) {
-        this.id = id;
+    public Package(@JsonProperty("name") String name, @JsonProperty("symbol") char symbol, @JsonProperty("pack") char[][] pack) {
+        this.name = name;
         this.symbol = symbol;
         this.pack = pack;
     }
@@ -40,7 +48,7 @@ public class Package {
                 this.pack[i][j] = lines.get(i).charAt(j);
             }
         }
-        this.id = String.valueOf(this.pack[0][0]);
+        this.name = String.valueOf(this.pack[0][0]);
         this.symbol = this.pack[0][0];
     }
 
@@ -87,7 +95,7 @@ public class Package {
         }
         Package aPackage = (Package) o;
         if (aPackage.getSymbol() != getSymbol()
-                || !aPackage.getId().equals(getId())
+                || !aPackage.getName().equals(getName())
                 || aPackage.getWidth() != getWidth()) {
             return false;
         }
@@ -121,7 +129,7 @@ public class Package {
     @Override
     public String toString() {
         return "Package{" +
-                "id='" + id + '\'' +
+                "name='" + name + '\'' +
                 ", symbol=" + symbol +
                 ", pack=" + Arrays.deepToString(pack) +
                 '}';

@@ -14,7 +14,7 @@ public class PackageValidator {
      * @throws InvalidPackageDataException если параметры посылки некорректны
      */
     public void validation(Package pack) {
-        if (pack.getId() == null || pack.getId().isEmpty()) {
+        if (pack.getName() == null || pack.getName().isEmpty()) {
             throw new InvalidPackageDataException("Empty id package");
         }
 

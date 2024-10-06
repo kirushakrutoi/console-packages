@@ -46,8 +46,8 @@ public class OptimalPlacementService extends PlacementService {
             logger.debug("Package type " + pack.getSymbol() + " the ending of the placement");
 
             if (!successInserted) {
-                logger.warn("Package " + pack.getId() + " failed to post");
-                throw new PlacementException("Package " + pack.getId() + " failed to post");
+                logger.warn("Package " + pack.getName() + " failed to post");
+                throw new PlacementException("Package " + pack.getName() + " failed to post");
             }
         }
 

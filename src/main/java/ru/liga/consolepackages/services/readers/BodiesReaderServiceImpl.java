@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.exceptions.FileNotFoundException;
 import ru.liga.consolepackages.models.Body;
@@ -35,6 +36,22 @@ public class BodiesReaderServiceImpl implements BodiesReaderService {
         } catch (IOException e) {
             logger.warn("Failed to read the file - {}. {}", filePath, e.getMessage());
             throw new FailedReadFileException("Failed to read the file - " + filePath + ". " + e.getMessage());
+        }
+    }
+
+    /**
+     * Считывает данные о кузовах машин из файла JSON.
+     *
+     * @param multipartFile Файл JSON с данными о кузовах машин.
+     * @return Список объектов кузовов машин.
+     */
+    @Override
+    public List<Body> readBodiesFromJson(MultipartFile multipartFile) {
+        try {
+            return objectMapper.readValue(multipartFile.getBytes(), new TypeReference<List<Body>>() {
+            });
+        } catch (IOException e) {
+            throw new FailedReadFileException("Failed to read the file - "  + ". " + e.getMessage());
         }
     }
 

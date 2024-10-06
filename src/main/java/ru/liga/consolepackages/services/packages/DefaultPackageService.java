@@ -6,7 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.liga.consolepackages.DTOs.ChangePackageDTO;
+import ru.liga.consolepackages.DTOs.NewPackageDTO;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.InvalidPackageDataException;
+import ru.liga.consolepackages.mappers.PackageMapper;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.repositories.PackageRepository;
 import ru.liga.consolepackages.validators.PackageValidator;
@@ -18,11 +21,13 @@ public class DefaultPackageService implements PackageService {
     private static final Logger logger = LoggerFactory.getLogger(DefaultPackageService.class);
     private final PackageRepository packageRepository;
     private final PackageValidator packageValidator;
+    private final PackageMapper packageMapper;
 
     @Autowired
-    public DefaultPackageService(PackageRepository packageRepository, PackageValidator packageValidator) {
+    public DefaultPackageService(PackageRepository packageRepository, PackageValidator packageValidator, PackageMapper packageMapper) {
         this.packageRepository = packageRepository;
         this.packageValidator = packageValidator;
+        this.packageMapper = packageMapper;
     }
 
     /**
@@ -43,7 +48,7 @@ public class DefaultPackageService implements PackageService {
      * @return посылка с указанным идентификатором
      */
     @Override
-    public Package getById(String id) {
+    public Package findByName(String id) {
         return packageRepository.getById(id);
     }
 
@@ -65,6 +70,12 @@ public class DefaultPackageService implements PackageService {
         }
     }
 
+    @Override
+    public void change(String name, ChangePackageDTO changePackageDTO) {
+        Package pack = packageMapper.fromChangeDtoToPackage(changePackageDTO);
+        packageRepository.change(name, pack);
+    }
+
     /**
      * Создает новую посылку.
      *
@@ -80,6 +91,12 @@ public class DefaultPackageService implements PackageService {
             logger.warn(e.getMessage());
             throw new InvalidPackageDataException(e.getMessage());
         }
+    }
+
+    @Override
+    public void create(NewPackageDTO newPackageDTO) {
+        Package pack = packageMapper.fromNewDtoToPackage(newPackageDTO);
+        packageRepository.create(pack);
     }
 
     /**

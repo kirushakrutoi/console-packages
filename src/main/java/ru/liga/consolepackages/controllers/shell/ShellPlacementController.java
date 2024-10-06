@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.controllers;
+package ru.liga.consolepackages.controllers.shell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +8,11 @@ import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
 import ru.liga.consolepackages.utils.PlacementServiceFactory;
 
 @ShellComponent
-public class PlacementController {
-    private static final Logger logger = LoggerFactory.getLogger(PlacementController.class);
+public class ShellPlacementController {
+    private static final Logger logger = LoggerFactory.getLogger(ShellPlacementController.class);
     private final PlacePackagesCoordinator coordinator;
 
-    public PlacementController(PlacePackagesCoordinator coordinator) {
+    public ShellPlacementController(PlacePackagesCoordinator coordinator) {
         this.coordinator = coordinator;
     }
 

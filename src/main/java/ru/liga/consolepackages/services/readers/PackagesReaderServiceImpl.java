@@ -3,13 +3,11 @@ package ru.liga.consolepackages.services.readers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Package;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +23,20 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
      */
     @Override
     public List<Package> readPackagesFromTxt(String filePath) {
-        File file = new File(filePath);
+        return readPackages(getReader(filePath));
+    }
 
+    @Override
+    public List<Package> readPackagesFromTxt(MultipartFile file) {
+        return readPackages(getReader(file));
+    }
+
+    private List<Package> readPackages(BufferedReader reader) {
         List<Package> packages = new ArrayList<>();
         String line;
         List<String> lines = new ArrayList<>();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty() && !lines.isEmpty()) {
                     Package pack = new Package(lines);
@@ -44,8 +48,8 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
                 }
             }
         } catch (IOException e) {
-            logger.warn("Failed to read the file - {}. {}", filePath, e.getMessage());
-            throw new FailedReadFileException("Failed to read the file - " + filePath + ". " + e.getMessage());
+            //logger.warn("Failed to read the file - {}. {}", filePath, e.getMessage());
+            throw new FailedReadFileException("Failed to read the file - " + e.getMessage());
         }
 
 
@@ -55,5 +59,21 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
         }
 
         return packages;
+    }
+
+    private BufferedReader getReader(MultipartFile file) {
+        try {
+            return new BufferedReader(new InputStreamReader(file.getInputStream()));
+        } catch (IOException e) {
+            throw new FailedReadFileException("Failed to read the file " + e.getMessage());
+        }
+    }
+
+    private BufferedReader getReader(String filePath) {
+        try {
+            return new BufferedReader(new FileReader(filePath));
+        } catch (IOException e) {
+            throw new FailedReadFileException("Failed to read the file " + e.getMessage());
+        }
     }
 }

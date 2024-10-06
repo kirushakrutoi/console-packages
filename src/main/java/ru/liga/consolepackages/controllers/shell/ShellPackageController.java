@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.controllers;
+package ru.liga.consolepackages.controllers.shell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,12 +10,12 @@ import ru.liga.consolepackages.services.packages.PackageService;
 import java.util.stream.Collectors;
 
 @ShellComponent
-public class PackageController {
-    private static final Logger logger = LoggerFactory.getLogger(PackageController.class);
+public class ShellPackageController {
+    private static final Logger logger = LoggerFactory.getLogger(ShellPackageController.class);
     private final PackageService packageService;
 
     @Autowired
-    public PackageController(PackageService packageService) {
+    public ShellPackageController(PackageService packageService) {
         this.packageService = packageService;
     }
 
@@ -41,14 +41,14 @@ public class PackageController {
     /**
      * Метод для получения посылки по id.
      *
-     * @param id идентификатор посылки
+     * @param name идентификатор посылки
      * @return посылка с указанным идентификатором
      */
     @ShellMethod("Метод для получения посылки по id")
-    public String getById(String id) {
-        logger.info("Get package by id - {}", id);
+    public String getById(String name) {
+        logger.info("Get package by id - {}", name);
         try {
-            return packageService.getById(id).toString();
+            return packageService.findByName(name).toString();
         } catch (RuntimeException e) {
             logger.warn(e.getMessage());
             return e.getMessage();

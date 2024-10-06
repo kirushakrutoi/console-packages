@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+import ru.liga.consolepackages.DTOs.CountPackageDTO;
 import ru.liga.consolepackages.converters.BodiesConverter;
 import ru.liga.consolepackages.converters.CountingPackagesConverter;
 import ru.liga.consolepackages.models.Body;
@@ -45,5 +47,19 @@ public class CountPackageCoordinator {
         return countingPackagesConverter.convertPackagesIngerMapToString(packageIntegerMap)
                 + "\n"
                 + bodiesConverter.fromBodiesToString(bodies);
+    }
+
+    /**
+     * Подсчитывает количество посылок на основе данных из файла.
+     *
+     * @param multipartFile Файл с данными о кузовах машин.
+     * @return Количество посылок в каждом кузове.
+     */
+    public CountPackageDTO countPackage(MultipartFile multipartFile) {
+        List<Body> bodies = readerService.readBodiesFromJson(multipartFile);
+        logger.info("Start counting packages");
+        Map<Character, Integer> packageIntegerMap = countPackagesService.countPackagesFromBodies(bodies);
+        logger.info("End counting packages");
+        return new CountPackageDTO(packageIntegerMap, bodies);
     }
 }

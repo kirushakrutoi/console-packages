@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.controllers;
+package ru.liga.consolepackages.controllers.shell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,11 +7,11 @@ import org.springframework.shell.standard.ShellMethod;
 import ru.liga.consolepackages.coordinators.CountPackageCoordinator;
 
 @ShellComponent
-public class CountPackagesController {
-    private static final Logger logger = LoggerFactory.getLogger(CountPackagesController.class);
+public class ShellCountPackagesController {
+    private static final Logger logger = LoggerFactory.getLogger(ShellCountPackagesController.class);
     private final CountPackageCoordinator coordinator;
 
-    public CountPackagesController(CountPackageCoordinator coordinator) {
+    public ShellCountPackagesController(CountPackageCoordinator coordinator) {
         this.coordinator = coordinator;
     }
 

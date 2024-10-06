@@ -81,7 +81,7 @@ public class FilePackageRepository implements PackageRepository {
     @Override
     public void change(String id, Package pack) {
         File oldFile = new File(BASE_DIR + "/" + id + ".json");
-        File newFile = new File(BASE_DIR + "/" + pack.getId() + ".json");
+        File newFile = new File(BASE_DIR + "/" + pack.getName() + ".json");
 
         if (!oldFile.delete()) {
             throw new PackageNotFoundException("Package with id " + id + " not found");
@@ -102,10 +102,10 @@ public class FilePackageRepository implements PackageRepository {
      */
     @Override
     public void create(Package pack) {
-        File newFile = new File(BASE_DIR + "/" + pack.getId() + ".json");
+        File newFile = new File(BASE_DIR + "/" + pack.getName() + ".json");
 
         if (newFile.exists()) {
-            throw new PackageAlreadyExistException("Package with id " + pack.getId() + " already exist");
+            throw new PackageAlreadyExistException("Package with id " + pack.getName() + " already exist");
         }
 
         try {

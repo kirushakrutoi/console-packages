@@ -1,1 +1,16 @@
-
+spring:
+  sql:
+    init:
+      mode: never
+  datasource:
+    username: ${PACKAGES_DB_USERNAME}
+    password: ${PACKAGES_DB_PASSWORD}
+    url: ${PACKAGES_DB_URL}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false

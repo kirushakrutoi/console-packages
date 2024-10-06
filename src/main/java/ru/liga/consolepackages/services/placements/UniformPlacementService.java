@@ -36,8 +36,8 @@ public class UniformPlacementService extends PlacementService {
 
             if (!chet) {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(i % numberBodies))) {
-                    logger.warn("Package " + packages.get(i).getId() + " failed to post");
-                    throw new SmallNumberBodiesException("Package " + packages.get(i).getId() + " failed to post");
+                    logger.warn("Package " + packages.get(i).getName() + " failed to post");
+                    throw new SmallNumberBodiesException("Package " + packages.get(i).getName() + " failed to post");
                 }
                 logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
@@ -46,8 +46,8 @@ public class UniformPlacementService extends PlacementService {
                 }
             } else {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(numberBodies - i % numberBodies - 1))) {
-                    logger.warn("Package " + packages.get(i).getId() + " failed to post");
-                    throw new SmallNumberBodiesException("Package " + packages.get(i).getId() + " failed to post");
+                    logger.warn("Package " + packages.get(i).getName() + " failed to post");
+                    throw new SmallNumberBodiesException("Package " + packages.get(i).getName() + " failed to post");
                 }
                 logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
