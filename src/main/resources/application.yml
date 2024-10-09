@@ -17,9 +17,9 @@ spring:
 
 bot:
   api-url: https://api.telegram.org/
-  path: https://95d5-89-31-38-68.ngrok-free.app
+  path: ${WEBHOOK}
   name: packages
-  token: 7640742907:AAF1sCUaPOXT-LPEkbgI3WDC1Q5U9ipei4o
+  token: ${BOT_TOKEN}
 
 dir:
   for:
