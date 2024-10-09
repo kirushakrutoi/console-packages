@@ -1,4 +1,4 @@
-package ru.liga.services;
+package ru.liga.services.readers;
 
 import org.junit.jupiter.api.Test;
 import ru.liga.consolepackages.models.Body;

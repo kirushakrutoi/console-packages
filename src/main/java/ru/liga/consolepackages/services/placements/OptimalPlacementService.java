@@ -1,15 +1,19 @@
 package ru.liga.consolepackages.services.placements;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PlacementException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 
 import java.util.List;
 
+@Slf4j
+@Component("o")
 public class OptimalPlacementService extends PlacementService {
-    private static final Logger logger = LoggerFactory.getLogger(OptimalPlacementService.class);
 
     public OptimalPlacementService() {
     }
@@ -23,18 +27,15 @@ public class OptimalPlacementService extends PlacementService {
      */
     @Override
     public List<Body> placementPackage(List<Package> packages, List<Body> emptyBody) {
-        logger.debug("Start sorting package");
+        log.debug("Start sorting package");
         sortPackage(packages);
-        logger.debug("End sorting package");
+        log.debug("End sorting package");
 
-        logger.debug("Creating empty bodies");
-        //List<Body> bodies = createEmptyBodies(numberBodies);
-
-        //boolean successPlacement = true;
+        log.debug("Creating empty bodies");
         for (Package pack : packages) {
             boolean successInserted = true;
 
-            logger.debug("Package type " + pack.getSymbol() + " the beginning of the placement");
+            log.debug("Package type " + pack.getSymbol() + " the beginning of the placement");
 
             for (Body body : emptyBody) {
                 successInserted = searchPlaceAndInsertPackage(pack, body);
@@ -43,14 +44,19 @@ public class OptimalPlacementService extends PlacementService {
                 }
             }
 
-            logger.debug("Package type " + pack.getSymbol() + " the ending of the placement");
+            log.debug("Package type " + pack.getSymbol() + " the ending of the placement");
 
             if (!successInserted) {
-                logger.warn("Package " + pack.getName() + " failed to post");
+                log.warn("Package " + pack.getName() + " failed to post");
                 throw new PlacementException("Package " + pack.getName() + " failed to post");
             }
         }
 
         return emptyBody;
+    }
+
+    @Override
+    public String getType() {
+        return "o";
     }
 }

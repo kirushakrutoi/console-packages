@@ -1,14 +1,12 @@
 package ru.liga.consolepackages.coordinators;
 
-import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.liga.consolepackages.DTOs.PlacementRequestDTO;
 import ru.liga.consolepackages.DTOs.PlacementResponseDTO;
-import ru.liga.consolepackages.converters.BodiesConverter;
+import ru.liga.consolepackages.converters.BodyConverter;
 import ru.liga.consolepackages.converters.PackagesConverter;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
@@ -17,23 +15,24 @@ import ru.liga.consolepackages.services.readers.PackagesReaderService;
 import ru.liga.consolepackages.services.writers.WriterService;
 
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Component
 public class PlacePackagesCoordinator {
-    private static final Logger logger = LoggerFactory.getLogger(PlacePackagesCoordinator.class);
     private final PackagesReaderService readerService;
     private final WriterService writerService;
-    private final BodiesConverter bodiesConverter;
+    private final BodyConverter bodyConverter;
     private final PackagesConverter packagesConverter;
-    @Setter
-    private PlacementService placementService;
+    private final Map<String, PlacementService> placementServiceMap;
 
     @Autowired
-    public PlacePackagesCoordinator(PackagesReaderService readerService, WriterService writerService, BodiesConverter bodiesConverter, PackagesConverter packagesConverter) {
+    public PlacePackagesCoordinator(PackagesReaderService readerService, WriterService writerService, BodyConverter bodyConverter, PackagesConverter packagesConverter, Map<String, PlacementService> placementServiceMap) {
         this.readerService = readerService;
         this.writerService = writerService;
-        this.bodiesConverter = bodiesConverter;
+        this.bodyConverter = bodyConverter;
         this.packagesConverter = packagesConverter;
+        this.placementServiceMap = placementServiceMap;
     }
 
     /**
@@ -43,13 +42,14 @@ public class PlacePackagesCoordinator {
      * @param filePath   Путь к файлу с типами посылок.
      * @return Результат размещения посылок в телах в виде строки.
      */
-    public String getFilledBodiesFromFile(String bodiesSize, String filePath) {
-        logger.debug("The file {} is being read", filePath);
+    public String getFilledBodiesFromFile(String bodiesSize, String filePath, String selectedAlgorithm) {
+        log.debug("The file {} is being read", filePath);
+        PlacementService placementService = placementServiceMap.get(selectedAlgorithm);
         List<Package> packages = readerService.readPackagesFromTxt(filePath);
-        logger.debug("The file has been read successfully");
-        List<Body> bodies = placementAndWrite(packages, bodiesSize);
+        log.debug("The file has been read successfully");
+        List<Body> bodies = placementAndWrite(packages, bodiesSize, placementService);
 
-        return bodiesConverter.fromBodiesToString(bodies);
+        return bodyConverter.converter(bodies);
     }
 
     /**
@@ -59,11 +59,12 @@ public class PlacePackagesCoordinator {
      * @param sPackages  Строка, содержащая типы посылок.
      * @return Результат размещения посылок в телах в виде строки.
      */
-    public String getFilledBodiesFromString(String bodiesSize, String sPackages) {
+    public String getFilledBodiesFromString(String bodiesSize, String sPackages, String selectedAlgorithm) {
+        PlacementService placementService = placementServiceMap.get(selectedAlgorithm);
         List<Package> packages = packagesConverter.convertFromString(sPackages);
-        List<Body> bodies = placementAndWrite(packages, bodiesSize);
+        List<Body> bodies = placementAndWrite(packages, bodiesSize, placementService);
 
-        return bodiesConverter.fromBodiesToString(bodies);
+        return bodyConverter.converter(bodies);
     }
 
 
@@ -71,13 +72,14 @@ public class PlacePackagesCoordinator {
      * Размещает посылки в кузова машин на основе данных из файла и строки содержащей размеры кузовов.
      *
      * @param bodiesSize Размер кузовов.
-     * @param file Файл с данными о посылках.
+     * @param file       Файл с данными о посылках.
      * @return Ответ с результатом размещения.
      */
-    public PlacementResponseDTO getFilledBodiesFromFile(String bodiesSize, MultipartFile file) {
+    public PlacementResponseDTO getFilledBodiesFromFile(String bodiesSize, MultipartFile file, String selectedAlgorithm) {
         List<Package> packages = readerService.readPackagesFromTxt(file);
-        logger.debug("The file has been read successfully");
-        List<Body> bodies = placementAndWrite(packages, bodiesSize);
+        PlacementService placementService = placementServiceMap.get(selectedAlgorithm);
+        log.debug("The file has been read successfully");
+        List<Body> bodies = placementAndWrite(packages, bodiesSize, placementService);
 
         return new PlacementResponseDTO(bodies);
     }
@@ -90,18 +92,18 @@ public class PlacePackagesCoordinator {
      */
     public PlacementResponseDTO getFilledBodiesFromString(PlacementRequestDTO placementRequestDTO) {
         List<Package> packages = packagesConverter.convertFromString(placementRequestDTO.getPackagesNames());
-        List<Body> bodies = placementAndWrite(packages, placementRequestDTO.getBodiesSize());
+        PlacementService placementService = placementServiceMap.get(placementRequestDTO.getSelectedAlgorithm());
+        List<Body> bodies = placementAndWrite(packages, placementRequestDTO.getBodiesSize(), placementService);
 
         return new PlacementResponseDTO(bodies);
     }
 
 
-
-    private List<Body> placementAndWrite(List<Package> packages, String bodiesSize) {
-        List<Body> bodies = placementService.placementPackage(packages, bodiesConverter.fromStringToBodies(bodiesSize));
-        logger.debug("Recording of downloaded machines to a file has begun");
+    private List<Body> placementAndWrite(List<Package> packages, String bodiesSize, PlacementService placementService) {
+        List<Body> bodies = placementService.placementPackage(packages, bodyConverter.converter(bodiesSize));
+        log.debug("Recording of downloaded machines to a file has begun");
         writerService.writeBodies(bodies);
-        logger.debug("The recording of the downloaded machines to the file has been completed successfully");
+        log.debug("The recording of the downloaded machines to the file has been completed successfully");
         return bodies;
     }
 }

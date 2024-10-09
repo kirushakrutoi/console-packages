@@ -1,19 +1,21 @@
 package ru.liga.consolepackages.services.readers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Package;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class PackagesReaderServiceImpl implements PackagesReaderService {
-    private static final Logger logger = LoggerFactory.getLogger(PackagesReaderServiceImpl.class);
 
     /**
      * Метод для чтения посылок из текстового файла.
@@ -26,6 +28,12 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
         return readPackages(getReader(filePath));
     }
 
+    /**
+     * Метод для чтения посылок из текстового файла.
+     *
+     * @param file текстовый файл для чтения.
+     * @return список посылок
+     */
     @Override
     public List<Package> readPackagesFromTxt(MultipartFile file) {
         return readPackages(getReader(file));
@@ -40,7 +48,7 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty() && !lines.isEmpty()) {
                     Package pack = new Package(lines);
-                    logger.debug("A figure of typ" + pack.getSymbol() + "has been read");
+                    log.debug("A figure of typ" + pack.getSymbol() + "has been read");
                     packages.add(pack);
                     lines.clear();
                 } else {

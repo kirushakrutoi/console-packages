@@ -1,6 +1,9 @@
-package ru.liga.services;
+package ru.liga.services.readers;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import ru.liga.consolepackages.ConsolePackages;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Place;
 import ru.liga.consolepackages.services.readers.BodiesReaderService;
@@ -11,11 +14,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest(classes = BodiesReaderServiceImpl.class)
 public class BodiesReaderServiceImplTest {
-    private final BodiesReaderService bodiesReaderService = new BodiesReaderServiceImpl();
+    @Autowired
+    private BodiesReaderService bodiesReaderService;
 
     @Test
-    public void emptyJsonFile() throws IOException {
+    public void emptyJsonFile() {
         List<Body> bodies =
                 bodiesReaderService.readBodiesFromJson(
                         "src/test/resources/readerservicetestfiles/emptyFile.json"

@@ -5,8 +5,6 @@ import ru.liga.consolepackages.DTOs.ChangePackageDTO;
 import ru.liga.consolepackages.DTOs.NewPackageDTO;
 import ru.liga.consolepackages.models.Package;
 
-import javax.persistence.Column;
-
 @Component
 public class PackageMapper {
     /**
@@ -33,13 +31,13 @@ public class PackageMapper {
      */
     public Package fromChangeDtoToPackage(ChangePackageDTO changePackageDTO) {
         Package newPack = new Package();
-        if(changePackageDTO.getName() != null) {
+        if (changePackageDTO.getName() != null) {
             newPack.setName(changePackageDTO.getName());
         }
-        if(changePackageDTO.getPack() != null) {
+        if (changePackageDTO.getPack() != null) {
             newPack.setPack(changePackageDTO.getPack());
         }
-        if(newPack.getSymbol() != '\u0000') {
+        if (newPack.getSymbol() != '\u0000') {
             newPack.setSymbol(changePackageDTO.getSymbol());
         }
         return newPack;

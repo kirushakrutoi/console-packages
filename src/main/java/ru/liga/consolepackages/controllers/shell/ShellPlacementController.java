@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
-import ru.liga.consolepackages.utils.PlacementServiceFactory;
 
 @ShellComponent
 public class ShellPlacementController {
@@ -30,8 +29,7 @@ public class ShellPlacementController {
             logger.debug("The path to the file {} has been entered", filePath);
             logger.debug("The type {} of algorithm entered", selectedAlgorithm);
             logger.info("The placement of packages has begun");
-            coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
-            String bodies = coordinator.getFilledBodiesFromFile(bodiesSize, filePath);
+            String bodies = coordinator.getFilledBodiesFromFile(bodiesSize, filePath, selectedAlgorithm);
             logger.info("The placement of packages has been completed");
 
             return bodies;
@@ -55,13 +53,12 @@ public class ShellPlacementController {
         try {
             logger.debug("The type {} of algorithm entered", selectedAlgorithm);
             logger.info("The placement of packages has begun");
-            coordinator.setPlacementService(new PlacementServiceFactory().getPlacementService(selectedAlgorithm));
-            String bodies = coordinator.getFilledBodiesFromString(bodiesSize, packages);
+            String bodies = coordinator.getFilledBodiesFromString(bodiesSize, packages, selectedAlgorithm);
             logger.info("The placement of packages has been completed");
             return bodies;
 
         } catch (RuntimeException e) {
-            logger.warn(e.getMessage());
+            logger.warn(e.getMessage(), e);
             return e.getMessage();
         }
     }

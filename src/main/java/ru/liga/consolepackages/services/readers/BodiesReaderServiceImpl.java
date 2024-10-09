@@ -2,8 +2,7 @@ package ru.liga.consolepackages.services.readers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
@@ -14,9 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Service
 public class BodiesReaderServiceImpl implements BodiesReaderService {
-    private static final Logger logger = LoggerFactory.getLogger(BodiesReaderServiceImpl.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -34,7 +33,7 @@ public class BodiesReaderServiceImpl implements BodiesReaderService {
             return objectMapper.readValue(file, new TypeReference<List<Body>>() {
             });
         } catch (IOException e) {
-            logger.warn("Failed to read the file - {}. {}", filePath, e.getMessage());
+            log.warn("Failed to read the file - {}. {}", filePath, e.getMessage());
             throw new FailedReadFileException("Failed to read the file - " + filePath + ". " + e.getMessage());
         }
     }
@@ -51,13 +50,30 @@ public class BodiesReaderServiceImpl implements BodiesReaderService {
             return objectMapper.readValue(multipartFile.getBytes(), new TypeReference<List<Body>>() {
             });
         } catch (IOException e) {
-            throw new FailedReadFileException("Failed to read the file - "  + ". " + e.getMessage());
+            throw new FailedReadFileException("Failed to read the file - " + ". " + e.getMessage());
+        }
+    }
+
+    /**
+     * Считывает данные о кузовах машин из файла JSON.
+     *
+     * @param file Файл в формате JSON.
+     * @return Список заполненых кузовов машин.
+     */
+    @Override
+    public List<Body> readBodiesFromJson(File file) {
+        try {
+            return objectMapper.readValue(file, new TypeReference<List<Body>>() {
+            });
+        } catch (IOException e) {
+            log.warn("Failed to read the file - {}. {}", file, e.getMessage());
+            throw new FailedReadFileException("Failed to read the file " + e.getMessage());
         }
     }
 
     private void checkExistenceFile(File file) {
         if (!file.exists()) {
-            logger.warn("File - {} not found", file.getName());
+            log.warn("File - {} not found", file.getName());
             throw new FileNotFoundException("File - " + file.getName() + " not found");
         }
     }

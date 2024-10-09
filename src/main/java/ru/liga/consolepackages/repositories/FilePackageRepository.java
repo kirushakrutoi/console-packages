@@ -1,8 +1,7 @@
 package ru.liga.consolepackages.repositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PackageAlreadyExistException;
@@ -14,9 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class FilePackageRepository implements PackageRepository {
-    private static final Logger logger = LoggerFactory.getLogger(FilePackageRepository.class);
     private final ObjectMapper objectMapper;
     private final String BASE_DIR = "packages";
 
@@ -41,7 +40,7 @@ public class FilePackageRepository implements PackageRepository {
             try {
                 packages.add(objectMapper.readValue(file, Package.class));
             } catch (IOException e) {
-                logger.warn("File " + file.getName() + "couldn't read");
+                log.warn("File " + file.getName() + "couldn't read");
                 throw new FailedReadFileException(e.getMessage());
             }
 
@@ -66,7 +65,7 @@ public class FilePackageRepository implements PackageRepository {
         try {
             return objectMapper.readValue(file, Package.class);
         } catch (IOException e) {
-            logger.warn("File " + file.getName() + "couldn't read");
+            log.warn("File " + file.getName() + "couldn't read");
             throw new FailedReadFileException("File " + file.getName() + "couldn't read");
         }
     }
@@ -90,7 +89,7 @@ public class FilePackageRepository implements PackageRepository {
         try {
             objectMapper.writeValue(newFile, pack);
         } catch (IOException e) {
-            logger.warn("File " + oldFile.getName() + "couldn't read");
+            log.warn("File " + oldFile.getName() + "couldn't read");
             throw new FailedReadFileException("File " + oldFile.getName() + "couldn't read");
         }
     }
@@ -111,7 +110,7 @@ public class FilePackageRepository implements PackageRepository {
         try {
             objectMapper.writeValue(newFile, pack);
         } catch (IOException e) {
-            logger.warn("File " + newFile.getName() + "couldn't read");
+            log.warn("File " + newFile.getName() + "couldn't read");
             throw new FailedReadFileException("File " + newFile.getName() + "couldn't read");
         }
     }

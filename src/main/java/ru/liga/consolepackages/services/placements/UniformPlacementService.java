@@ -1,19 +1,16 @@
 package ru.liga.consolepackages.services.placements;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 
 import java.util.List;
 
-
+@Slf4j
+@Component("u")
 public class UniformPlacementService extends PlacementService {
-    private static final Logger logger = LoggerFactory.getLogger(UniformPlacementService.class);
-
-    public UniformPlacementService() {
-    }
 
     /**
      * Равномерно размещает посылки в указанных телах.
@@ -24,32 +21,32 @@ public class UniformPlacementService extends PlacementService {
      */
     @Override
     public List<Body> placementPackage(List<Package> packages, List<Body> emptyBodies) {
-        logger.debug("Start sorting package");
+        log.debug("Start sorting package");
         sortPackage(packages);
-        logger.debug("End sorting package");
+        log.debug("End sorting package");
         int numberBodies = emptyBodies.size();
-        logger.debug("Creating empty bodies");
+        log.debug("Creating empty bodies");
         boolean chet = false;
 
         for (int i = 0; i < packages.size(); i++) {
-            logger.debug("Package type " + packages.get(i).getSymbol() + " the beginning of the placement");
+            log.debug("Package type " + packages.get(i).getSymbol() + " the beginning of the placement");
 
             if (!chet) {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(i % numberBodies))) {
-                    logger.warn("Package " + packages.get(i).getName() + " failed to post");
+                    log.warn("Package " + packages.get(i).getName() + " failed to post");
                     throw new SmallNumberBodiesException("Package " + packages.get(i).getName() + " failed to post");
                 }
-                logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
+                log.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
                 if (i > 0 && (i + 1) % numberBodies == 0) {
                     chet = true;
                 }
             } else {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(numberBodies - i % numberBodies - 1))) {
-                    logger.warn("Package " + packages.get(i).getName() + " failed to post");
+                    log.warn("Package " + packages.get(i).getName() + " failed to post");
                     throw new SmallNumberBodiesException("Package " + packages.get(i).getName() + " failed to post");
                 }
-                logger.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
+                log.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
                 if ((i + 1) % numberBodies == 0) {
                     chet = false;
@@ -58,5 +55,10 @@ public class UniformPlacementService extends PlacementService {
         }
 
         return emptyBodies;
+    }
+
+    @Override
+    public String getType() {
+        return "u";
     }
 }

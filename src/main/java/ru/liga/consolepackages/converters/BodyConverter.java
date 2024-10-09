@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class BodiesConverter {
+public class BodyConverter {
 
     /**
      * Преобразует строку с размерами посылок в список объектов `Body`.
@@ -15,7 +15,7 @@ public class BodiesConverter {
      * @param bodiesSize Строка с размерами посылок в формате "ширинаxвысота".
      * @return Список объектов `Body`.
      */
-    public List<Body> fromStringToBodies(String bodiesSize) {
+    public List<Body> converter(String bodiesSize) {
         String[] sizes = bodiesSize.split(" ");
         List<Body> bodies = new ArrayList<>();
         for (String s : sizes) {
@@ -34,7 +34,7 @@ public class BodiesConverter {
      * @param bodies Список объектов `Body`.
      * @return Строка представляющая собой заполненные кузова машин.
      */
-    public String fromBodiesToString(List<Body> bodies) {
+    public String converter(List<Body> bodies) {
         StringBuilder result = new StringBuilder();
         for (Body body : bodies) {
             result.append(body).append("\n");

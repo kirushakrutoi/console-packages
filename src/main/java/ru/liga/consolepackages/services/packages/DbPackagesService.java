@@ -2,6 +2,8 @@ package ru.liga.consolepackages.services.packages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.checkerframework.checker.fenum.qual.AwtAlphaCompositingRule;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -18,17 +20,12 @@ import java.util.List;
 @Service
 @Primary
 public class DbPackagesService implements PackageService {
-
-    private final JpaPackageRepository jpaPackageRepository;
-    private final ObjectMapper objectMapper;
-    private final PackageMapper packageMapper;
-
     @Autowired
-    public DbPackagesService(JpaPackageRepository jpaPackageRepository, ObjectMapper objectMapper, PackageMapper packageMapper) {
-        this.jpaPackageRepository = jpaPackageRepository;
-        this.objectMapper = objectMapper;
-        this.packageMapper = packageMapper;
-    }
+    private JpaPackageRepository jpaPackageRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private PackageMapper packageMapper;
 
     /**
      * Возвращает список всех посылок.
@@ -48,7 +45,9 @@ public class DbPackagesService implements PackageService {
      */
     @Override
     public Package findByName(String name) {
-        return jpaPackageRepository.findByName(name).orElseThrow(() -> new PackageNotFoundException("Package with id " + name + " not found"));
+        return jpaPackageRepository
+                .findByName(name)
+                .orElseThrow(() -> new PackageNotFoundException("Package with id " + name + " not found"));
     }
 
     /**
