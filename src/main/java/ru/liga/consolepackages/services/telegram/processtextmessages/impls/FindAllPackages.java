@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.liga.consolepackages.services.packages.PackageService;
+import ru.liga.consolepackages.services.telegram.SendMessageCreator;
 import ru.liga.consolepackages.services.telegram.processtextmessages.ProcessTextMessageService;
 
 import java.util.Objects;
@@ -13,9 +14,11 @@ import java.util.stream.Collectors;
 public class FindAllPackages implements ProcessTextMessageService {
 
     private final PackageService packageService;
+    private final SendMessageCreator messageCreator;
 
-    public FindAllPackages(PackageService packageService) {
+    public FindAllPackages(PackageService packageService, SendMessageCreator messageCreator) {
         this.packageService = packageService;
+        this.messageCreator = messageCreator;
     }
 
     @Override
@@ -24,6 +27,6 @@ public class FindAllPackages implements ProcessTextMessageService {
                 .map(Objects::toString)
                 .collect(Collectors.joining("\n"));
 
-        return createResponse(text, message);
+        return messageCreator.createResponse(text, message);
     }
 }

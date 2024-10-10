@@ -1,8 +1,8 @@
 package ru.liga.consolepackages.mappers;
 
 import org.springframework.stereotype.Component;
-import ru.liga.consolepackages.DTOs.ChangePackageDTO;
-import ru.liga.consolepackages.DTOs.NewPackageDTO;
+import ru.liga.consolepackages.dtos.ChangePackageDto;
+import ru.liga.consolepackages.dtos.NewPackageDto;
 import ru.liga.consolepackages.models.Package;
 
 @Component
@@ -13,7 +13,7 @@ public class PackageMapper {
      * @param newPackageDTO Данные новой посылки.
      * @return Объект сущности посылки.
      */
-    public Package fromNewDtoToPackage(NewPackageDTO newPackageDTO) {
+    public Package fromNewDtoToPackage(NewPackageDto newPackageDTO) {
         Package pack = new Package();
 
         pack.setName(newPackageDTO.getName());
@@ -29,7 +29,7 @@ public class PackageMapper {
      * @param changePackageDTO Измененные данные посылки.
      * @return Объект сущности посылки.
      */
-    public Package fromChangeDtoToPackage(ChangePackageDTO changePackageDTO) {
+    public Package fromChangeDtoToPackage(ChangePackageDto changePackageDTO) {
         Package newPack = new Package();
         if (changePackageDTO.getName() != null) {
             newPack.setName(changePackageDTO.getName());
@@ -49,7 +49,7 @@ public class PackageMapper {
      * @param oldPack Текущий объект сущности посылки.
      * @param newPack Измененные данные посылки.
      */
-    public void updatePackageFields(Package oldPack, ChangePackageDTO newPack) {
+    public void updatePackageFields(Package oldPack, Package newPack) {
         if (newPack.getName() != null) {
             oldPack.setName(newPack.getName());
         }

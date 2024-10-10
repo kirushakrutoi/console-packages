@@ -2,7 +2,7 @@ package ru.liga.consolepackages.services.placements;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.liga.consolepackages.exceptions.SmallNumberBodiesException;
+import ru.liga.consolepackages.exceptions.pacakgesexceptions.PlacementException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 
@@ -34,7 +34,7 @@ public class UniformPlacementService extends PlacementService {
             if (!chet) {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(i % numberBodies))) {
                     log.warn("Package " + packages.get(i).getName() + " failed to post");
-                    throw new SmallNumberBodiesException("Package " + packages.get(i).getName() + " failed to post");
+                    throw new PlacementException("Package " + packages.get(i).getName() + " failed to post");
                 }
                 log.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
@@ -44,7 +44,7 @@ public class UniformPlacementService extends PlacementService {
             } else {
                 if (!searchPlaceAndInsertPackage(packages.get(i), emptyBodies.get(numberBodies - i % numberBodies - 1))) {
                     log.warn("Package " + packages.get(i).getName() + " failed to post");
-                    throw new SmallNumberBodiesException("Package " + packages.get(i).getName() + " failed to post");
+                    throw new PlacementException("Package " + packages.get(i).getName() + " failed to post");
                 }
                 log.debug("Package type " + packages.get(i).getSymbol() + " the ending of the placement");
 
@@ -55,10 +55,5 @@ public class UniformPlacementService extends PlacementService {
         }
 
         return emptyBodies;
-    }
-
-    @Override
-    public String getType() {
-        return "u";
     }
 }

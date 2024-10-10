@@ -1,8 +1,7 @@
 package ru.liga.consolepackages.services.writers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.FailedWriteDataException;
@@ -12,14 +11,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Service
-public class WriterServiceImpl implements WriterService {
-    private static final Logger logger = LoggerFactory.getLogger(WriterServiceImpl.class);
+public class DefaultWriterService implements WriterService {
     private final ObjectMapper objectMapper;
     @Value("${dir.for.write}")
     private String DIR_FOR_WRITE;
 
-    public WriterServiceImpl(ObjectMapper objectMapper) {
+    public DefaultWriterService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -34,6 +33,7 @@ public class WriterServiceImpl implements WriterService {
         try {
             objectMapper.writeValue(getNextFile(), bodies);
         } catch (IOException e) {
+            log.warn(e.getMessage());
             throw new FailedWriteDataException(e.getMessage());
         }
 
@@ -44,7 +44,7 @@ public class WriterServiceImpl implements WriterService {
         while (true) {
             File file = new File(DIR_FOR_WRITE + "/batch-" + i + ".json");
             if (!file.exists()) {
-                logger.debug("New file {} has been created", file.getName());
+                log.debug("New file {} has been created", file.getName());
                 return file;
             }
             i++;
@@ -54,6 +54,6 @@ public class WriterServiceImpl implements WriterService {
     private void createDir() {
         File file = new File(DIR_FOR_WRITE);
         if (file.mkdir())
-            logger.debug("New folder {} has been created", file.getName());
+            log.debug("New folder {} has been created", file.getName());
     }
 }

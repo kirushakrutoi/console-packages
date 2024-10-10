@@ -9,18 +9,26 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: false
+        show_sql: true
+  flyway:
+    user: ${PACKAGES_DB_USERNAME}
+    password: ${PACKAGES_DB_PASSWORD}
+    url: ${PACKAGES_DB_URL}
+    locations: classpath:db/migration
+    baselineOnMigrate: true
+    enabled: true
 
 bot:
   api-url: https://api.telegram.org/
   path: ${WEBHOOK}
   name: packages
-  token: ${BOT_TOKEN}
+  token: ${TOKEN}
 
 dir:
   for:
     write: batches
+

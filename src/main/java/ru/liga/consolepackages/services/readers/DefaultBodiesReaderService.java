@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class BodiesReaderServiceImpl implements BodiesReaderService {
+public class DefaultBodiesReaderService implements BodiesReaderService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**

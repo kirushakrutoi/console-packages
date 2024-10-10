@@ -1,49 +1,44 @@
 package ru.liga.services.readers;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.liga.consolepackages.ConsolePackages;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Place;
 import ru.liga.consolepackages.services.readers.BodiesReaderService;
-import ru.liga.consolepackages.services.readers.BodiesReaderServiceImpl;
+import ru.liga.consolepackages.services.readers.DefaultBodiesReaderService;
 
-import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = BodiesReaderServiceImpl.class)
-public class BodiesReaderServiceImplTest {
-    @Autowired
-    private BodiesReaderService bodiesReaderService;
+public class DefaultBodiesReaderServiceTest {
+    BodiesReaderService bodiesReaderService;
 
     @Test
     public void emptyJsonFile() {
+        BodiesReaderService bodiesReaderService = new DefaultBodiesReaderService();
         List<Body> bodies =
                 bodiesReaderService.readBodiesFromJson(
-                        "src/test/resources/readerservicetestfiles/emptyFile.json"
+                        "src/test/resources/readerservicetestfiles/empty_file.json"
                 );
 
-        assertEquals(1, bodies.size());
+        assertThat(bodies.size()).isEqualTo(1);
         Body body = bodies.get(0);
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                assertEquals(body.getElement(new Place(i, j)), ' ');
+                assertThat(body.getElement(new Place(i, j))).isEqualTo(' ');
             }
         }
     }
 
     @Test
-    public void onePackageJsonFileTest() throws IOException {
+    public void onePackageJsonFileTest() {
         List<Body> bodies =
                 bodiesReaderService.readBodiesFromJson(
-                        "src/test/resources/readerservicetestfiles/onePackageFile.json"
+                        "src/test/resources/readerservicetestfiles/one_package_file.json"
                 );
 
-        assertEquals(1, bodies.size());
+        assertThat(bodies.size()).isEqualTo(1);
         Body body = bodies.get(0);
         char[][] testChars = new char[][]{
                 {' ', ' ', ' ', ' ', ' ', ' '},
@@ -55,19 +50,19 @@ public class BodiesReaderServiceImplTest {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                assertEquals(body.getElement(new Place(i, j)), testChars[i][j]);
+                assertThat(body.getElement(new Place(i, j))).isEqualTo(testChars[i][j]);
             }
         }
     }
 
     @Test
-    void multipleBodiesTest() throws IOException {
+    void multipleBodiesTest() {
         List<Body> bodies =
                 bodiesReaderService.readBodiesFromJson(
-                        "src/test/resources/readerservicetestfiles/manyBodiesFile.json"
+                        "src/test/resources/readerservicetestfiles/many_bodies_file.json"
                 );
 
-        assertEquals(2, bodies.size());
+        assertThat(bodies.size()).isEqualTo(2);
 
         char[][][] testChars = {
                 {
@@ -91,7 +86,7 @@ public class BodiesReaderServiceImplTest {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 6; j++) {
                 for (int k = 0; k < 6; k++) {
-                    assertEquals(bodies.get(i).getElement(new Place(j, k)), testChars[i][j][k]);
+                    assertThat(bodies.get(i).getElement(new Place(j, k))).isEqualTo(testChars[i][j][k]);
                 }
             }
         }

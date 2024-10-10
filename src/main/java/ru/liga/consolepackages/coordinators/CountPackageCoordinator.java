@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import ru.liga.consolepackages.DTOs.CountPackageDTO;
 import ru.liga.consolepackages.converters.BodyConverter;
 import ru.liga.consolepackages.converters.CountingPackagesConverter;
+import ru.liga.consolepackages.dtos.CountPackageDto;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.services.packages.CountPackagesService;
 import ru.liga.consolepackages.services.readers.BodiesReaderService;
@@ -55,12 +55,12 @@ public class CountPackageCoordinator {
      * @param multipartFile Файл с данными о кузовах машин.
      * @return Количество посылок в каждом кузове.
      */
-    public CountPackageDTO countPackage(MultipartFile multipartFile) {
+    public CountPackageDto countPackage(MultipartFile multipartFile) {
         List<Body> bodies = readerService.readBodiesFromJson(multipartFile);
         log.info("Start counting packages");
         Map<Character, Integer> packageIntegerMap = countPackagesService.countPackagesFromBodies(bodies);
         log.info("End counting packages");
-        return new CountPackageDTO(packageIntegerMap, bodies);
+        return new CountPackageDto(packageIntegerMap, bodies);
     }
 
     public String countPackage(File file) {

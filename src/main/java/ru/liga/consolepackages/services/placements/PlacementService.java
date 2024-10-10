@@ -63,6 +63,4 @@ public abstract class PlacementService {
 
         return true;
     }
-
-    abstract public String getType();
 }

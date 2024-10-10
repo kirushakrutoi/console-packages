@@ -13,11 +13,4 @@ public interface ProcessTextMessageService {
      * @return Метод API Telegram для отправки ответа пользователю.
      */
     SendMessage processMessage(Message message);
-
-    default SendMessage createResponse(String text, Message message) {
-        SendMessage response = new SendMessage();
-        response.setText(text);
-        response.setChatId(message.getChatId());
-        return response;
-    }
 }

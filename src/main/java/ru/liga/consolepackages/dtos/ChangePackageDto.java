@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.DTOs;
+package ru.liga.consolepackages.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangePackageDTO {
+public class ChangePackageDto {
     private char[][] pack;
     private String name;
     private char symbol;

@@ -10,25 +10,26 @@ import ru.liga.consolepackages.services.placements.UniformPlacementService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UniformPlacementServiceTest {
-    private final PlacementService placementService = new UniformPlacementService();
+    PlacementService placementService = new UniformPlacementService();
 
     @Test
     void emptyListTest() {
+        PlacementService placementService = new UniformPlacementService();
         List<Package> packages = new ArrayList<>();
 
         List<Body> emptyBodies = new ArrayList<>();
-        emptyBodies.add(new Body(6,6));
+        emptyBodies.add(new Body(6, 6));
 
         List<Body> bodies = placementService.placementPackage(packages, emptyBodies);
-        assertEquals(1, bodies.size());
+        assertThat(bodies.size()).isEqualTo(1);
         Body body = bodies.get(0);
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                assertEquals(body.getElement(new Place(i, j)), ' ');
+                assertThat(body.getElement(new Place(i, j))).isEqualTo(' ');
             }
         }
 
@@ -36,15 +37,16 @@ public class UniformPlacementServiceTest {
 
     @Test
     void singlePackageTest() {
+        PlacementService placementService = new UniformPlacementService();
         List<Package> packages = new ArrayList<>();
         packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
 
         List<Body> emptyBodies = new ArrayList<>();
-        emptyBodies.add(new Body(6,6));
+        emptyBodies.add(new Body(6, 6));
 
         List<Body> bodies = placementService.placementPackage(packages, emptyBodies);
 
-        assertEquals(1, bodies.size());
+        assertThat(bodies.size()).isEqualTo(1);
         Body body = bodies.get(0);
         char[][] testChars = new char[][]{
                 {' ', ' ', ' ', ' ', ' ', ' '},
@@ -56,25 +58,26 @@ public class UniformPlacementServiceTest {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                assertEquals(body.getElement(new Place(i, j)), testChars[i][j]);
+                assertThat(body.getElement(new Place(i, j))).isEqualTo(testChars[i][j]);
             }
         }
     }
 
     @Test
     void multiplePackagesTest() {
+        PlacementService placementService = new UniformPlacementService();
         List<Package> packages = new ArrayList<>();
         packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
         packages.add(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}));
         packages.add(new Package(new char[][]{{'9', '9', '9'}, {'9', '9', '9'}, {'9', '9', '9'}}));
 
         List<Body> emptyBodies = new ArrayList<>();
-        emptyBodies.add(new Body(6,6));
-        emptyBodies.add(new Body(6,6));
-        emptyBodies.add(new Body(6,6));
+        emptyBodies.add(new Body(6, 6));
+        emptyBodies.add(new Body(6, 6));
+        emptyBodies.add(new Body(6, 6));
 
         List<Body> bodies = placementService.placementPackage(packages, emptyBodies);
-        assertEquals(3, bodies.size());
+        assertThat(bodies.size()).isEqualTo(1);
 
         char[][][] testChars = {
                 {
@@ -107,7 +110,7 @@ public class UniformPlacementServiceTest {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 6; j++) {
                 for (int k = 0; k < 6; k++) {
-                    assertEquals(bodies.get(i).getElement(new Place(j, k)), testChars[i][j][k]);
+                    assertThat(bodies.get(i).getElement(new Place(j, k))).isEqualTo(testChars[i][j][k]);
                 }
             }
         }
@@ -115,6 +118,7 @@ public class UniformPlacementServiceTest {
 
     @Test
     void secondMultiplePackagesTest() {
+        PlacementService placementService = new UniformPlacementService();
         List<Package> packages = new ArrayList<>();
         packages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
         packages.add(new Package(new char[][]{{'6', '6', '6'}, {'6', '6', '6'}}));
@@ -122,11 +126,11 @@ public class UniformPlacementServiceTest {
         packages.add(new Package(new char[][]{{'2', '2'}}));
 
         List<Body> emptyBodies = new ArrayList<>();
-        emptyBodies.add(new Body(6,6));
-        emptyBodies.add(new Body(6,6));
+        emptyBodies.add(new Body(6, 6));
+        emptyBodies.add(new Body(6, 6));
 
         List<Body> bodies = placementService.placementPackage(packages, emptyBodies);
-        assertEquals(2, bodies.size());
+        assertThat(bodies.size()).isEqualTo(2);
 
         char[][][] testChars = {
                 {
@@ -150,7 +154,7 @@ public class UniformPlacementServiceTest {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 6; j++) {
                 for (int k = 0; k < 6; k++) {
-                    assertEquals(bodies.get(i).getElement(new Place(j, k)), testChars[i][j][k]);
+                    assertThat(bodies.get(i).getElement(new Place(j, k))).isEqualTo(testChars[i][j][k]);
                 }
             }
         }

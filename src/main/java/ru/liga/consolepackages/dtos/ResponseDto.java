@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.DTOs;
+package ru.liga.consolepackages.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDTO {
+public class ResponseDto {
     private String response;
 }

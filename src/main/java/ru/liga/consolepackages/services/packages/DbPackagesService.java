@@ -2,13 +2,9 @@ package ru.liga.consolepackages.services.packages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.checkerframework.checker.fenum.qual.AwtAlphaCompositingRule;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import ru.liga.consolepackages.DTOs.ChangePackageDTO;
-import ru.liga.consolepackages.DTOs.NewPackageDTO;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.InvalidPackageDataException;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PackageNotFoundException;
 import ru.liga.consolepackages.mappers.PackageMapper;
@@ -20,12 +16,16 @@ import java.util.List;
 @Service
 @Primary
 public class DbPackagesService implements PackageService {
+    private final JpaPackageRepository jpaPackageRepository;
+    private final ObjectMapper objectMapper;
+    private final PackageMapper packageMapper;
+
     @Autowired
-    private JpaPackageRepository jpaPackageRepository;
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private PackageMapper packageMapper;
+    public DbPackagesService(JpaPackageRepository jpaPackageRepository, ObjectMapper objectMapper, PackageMapper packageMapper) {
+        this.jpaPackageRepository = jpaPackageRepository;
+        this.objectMapper = objectMapper;
+        this.packageMapper = packageMapper;
+    }
 
     /**
      * Возвращает список всех посылок.
@@ -53,15 +53,15 @@ public class DbPackagesService implements PackageService {
     /**
      * Изменяет данные посылки по ее имени.
      *
-     * @param name Имя посылки.
+     * @param name  Имя посылки.
      * @param sPack Измененные данные посылки в формате JSON.
      */
     @Override
     public void change(String name, String sPack) {
         Package oldPack = findByName(name);
-        ChangePackageDTO newPack;
+        Package newPack;
         try {
-            newPack = objectMapper.readValue(sPack, ChangePackageDTO.class);
+            newPack = objectMapper.readValue(sPack, Package.class);
             packageMapper.updatePackageFields(oldPack, newPack);
 
             jpaPackageRepository.save(oldPack);
@@ -73,13 +73,13 @@ public class DbPackagesService implements PackageService {
     /**
      * Изменяет данные посылки по ее имени.
      *
-     * @param name Имя посылки.
-     * @param changePackageDTO Измененные данные посылки.
+     * @param name       Имя посылки.
+     * @param changePack Измененные данные посылки.
      */
     @Override
-    public void change(String name, ChangePackageDTO changePackageDTO) {
+    public void change(String name, Package changePack) {
         Package oldPack = findByName(name);
-        packageMapper.updatePackageFields(oldPack, changePackageDTO);
+        packageMapper.updatePackageFields(oldPack, changePack);
         jpaPackageRepository.save(oldPack);
     }
 
@@ -101,11 +101,10 @@ public class DbPackagesService implements PackageService {
     /**
      * Создает новую посылку.
      *
-     * @param newPack Данные новой посылки.
+     * @param pack Данные новой посылки.
      */
     @Override
-    public void create(NewPackageDTO newPack) {
-        Package pack = packageMapper.fromNewDtoToPackage(newPack);
+    public void create(Package pack) {
         jpaPackageRepository.save(pack);
     }
 

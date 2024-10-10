@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import ru.liga.consolepackages.DTOs.ResponseDTO;
 import ru.liga.consolepackages.coordinators.CountPackageCoordinator;
+import ru.liga.consolepackages.dtos.ResponseDto;
 
 @Slf4j
 @RestController()
@@ -36,7 +36,7 @@ public class RestCountPackagesController {
             return new ResponseEntity<>(coordinator.countPackage(multipartFile), HttpStatus.OK);
         } catch (RuntimeException e) {
             log.warn(e.getMessage());
-            return new ResponseEntity<>(new ResponseDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -3,11 +3,10 @@ package ru.liga.consolepackages.coordinators;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import ru.liga.consolepackages.DTOs.PlacementRequestDTO;
-import ru.liga.consolepackages.DTOs.PlacementResponseDTO;
 import ru.liga.consolepackages.converters.BodyConverter;
 import ru.liga.consolepackages.converters.PackagesConverter;
+import ru.liga.consolepackages.dtos.PlacementRequestDto;
+import ru.liga.consolepackages.dtos.PlacementResponseDto;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
 import ru.liga.consolepackages.services.placements.PlacementService;
@@ -75,13 +74,13 @@ public class PlacePackagesCoordinator {
      * @param file       Файл с данными о посылках.
      * @return Ответ с результатом размещения.
      */
-    public PlacementResponseDTO getFilledBodiesFromFile(String bodiesSize, MultipartFile file, String selectedAlgorithm) {
-        List<Package> packages = readerService.readPackagesFromTxt(file);
+    public PlacementResponseDto getFilledBodiesFromFile(String bodiesSize, byte[] file, String selectedAlgorithm) {
+        List<Package> packages = readerService.readPackagesFromBytes(file);
         PlacementService placementService = placementServiceMap.get(selectedAlgorithm);
         log.debug("The file has been read successfully");
         List<Body> bodies = placementAndWrite(packages, bodiesSize, placementService);
 
-        return new PlacementResponseDTO(bodies);
+        return new PlacementResponseDto(bodies);
     }
 
     /**
@@ -90,12 +89,12 @@ public class PlacePackagesCoordinator {
      * @param placementRequestDTO Данные о посылках и размерах кузовов.
      * @return Ответ с результатом размещения.
      */
-    public PlacementResponseDTO getFilledBodiesFromString(PlacementRequestDTO placementRequestDTO) {
+    public PlacementResponseDto getFilledBodiesFromString(PlacementRequestDto placementRequestDTO) {
         List<Package> packages = packagesConverter.convertFromString(placementRequestDTO.getPackagesNames());
         PlacementService placementService = placementServiceMap.get(placementRequestDTO.getSelectedAlgorithm());
         List<Body> bodies = placementAndWrite(packages, placementRequestDTO.getBodiesSize(), placementService);
 
-        return new PlacementResponseDTO(bodies);
+        return new PlacementResponseDto(bodies);
     }
 
 

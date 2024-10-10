@@ -1,0 +1,9 @@
+INSERT INTO public.packages(name, pack, symbol) VALUES ('1', '1', '1');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('2', '22', '2');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('3', '333', '3');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('4', '4444', '4');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('5', '55555', '5');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('6', '666\n666', '6');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('7', '777\n7777', '7');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('8', '8888\n8888', '8');
+INSERT INTO public.packages(name, pack, symbol) VALUES ('9', '999\n999\n999', '9');

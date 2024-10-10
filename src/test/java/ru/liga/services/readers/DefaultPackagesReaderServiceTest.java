@@ -1,53 +1,48 @@
 package ru.liga.services.readers;
 
 import org.junit.jupiter.api.Test;
-import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
-import ru.liga.consolepackages.models.Place;
+import ru.liga.consolepackages.services.readers.DefaultPackagesReaderService;
 import ru.liga.consolepackages.services.readers.PackagesReaderService;
-import ru.liga.consolepackages.services.readers.PackagesReaderServiceImpl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class PackagesReaderServiceImplTest {
-    private final PackagesReaderService packagesReaderService = new PackagesReaderServiceImpl();
+public class DefaultPackagesReaderServiceTest {
+    private final PackagesReaderService packagesReaderService = new DefaultPackagesReaderService();
 
     @Test
-    public void emptyTxtFileTest() throws IOException {
+    public void emptyTxtFileTest() {
         List<Package> packages =
                 packagesReaderService.readPackagesFromTxt(
-                        "src/test/resources/readerservicetestfiles/emptyFile.txt"
+                        "src/test/resources/readerservicetestfiles/empty_file.txt"
                 );
 
-        assertTrue(packages.isEmpty());
+        assertThat(packages).isEmpty();
     }
 
     @Test
-    public void onePackageTxtFileTest() throws IOException {
+    public void onePackageTxtFileTest() {
         List<Package> packages =
                 packagesReaderService.readPackagesFromTxt(
-                        "src/test/resources/readerservicetestfiles/onePackageFile.txt"
+                        "src/test/resources/readerservicetestfiles/one_package_file.txt"
                 );
-        assertEquals(1, packages.size());
+        assertThat(packages.size()).isEqualTo(1);
 
         List<Package> testPackages = new ArrayList<>();
         testPackages.add(new Package(new char[][]{{'7', '7', '7'}, {'7', '7', '7', '7'}}));
-        assertEquals(testPackages.get(0), packages.get(0));
+        assertThat(testPackages.get(0)).isEqualTo(packages.get(0));
     }
 
     @Test
-    public void manyPackageTxtFiles() throws IOException {
+    public void manyPackageTxtFiles() {
         List<Package> packages =
                 packagesReaderService.readPackagesFromTxt(
-                        "src/test/resources/readerservicetestfiles/manyPackageFile.txt")
-                ;
+                        "src/test/resources/readerservicetestfiles/many_package_file.txt");
 
-        assertEquals(11, packages.size());
+        assertThat(packages.size()).isEqualTo(11);
 
         List<Package> testPackages = new ArrayList<>();
         testPackages.add(new Package(new char[][]{{'4', '4', '4', '4'}}));
@@ -63,7 +58,7 @@ public class PackagesReaderServiceImplTest {
         testPackages.add(new Package(new char[][]{{'1'}}));
 
         for (int i = 0; i < testPackages.size(); i++) {
-            assertEquals(testPackages.get(i), packages.get(i));
+            assertThat(testPackages.get(i)).isEqualTo(packages.get(i));
         }
     }
 }

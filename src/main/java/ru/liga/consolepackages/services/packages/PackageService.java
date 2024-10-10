@@ -1,7 +1,5 @@
 package ru.liga.consolepackages.services.packages;
 
-import ru.liga.consolepackages.DTOs.ChangePackageDTO;
-import ru.liga.consolepackages.DTOs.NewPackageDTO;
 import ru.liga.consolepackages.models.Package;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public interface PackageService {
     /**
      * Изменяет данные посылки по ее имени.
      *
-     * @param name Имя посылки.
+     * @param name  Имя посылки.
      * @param sPack Измененные данные посылки в формате JSON.
      */
     void change(String name, String sPack);
@@ -34,9 +32,9 @@ public interface PackageService {
      * Изменяет данные посылки по ее имени.
      *
      * @param name Имя посылки.
-     * @param changePackageDTO Измененные данные посылки.
+     * @param pack Измененные данные посылки.
      */
-    void change(String name, ChangePackageDTO changePackageDTO);
+    void change(String name, Package pack);
 
     /**
      * Создает новую посылку.
@@ -48,9 +46,9 @@ public interface PackageService {
     /**
      * Создает новую посылку.
      *
-     * @param newPack Данные новой посылки.
+     * @param pack Данные новой посылки.
      */
-    void create(NewPackageDTO newPack);
+    void create(Package pack);
 
     /**
      * Удаляет посылку по ее имени.

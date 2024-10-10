@@ -1,10 +1,7 @@
 package ru.liga.consolepackages.services.placements;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PlacementException;
 import ru.liga.consolepackages.models.Body;
 import ru.liga.consolepackages.models.Package;
@@ -53,10 +50,5 @@ public class OptimalPlacementService extends PlacementService {
         }
 
         return emptyBody;
-    }
-
-    @Override
-    public String getType() {
-        return "o";
     }
 }

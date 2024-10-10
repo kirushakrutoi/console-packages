@@ -14,6 +14,7 @@ public interface BodiesReaderService {
      * @return список заполненных кузовов грузовиков
      */
     List<Body> readBodiesFromJson(String filePath);
+
     /**
      * Считывает данные о кузовах машин из файла JSON.
      *
@@ -21,6 +22,7 @@ public interface BodiesReaderService {
      * @return Список объектов кузовов машин.
      */
     List<Body> readBodiesFromJson(MultipartFile multipartFile);
+
     /**
      * Считывает данные о кузовах машин из файла JSON.
      *

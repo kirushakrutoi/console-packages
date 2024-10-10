@@ -1,4 +1,4 @@
-package ru.liga.consolepackages.DTOs;
+package ru.liga.consolepackages.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewPackageDTO {
+public class NewPackageDto {
     @NotNull
     private char[][] pack;
     @NotBlank

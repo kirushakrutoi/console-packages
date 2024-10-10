@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
+import ru.liga.consolepackages.exceptions.FailedWriteDataException;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PackageAlreadyExistException;
 import ru.liga.consolepackages.exceptions.pacakgesexceptions.PackageNotFoundException;
 import ru.liga.consolepackages.models.Package;
@@ -41,7 +42,7 @@ public class FilePackageRepository implements PackageRepository {
                 packages.add(objectMapper.readValue(file, Package.class));
             } catch (IOException e) {
                 log.warn("File " + file.getName() + "couldn't read");
-                throw new FailedReadFileException(e.getMessage());
+                throw new FailedReadFileException("File " + file.getName() + "couldn't read");
             }
 
         }
@@ -111,7 +112,7 @@ public class FilePackageRepository implements PackageRepository {
             objectMapper.writeValue(newFile, pack);
         } catch (IOException e) {
             log.warn("File " + newFile.getName() + "couldn't read");
-            throw new FailedReadFileException("File " + newFile.getName() + "couldn't read");
+            throw new FailedWriteDataException("File " + newFile.getName() + "couldn't read");
         }
     }
 

@@ -2,20 +2,16 @@ package ru.liga.consolepackages.services.readers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.liga.consolepackages.exceptions.FailedReadFileException;
 import ru.liga.consolepackages.models.Package;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
-public class PackagesReaderServiceImpl implements PackagesReaderService {
+public class DefaultPackagesReaderService implements PackagesReaderService {
 
     /**
      * Метод для чтения посылок из текстового файла.
@@ -35,7 +31,7 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
      * @return список посылок
      */
     @Override
-    public List<Package> readPackagesFromTxt(MultipartFile file) {
+    public List<Package> readPackagesFromBytes(byte[] file) {
         return readPackages(getReader(file));
     }
 
@@ -56,7 +52,6 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
                 }
             }
         } catch (IOException e) {
-            //logger.warn("Failed to read the file - {}. {}", filePath, e.getMessage());
             throw new FailedReadFileException("Failed to read the file - " + e.getMessage());
         }
 
@@ -69,10 +64,10 @@ public class PackagesReaderServiceImpl implements PackagesReaderService {
         return packages;
     }
 
-    private BufferedReader getReader(MultipartFile file) {
+    private BufferedReader getReader(byte[] file) {
         try {
-            return new BufferedReader(new InputStreamReader(file.getInputStream()));
-        } catch (IOException e) {
+            return new BufferedReader(new InputStreamReader(new ByteArrayInputStream(file)));
+        } catch (Exception e) {
             throw new FailedReadFileException("Failed to read the file " + e.getMessage());
         }
     }

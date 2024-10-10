@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.liga.consolepackages.DTOs.PlacementRequestDTO;
-import ru.liga.consolepackages.DTOs.PlacementResponseDTO;
-import ru.liga.consolepackages.DTOs.ResponseDTO;
 import ru.liga.consolepackages.coordinators.PlacePackagesCoordinator;
+import ru.liga.consolepackages.dtos.PlacementRequestDto;
+import ru.liga.consolepackages.dtos.PlacementResponseDto;
+import ru.liga.consolepackages.dtos.ResponseDto;
+
+import java.io.IOException;
 
 @Slf4j
 @RestController()
@@ -34,11 +36,16 @@ public class RestPlacementController {
                                                   @RequestParam("bodies_size") String bodiesSize) {
         try {
             log.info("Place packages from file");
-            PlacementResponseDTO placementResponseDTO = coordinator.getFilledBodiesFromFile(bodiesSize, multipartFile, algorithm);
+            PlacementResponseDto placementResponseDTO =
+                    coordinator.getFilledBodiesFromFile(
+                            bodiesSize,
+                            multipartFile.getBytes(),
+                            algorithm
+                    );
             return new ResponseEntity<>(placementResponseDTO, HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | IOException e) {
             log.warn(e.getMessage());
-            return new ResponseEntity<>(new ResponseDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -49,15 +56,15 @@ public class RestPlacementController {
      * @return Ответ с размещенными телами.
      */
     @GetMapping("/from/json")
-    public ResponseEntity<?> placePackageFromJson(@RequestBody PlacementRequestDTO placementRequestDTO) {
+    public ResponseEntity<?> placePackageFromJson(@RequestBody PlacementRequestDto placementRequestDTO) {
         try {
             log.info("Place package from json");
-            PlacementResponseDTO placementResponseDTO =
+            PlacementResponseDto placementResponseDTO =
                     coordinator.getFilledBodiesFromString(placementRequestDTO);
             return new ResponseEntity<>(placementResponseDTO, HttpStatus.OK);
         } catch (RuntimeException e) {
             log.warn(e.getMessage());
-            return new ResponseEntity<>(new ResponseDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 }
